@@ -1,0 +1,155 @@
+package cn.mmf.slashblade_tic.item;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+
+import cn.mmf.slashblade_tic.blade.SlashBladeCore;
+import gnu.trove.set.hash.TLinkedHashSet;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import slimeknights.tconstruct.library.TinkerAPIException;
+import slimeknights.tconstruct.library.materials.Material;
+import slimeknights.tconstruct.library.tinkering.PartMaterialType;
+import slimeknights.tconstruct.library.tools.IPattern;
+import slimeknights.tconstruct.library.tools.IToolPart;
+import slimeknights.tconstruct.library.tools.Shard;
+import slimeknights.tconstruct.library.tools.ToolCore;
+
+public class TinkerSlashBladeRegistry {
+	 /*---------------------------------------------------------------------------
+	  | TOOLS & WEAPONS & Crafting                                                |
+	  ---------------------------------------------------------------------------*/
+
+	  /** This set contains all known tools */
+	  private static final Set<SlashBladeCore> tools = new TLinkedHashSet<>();
+	  private static final Set<IToolPart> toolParts = new TLinkedHashSet<>();
+	  private static final Set<SlashBladeCore> toolStationCrafting = Sets.newLinkedHashSet();
+	  private static final Set<SlashBladeCore> toolForgeCrafting = Sets.newLinkedHashSet();
+	  private static final List<ItemStack> stencilTableCrafting = Lists.newLinkedList();
+	  private static final Set<Item> patternItems = Sets.newHashSet();
+	  private static final Set<Item> castItems = Sets.newHashSet();
+	  private static Shard shardItem;
+
+	  /**
+	   * Register a tool, making it known to tinkers' systems.
+	   * All toolparts used to craft the tool will be registered as well.
+	   */
+	  public static void registerTool(SlashBladeCore tool) {
+	    tools.add(tool);
+
+	    for(PartMaterialType pmt : tool.getRequiredComponents()) {
+	      for(IToolPart tp : pmt.getPossibleParts()) {
+	        registerToolPart(tp);
+	      }
+	    }
+	  }
+
+	  public static Set<SlashBladeCore> getTools() {
+	    return ImmutableSet.copyOf(tools);
+	  }
+
+	  /**
+	   * Used for the sharpening kit. Allows to register a toolpart that is not part of a tool.
+	   */
+	  public static void registerToolPart(IToolPart part) {
+	    toolParts.add(part);
+	    if(part instanceof Item) {
+	      if(part.canBeCrafted()) {
+	        addPatternForItem((Item) part);
+	      }
+	      if(part.canBeCasted()) {
+	        addCastForItem((Item) part);
+	      }
+	    }
+	  }
+
+	  public static Set<IToolPart> getToolParts() {
+	    return ImmutableSet.copyOf(toolParts);
+	  }
+
+	  /** Adds a tool to the Crafting UI of both the Tool Station as well as the Tool Forge */
+	  public static void registerToolCrafting(SlashBladeCore tool) {
+	    registerToolStationCrafting(tool);
+	    registerToolForgeCrafting(tool);
+	  }
+
+	  /** Adds a tool to the Crafting UI of the Tool Station */
+	  public static void registerToolStationCrafting(SlashBladeCore tool) {
+	    toolStationCrafting.add(tool);
+	  }
+
+	  public static Set<SlashBladeCore> getToolStationCrafting() {
+	    return ImmutableSet.copyOf(toolStationCrafting);
+	  }
+
+	  /** Adds a tool to the Crafting UI of the Tool Forge */
+	  public static void registerToolForgeCrafting(SlashBladeCore tool) {
+	    toolForgeCrafting.add(tool);
+	  }
+
+	  public static Set<SlashBladeCore> getToolForgeCrafting() {
+	    return ImmutableSet.copyOf(toolForgeCrafting);
+	  }
+
+	  /** Adds a new pattern to craft to the stenciltable. NBT sensitive. Has to be a Pattern. */
+	  public static void registerStencilTableCrafting(ItemStack stencil) {
+	    if(!(stencil.getItem() instanceof IPattern)) {
+	      error(String.format(
+	          "Stencil Table Crafting has to be a pattern (%s)", stencil.toString()));
+	      return;
+	    }
+	    stencilTableCrafting.add(stencil);
+	  }
+
+	  public static List<ItemStack> getStencilTableCrafting() {
+	    return ImmutableList.copyOf(stencilTableCrafting);
+	  }
+
+	  public static void setShardItem(Shard shard) {
+	    if(shard == null) {
+	      return;
+	    }
+	    shardItem = shard;
+	  }
+
+	  public static Shard getShard() {
+	    return shardItem;
+	  }
+
+	  public static ItemStack getShard(Material material) {
+	    ItemStack out = material.getShard();
+	    if(out.isEmpty()) {
+	      out = shardItem.getItemstackWithMaterial(material);
+	    }
+	    return out;
+	  }
+
+	  /** Registers a pattern for the given item */
+	  public static void addPatternForItem(Item item) {
+	    patternItems.add(item);
+	  }
+
+	  /** Registers a cast for the given item */
+	  public static void addCastForItem(Item item) {
+	    castItems.add(item);
+	  }
+
+	  /** All items that have a pattern */
+	  public static Collection<Item> getPatternItems() {
+	    return ImmutableList.copyOf(patternItems);
+	  }
+
+	  /** All items that have a cast */
+	  public static Collection<Item> getCastItems() {
+	    return ImmutableList.copyOf(castItems);
+	  }
+	  private static void error(String message, Object... params) {
+		    throw new TinkerAPIException(String.format(message, params));
+		  }
+}
