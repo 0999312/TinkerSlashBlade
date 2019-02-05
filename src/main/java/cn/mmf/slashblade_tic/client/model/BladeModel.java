@@ -59,8 +59,8 @@ public class BladeModel implements IBakedModel {
         return modelMesher.getItemModel(proudsoul).getQuads(null,null,0);
     }
 
-    static ItemStack targetStack = ItemStack.EMPTY;
-    static ItemSlashBladeTIC itemBlade = null;
+    public static ItemStack targetStack = ItemStack.EMPTY;
+    public static ItemSlashBladeTIC itemBlade = null;
     static EntityLivingBase user = null;
 
     /**

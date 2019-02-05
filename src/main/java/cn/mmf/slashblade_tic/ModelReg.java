@@ -1,6 +1,7 @@
 package cn.mmf.slashblade_tic;
 
 import cn.mmf.slashblade_tic.client.model.BladeSpecialRender;
+import cn.mmf.slashblade_tic.client.model.NullTE;
 import cn.mmf.slashblade_tic.item.ItemLoader;
 import mods.flammpfeil.slashblade.tileentity.DummyTileEntity;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -19,13 +20,15 @@ public class ModelReg {
 	@SideOnly(Side.CLIENT)
     public ModelReg() {
     	ItemLoader.registerRender();
-
-    	
-    	
-        
     }
 
-
+	@SideOnly(Side.CLIENT)
+	public static void registerModel(){
+        ModelLoader.setCustomModelResourceLocation(ItemLoader.sb, 0, modelLoc);
+        ForgeHooksClient.registerTESRItemStack(ItemLoader.sb, 0, NullTE.class);
+    
+	}
+	
     @SuppressWarnings("deprecation")
 	public static void Slashblade_model(Item item) {
         ModelLoader.setCustomModelResourceLocation(item, 0, modelLoc);

@@ -3,9 +3,10 @@ package cn.mmf.slashblade_tic.util;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
 
+import cn.mmf.slashblade_tic.blade.SlashBladeCore;
 import cn.mmf.slashblade_tic.blade.SlashBladeTICBasic;
 import cn.mmf.slashblade_tic.blade.TinkerSlashBladeEvent;
-import cn.mmf.slashblade_tic.item.TinkerSlashBladeRegistry;
+import cn.mmf.slashblade_tic.blade.TinkerSlashBladeRegistry;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
 
@@ -69,7 +70,7 @@ public final class SlashBladeBuilder {
    * @return The built tool or null if none could be built.
    */
   @Nonnull
-  public static ItemStack tryBuildTool(NonNullList<ItemStack> stacks, String name, Collection<ToolCore> possibleTools) {
+  public static ItemStack tryBuildTool(NonNullList<ItemStack> stacks, String name, Collection<SlashBladeCore> possibleTools) {
     int length = -1;
     NonNullList<ItemStack> input;
     // remove trailing empty slots

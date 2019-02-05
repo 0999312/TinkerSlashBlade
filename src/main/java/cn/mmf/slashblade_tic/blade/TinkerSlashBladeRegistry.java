@@ -1,4 +1,4 @@
-package cn.mmf.slashblade_tic.item;
+package cn.mmf.slashblade_tic.blade;
 
 import java.util.Collection;
 import java.util.List;
@@ -9,7 +9,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
-import cn.mmf.slashblade_tic.blade.SlashBladeCore;
 import gnu.trove.set.hash.TLinkedHashSet;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

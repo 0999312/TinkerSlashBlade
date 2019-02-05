@@ -71,7 +71,7 @@ dependencies {
     runtime ("mezz.jei:jei_1.12.2:4.14.3.242"){
 	force = true
 	}
-	deobfCompile "slashblade:SlashBlade:mc1.12:r15"
+	deobfCompile "slashblade:SlashBlade:mc1.12:r16"
 	deobfCompile "slimeknights.mantle:Mantle:1.12-1.3.3.39"
     deobfCompile "slimeknights:TConstruct:1.12.2-2.12.0.113"
 

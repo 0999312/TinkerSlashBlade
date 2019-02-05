@@ -46,11 +46,9 @@ public class RemixTexture extends AbstractTexture {
 	            g.drawImage(bufferedimage, 0, 0, 64,128, null);
 	            g.dispose();
 	        	}
-	            
-
+	           
 	            boolean flag = false;
 	            boolean flag1 = false;
-
 
 	            TextureUtil.uploadTextureImageAllocate(this.getGlTextureId(), bufferedimage_final, flag, flag1);
 	        }

@@ -3,7 +3,6 @@ package cn.mmf.slashblade_tic.client.model;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.client.model.obj.Face;
 import mods.flammpfeil.slashblade.client.model.obj.WavefrontObject;
-import mods.flammpfeil.slashblade.client.renderer.entity.BladeFirstPersonRender;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.tileentity.DummyTileEntity;
 import net.minecraft.client.Minecraft;
@@ -27,6 +26,8 @@ import net.minecraft.util.ResourceLocation;
 import mods.flammpfeil.slashblade.util.ResourceLocationRaw;
 import org.lwjgl.opengl.GL11;
 
+import cn.mmf.slashblade_tic.blade.ItemSlashBladeTIC;
+import cn.mmf.slashblade_tic.client.render.entity.BladeFirstPersonRender;
 import cn.mmf.slashblade_tic.client.texture.RemixTexture;
 
 import javax.vecmath.Color4f;
@@ -37,31 +38,26 @@ import java.util.List;
 /**
  * Created by Furia on 2016/06/21.
  */
-public class BladeSpecialRender extends TileEntityItemStackRenderer {
+public class BladeSpecialRender extends TileEntitySpecialRenderer<NullTE> {
     private static final ResourceLocationRaw RES_ITEM_GLINT = new ResourceLocationRaw("textures/misc/enchanted_item_glint.png");
 
     @Override
-    public void renderByItem(ItemStack itemStackIn) {
-
+    public void render(NullTE te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+    	if(te!=null)
+            return;
     	if(BladeModel.targetStack.isEmpty())
-        return;
+            return;
 
-    	List<ResourceLocationRaw> resourceTexture = BladeModel.itemBlade.getMuitlModelTexture(BladeModel.targetStack);
-    	ITextureObject itextureobject  = new RemixTexture(resourceTexture);
-         
-        GlStateManager.bindTexture(itextureobject.getGlTextureId());
+        	List<ResourceLocationRaw> resourceTexture = BladeModel.itemBlade.getMuitlModelTexture(BladeModel.targetStack);
+        	ITextureObject itextureobject  = new RemixTexture(resourceTexture);
+             
+            GlStateManager.bindTexture(itextureobject.getGlTextureId());
 
-    	if(render() && BladeModel.targetStack.hasEffect()){
-    		renderEffect();
-    	}
+        	if(render() && BladeModel.targetStack.hasEffect()){
+        		renderEffect();
+        	}
     }
-    
-    public void bindTexture(ResourceLocation resource)
-    {
-        ITextureObject itextureobject = new SimpleTexture(resource);
-        GlStateManager.bindTexture(itextureobject.getGlTextureId());
-    }
-    
+
     private void renderEffect()
     {
         if(!SlashBlade.RenderEnchantEffect)
@@ -240,7 +236,7 @@ public class BladeSpecialRender extends TileEntityItemStackRenderer {
     private void renderNaked(){
         EntityLivingBase entitylivingbaseIn = BladeModel.user ;
         ItemStack itemstack = BladeModel.targetStack;
-        ItemSlashBlade itemBlade = BladeModel.itemBlade;
+        ItemSlashBladeTIC itemBlade = BladeModel.itemBlade;
 
         WavefrontObject model = BladeModelManager.getInstance().getModel(itemBlade.getModelLocation(itemstack));
         EnumSet<ItemSlashBlade.SwordType> swordType = itemBlade.getSwordType(itemstack);
@@ -256,7 +252,7 @@ public class BladeSpecialRender extends TileEntityItemStackRenderer {
             Minecraft minecraft = Minecraft.getMinecraft();
 
             {
-            	List<ResourceLocationRaw> resourceTexture = BladeModel.itemBlade.getMuitlModelTexture(BladeModel.targetStack);
+            	List<ResourceLocationRaw> resourceTexture = itemBlade.getMuitlModelTexture(BladeModel.targetStack);
             	ITextureObject itextureobject  = new RemixTexture(resourceTexture);
                  
                 GlStateManager.bindTexture(itextureobject.getGlTextureId());

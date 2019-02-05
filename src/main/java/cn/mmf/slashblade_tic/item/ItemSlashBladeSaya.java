@@ -38,6 +38,9 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
+import cn.mmf.slashblade_tic.blade.SlashBladeCore;
+import cn.mmf.slashblade_tic.blade.TinkerSlashBladeRegistry;
+
 public class ItemSlashBladeSaya extends ItemSlashBlade implements IToolPart {
 
 	public ItemSlashBladeSaya(ToolMaterial par2EnumToolMaterial){
@@ -265,7 +268,7 @@ public class ItemSlashBladeSaya extends ItemSlashBlade implements IToolPart {
 	
 	  @Override
 	  public boolean canUseMaterial(Material mat) {
-	    for(ToolCore tool : TinkerSlashBladeRegistry.getTools()) {
+	    for(SlashBladeCore tool : TinkerSlashBladeRegistry.getTools()) {
 	      for(PartMaterialType pmt : tool.getRequiredComponents()) {
 	        if(pmt.isValid(this, mat)) {
 	          return true;
