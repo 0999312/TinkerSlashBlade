@@ -3,7 +3,6 @@ package cn.mmf.slashblade_tic.client;
 import org.lwjgl.input.Keyboard;
 
 import cn.mmf.slashblade_tic.CommonProxy;
-import cn.mmf.slashblade_tic.ModelReg;
 import cn.mmf.slashblade_tic.client.model.BladeModelManager;
 import cn.mmf.slashblade_tic.client.model.BladeSpecialRender;
 import cn.mmf.slashblade_tic.client.model.NullTE;

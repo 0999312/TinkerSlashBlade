@@ -1,9 +1,9 @@
 package cn.mmf.slashblade_tic.item;
 
 import cn.mmf.slashblade_tic.Main;
-import cn.mmf.slashblade_tic.ModelReg;
 import cn.mmf.slashblade_tic.blade.ItemSlashBladeTIC;
 import cn.mmf.slashblade_tic.blade.TinkerSlashBladeRegistry;
+import cn.mmf.slashblade_tic.client.ModelReg;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemStack;
@@ -46,7 +46,7 @@ public class ItemLoader {
 	     sb = (ItemSlashBladeTIC) new ItemSlashBladeTIC().setUnlocalizedName("flammpfeil.slashblade.test");
 	     register(sb);
 		TinkerSlashBladeRegistry.registerToolCrafting(sb);		
-		ModelReg.registerModel();
+//		ModelReg.registerModel();
 	}
 	@SideOnly(Side.CLIENT)
 	public static void registerRender() {

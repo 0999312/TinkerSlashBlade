@@ -2,6 +2,7 @@ package cn.mmf.slashblade_tic.blade;
 
 import java.util.List;
 
+import cn.mmf.slashblade_tic.item.ItemLoader;
 import mods.flammpfeil.slashblade.util.ResourceLocationRaw;
 import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.tinkering.Category;
@@ -16,16 +17,16 @@ public class ItemSlashBladeTIC extends SlashBladeCore {
 	  public ItemSlashBladeTIC() {
 	    super(PartMaterialType.handle(TinkerTools.toolRod),
 	         PartMaterialType.head(TinkerTools.swordBlade),
-	         PartMaterialType.extra(TinkerTools.wideGuard));
+	         PartMaterialType.extra(ItemLoader.wrapper));
 
 	    addCategory(Category.WEAPON);
 	  }
 
-	  @Override
-	public ResourceLocationRaw getModel() {
-		// TODO Auto-generated method stub
-		return new ResourceLocationRaw("flammpfeil.slashblade","model/blade_white.obj");
-	}
+//	  @Override
+//	public ResourceLocationRaw getModel() {
+//		// TODO Auto-generated method stub
+//		return new ResourceLocationRaw("flammpfeil.slashblade","model/blade_white.obj");
+//	}
 	  
 	  @Override
 	  public float damagePotential() {

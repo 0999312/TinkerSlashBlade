@@ -1,4 +1,4 @@
-package cn.mmf.slashblade_tic;
+package cn.mmf.slashblade_tic.client;
 
 import cn.mmf.slashblade_tic.client.model.BladeSpecialRender;
 import cn.mmf.slashblade_tic.client.model.NullTE;
