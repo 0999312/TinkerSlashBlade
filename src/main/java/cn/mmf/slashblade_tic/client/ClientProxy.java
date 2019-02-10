@@ -3,9 +3,6 @@ package cn.mmf.slashblade_tic.client;
 import org.lwjgl.input.Keyboard;
 
 import cn.mmf.slashblade_tic.CommonProxy;
-import cn.mmf.slashblade_tic.client.model.BladeModelManager;
-import cn.mmf.slashblade_tic.client.model.BladeSpecialRender;
-import cn.mmf.slashblade_tic.client.model.NullTE;
 import cn.mmf.slashblade_tic.item.ItemLoader;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.settings.KeyBinding;
@@ -26,9 +23,7 @@ public class ClientProxy extends CommonProxy {
 	    public void preInit(FMLPreInitializationEvent event)
 	    {
 	        super.preInit(event);
-	        MinecraftForge.EVENT_BUS.register(BladeModelManager.getInstance());
-	      
-	        ClientRegistry.bindTileEntitySpecialRenderer(NullTE.class, new BladeSpecialRender());
+
 	    }
 
 

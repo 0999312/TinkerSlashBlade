@@ -46,11 +46,12 @@ public class ItemLoader {
 	     sb = (ItemSlashBladeTIC) new ItemSlashBladeTIC().setUnlocalizedName("flammpfeil.slashblade.test");
 	     register(sb);
 		TinkerSlashBladeRegistry.registerToolCrafting(sb);		
-//		ModelReg.registerModel();
+		registerRender();
 	}
 	@SideOnly(Side.CLIENT)
 	public static void registerRender() {
 		ModelReg.Slashblade_model(wrapper);
+		ModelReg.Slashblade_model(sb);
 	}
    
     
