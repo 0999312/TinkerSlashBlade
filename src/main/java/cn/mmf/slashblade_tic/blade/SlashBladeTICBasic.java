@@ -207,6 +207,36 @@ public abstract class SlashBladeTICBasic extends ItemSlashBlade implements ITink
     }
 
     @Nonnull
+    public ItemStack buildItemFromStacks(NonNullList<ItemStack> stacks) {
+      long itemCount = stacks.stream().filter(stack -> !stack.isEmpty()).count();
+      List<Material> materials = new ArrayList<>(stacks.size());
+
+      if(itemCount != requiredComponents.length) {
+        return ItemStack.EMPTY;
+      }
+
+      // not a valid part arrangement for this tool
+      for(int i = 0; i < itemCount; i++) {
+        if(!validComponent(i, stacks.get(i))) {
+          return ItemStack.EMPTY;
+        }
+
+        materials.add(TinkerUtil.getMaterialFromStack(stacks.get(i)));
+      }
+
+      return buildItem(materials);
+    }
+    /* Building the Item */
+    public boolean validComponent(int slot, ItemStack stack) {
+      if(slot > requiredComponents.length || slot < 0) {
+        return false;
+      }
+
+      return requiredComponents[slot].isValid(stack);
+    }
+
+    
+    @Nonnull
     public ItemStack buildItemForRenderingInGui() {
       List<Material> materials = IntStream.range(0, getRequiredComponents().size())
                                           .mapToObj(this::getMaterialForPartForGuiRendering)

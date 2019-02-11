@@ -1,6 +1,6 @@
 package cn.mmf.slashblade_tic.client;
 
-import cn.mmf.slashblade_tic.item.ItemLoader;
+import cn.mmf.slashblade_tic.item.RegisterLoader;
 import mods.flammpfeil.slashblade.tileentity.DummyTileEntity;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;

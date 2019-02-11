@@ -13,6 +13,7 @@ import gnu.trove.set.hash.TLinkedHashSet;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import slimeknights.tconstruct.library.TinkerAPIException;
+import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.tinkering.PartMaterialType;
 import slimeknights.tconstruct.library.tools.IPattern;
@@ -57,15 +58,7 @@ public class TinkerSlashBladeRegistry {
 	   * Used for the sharpening kit. Allows to register a toolpart that is not part of a tool.
 	   */
 	  public static void registerToolPart(IToolPart part) {
-	    toolParts.add(part);
-	    if(part instanceof Item) {
-	      if(part.canBeCrafted()) {
-	        addPatternForItem((Item) part);
-	      }
-	      if(part.canBeCasted()) {
-	        addCastForItem((Item) part);
-	      }
-	    }
+	    TinkerRegistry.registerToolPart(part);
 	  }
 
 	  public static Set<IToolPart> getToolParts() {

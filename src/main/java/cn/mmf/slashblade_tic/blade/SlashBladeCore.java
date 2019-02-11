@@ -311,4 +311,10 @@ public class SlashBladeCore extends SlashBladeTICBasic implements IToolStationDi
 	    return data;
 
 	  	}
+
+	  /** Returns info about the Tool. Displayed in the tool stations etc. */
+	  public String getLocalizedDescription() {
+	    return Util.translate(getUnlocalizedName() + ".desc");
+	  }
+	  
 	  }

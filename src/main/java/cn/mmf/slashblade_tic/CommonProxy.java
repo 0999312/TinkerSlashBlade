@@ -1,7 +1,7 @@
 package cn.mmf.slashblade_tic;
 
 import cn.mmf.slashblade_tic.blade.TinkerSlashBladeEvent;
-import cn.mmf.slashblade_tic.item.ItemLoader;
+import cn.mmf.slashblade_tic.item.RegisterLoader;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -16,7 +16,8 @@ import slimeknights.tconstruct.tools.TinkerTools;
 public class CommonProxy {
 	public void preInit(FMLPreInitializationEvent event)
 	{
-		new ItemLoader(event);
+		new RegisterLoader(event);
+		new NetHandler();
 	}
 	
     public void init(FMLInitializationEvent event)

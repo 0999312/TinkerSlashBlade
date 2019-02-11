@@ -42,7 +42,6 @@ import slimeknights.tconstruct.library.tinkering.PartMaterialType;
 import slimeknights.tconstruct.library.tinkering.TinkersItem;
 import slimeknights.tconstruct.library.tools.IToolPart;
 import slimeknights.tconstruct.library.tools.Pattern;
-import slimeknights.tconstruct.library.tools.ToolCore;
 import slimeknights.tconstruct.library.traits.AbstractTrait;
 import slimeknights.tconstruct.library.traits.ITrait;
 import slimeknights.tconstruct.library.utils.ListUtil;
@@ -93,10 +92,10 @@ public final class SlashBladeBuilder {
     input = ItemStackList.of(stacks);
 
     for(Item item : possibleTools) {
-      if(!(item instanceof ToolCore)) {
+      if(!(item instanceof SlashBladeCore)) {
         continue;
       }
-      ItemStack output = ((ToolCore) item).buildItemFromStacks(input);
+      ItemStack output = ((SlashBladeCore) item).buildItemFromStacks(input);
       if(!output.isEmpty()) {
         // name the item
         if(name != null && !name.isEmpty()) {
@@ -372,10 +371,10 @@ public final class SlashBladeBuilder {
       } catch(TinkerGuiException e) {
         // try again with more modifiers, in case something modified them (tinkers tool leveling)
         // ensure that free modifiers are present (
-        if(ToolHelper.getFreeModifiers(copyToCheck) < ToolCore.DEFAULT_MODIFIERS) {
+        if(ToolHelper.getFreeModifiers(copyToCheck) < SlashBladeCore.DEFAULT_MODIFIERS) {
           ItemStack copyWithModifiers = copyToCheck.copy();
           NBTTagCompound nbt = TagUtil.getToolTag(copyWithModifiers);
-          nbt.setInteger(Tags.FREE_MODIFIERS, ToolCore.DEFAULT_MODIFIERS);
+          nbt.setInteger(Tags.FREE_MODIFIERS, SlashBladeCore.DEFAULT_MODIFIERS);
           TagUtil.setToolTag(copyWithModifiers, nbt);
           canApply = mod.canApply(copyWithModifiers, copyWithModifiers);
         }

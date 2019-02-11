@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
 
-import cn.mmf.slashblade_tic.item.ItemLoader;
+import cn.mmf.slashblade_tic.item.RegisterLoader;
 import cn.mmf.slashblade_tic.util.TextureMixer;
 import mods.flammpfeil.slashblade.client.model.BladeModel;
 import mods.flammpfeil.slashblade.client.model.BladeModelManager;
@@ -23,8 +23,8 @@ public class ItemSlashBladeTIC extends SlashBladeCore {
 
 	  public ItemSlashBladeTIC() {
 	    super(PartMaterialType.handle(TinkerTools.toolRod),
-	         PartMaterialType.head(TinkerTools.swordBlade),
-	         PartMaterialType.extra(ItemLoader.wrapper));
+	         PartMaterialType.head(TinkerTools.largeSwordBlade),
+	         PartMaterialType.extra(RegisterLoader.wrapper));
 
 	    addCategory(Category.WEAPON);
 	  }
@@ -46,6 +46,7 @@ public class ItemSlashBladeTIC extends SlashBladeCore {
 	}
 
 	  
+	
 	  @Override
 	  public float damagePotential() {
 	    return 1.0f;

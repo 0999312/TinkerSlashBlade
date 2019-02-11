@@ -33,6 +33,7 @@ public class TextureMixer {
 	        BufferedImage buffImg = new BufferedImage(64, 128, BufferedImage.TYPE_4BYTE_ABGR);
 	        
 	        for(int i = 0; i<list.size();i++){
+	        	if( manager.getResource(list.get(i))!=null){
 	        	InputStream imageStream = manager.getResource(list.get(i)).getInputStream();
 	        	try
 	            {
@@ -42,6 +43,9 @@ public class TextureMixer {
 	            {
 	                IOUtils.closeQuietly(imageStream);
 	            }
+	        	}else{
+	        		imgs.add(new BufferedImage(64, 128, BufferedImage.TYPE_4BYTE_ABGR));
+	        	}
 	        }
 	        
 	        // 创建Graphics2D对象，用在底图对象上绘图

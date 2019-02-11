@@ -20,7 +20,6 @@ import slimeknights.tconstruct.library.materials.IMaterialStats;
 import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.tinkering.PartMaterialType;
 import slimeknights.tconstruct.library.tools.IToolPart;
-import slimeknights.tconstruct.library.tools.ToolCore;
 import slimeknights.tconstruct.library.traits.ITrait;
 import slimeknights.tconstruct.library.utils.TagUtil;
 import slimeknights.tconstruct.library.utils.Tags;
@@ -73,7 +72,6 @@ public class ItemSlashBladeSaya extends ItemSlashBlade implements IToolPart {
 
       arg2.addAll(getAddedByInfo(material));
     }
-	
 
   public boolean checkMissingMaterialTooltip(ItemStack stack, List<String> tooltip) {
 	    return checkMissingMaterialTooltip(stack, tooltip, null);
@@ -260,6 +258,12 @@ public class ItemSlashBladeSaya extends ItemSlashBlade implements IToolPart {
       return stack;
     }
     
+    @Override
+    public ResourceLocationRaw getModel() {
+    	// TODO Auto-generated method stub
+    	return new ResourceLocationRaw("flammpfeil.slashblade","model/blade_sheath.obj");
+    }
+    
 	@Override
 	public int getCost() {
 		// TODO Auto-generated method stub
@@ -278,12 +282,19 @@ public class ItemSlashBladeSaya extends ItemSlashBlade implements IToolPart {
 
 	    return false;
 	  }
-	@Override
-	public boolean hasUseForStat(String stat) {
-		// TODO Auto-generated method stub
-		return true;
-	}
 
+	  @Override
+	  public boolean hasUseForStat(String stat) {
+		  for(SlashBladeCore tool : TinkerSlashBladeRegistry.getTools()) {
+	      for(PartMaterialType pmt : tool.getRequiredComponents()) {
+	        if(pmt.isValidItem(this) && pmt.usesStat(stat)) {
+	          return true;
+	        }
+	      }
+	    }
+
+	    return false;
+	  }
 	@Override
 	public boolean canBeCasted() {
 		// TODO Auto-generated method stub

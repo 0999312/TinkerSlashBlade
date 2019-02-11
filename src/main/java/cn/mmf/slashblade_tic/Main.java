@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 @Mod(modid = Main.MODID, name = Main.NAME, version = Main.VERSION,dependencies="required-after:forge@[14.23.4.2768,);required-after:flammpfeil.slashblade@[mc1.12-r10,);required-after:tconstruct;")
 public class Main
 {
-    public static final String MODID = "examplemod";
+    public static final String MODID = "slashbladetic";
     public static final String NAME = "Example Mod";
     public static final String VERSION = "1.0";
 
