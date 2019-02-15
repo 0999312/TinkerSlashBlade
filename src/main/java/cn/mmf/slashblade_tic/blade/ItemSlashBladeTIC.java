@@ -2,14 +2,22 @@ package cn.mmf.slashblade_tic.blade;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 
 import cn.mmf.slashblade_tic.item.RegisterLoader;
 import cn.mmf.slashblade_tic.util.TextureMixer;
-import mods.flammpfeil.slashblade.client.model.BladeModel;
-import mods.flammpfeil.slashblade.client.model.BladeModelManager;
 import mods.flammpfeil.slashblade.util.ResourceLocationRaw;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.tinkering.Category;
 import slimeknights.tconstruct.library.tinkering.PartMaterialType;
@@ -22,24 +30,28 @@ public class ItemSlashBladeTIC extends SlashBladeCore {
 	public static final float DURABILITY_MODIFIER = 1.1f;
 
 	  public ItemSlashBladeTIC() {
-	    super(PartMaterialType.handle(TinkerTools.toolRod),
-	         PartMaterialType.head(TinkerTools.largeSwordBlade),
+	    super(PartMaterialType.handle(TinkerTools.toughToolRod),
+	         PartMaterialType.head(TinkerTools.swordBlade),
 	         PartMaterialType.extra(RegisterLoader.wrapper));
 
 	    addCategory(Category.WEAPON);
 	  }
+	  
+		private final Cache<BufferedImage, ResourceLocationRaw> texCache = CacheBuilder.newBuilder()
+				.maximumSize(500L)
+				.expireAfterWrite(10L, TimeUnit.MINUTES)
+				.build();  
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public ResourceLocationRaw getModelTexture(ItemStack par1ItemStack){
+		TextureMixer texture_mixer = new TextureMixer();
 		List<ResourceLocationRaw> list = getMuitlModelTexture(par1ItemStack);
-		BufferedImage image = null;
 		ResourceLocationRaw res = new ResourceLocationRaw("flammpfeil.slashblade","model/blade.png");
 		try {
-			image = TextureMixer.TextureMix(list, 1.0F);
-			res = TextureMixer.generateTexture(image);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			BufferedImage image = texture_mixer.TextureMix(list, 1.0F);
+			res = texCache.get(image, () -> texture_mixer.generateTexture(image));
+		} catch (IOException | ExecutionException e) {
 		}
 				
 		return res;
@@ -70,4 +82,5 @@ public class ItemSlashBladeTIC extends SlashBladeCore {
 	    data.durability *= DURABILITY_MODIFIER;
 	    return data;
 	  }
+	  
 }

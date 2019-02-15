@@ -15,6 +15,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
 
 import cn.mmf.slashblade_tic.util.SlashBladeBuilder;
+import cn.mmf.slashblade_tic.util.SlashBladeHelper;
 import gnu.trove.set.hash.THashSet;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.util.ResourceLocationRaw;
@@ -27,6 +28,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
@@ -109,7 +111,9 @@ public abstract class SlashBladeTICBasic extends ItemSlashBlade implements ITink
 	    super.setDamage(stack, Math.min(max, damage));
 
 	    if(getDamage(stack) == max) {
-	      ToolHelper.breakTool(stack, null);
+	      SlashBladeHelper.breakTool(stack, null);
+	      NBTTagCompound nbt = ItemSlashBlade.getItemTagCompound(stack);
+		  ItemSlashBlade.IsBroken.set(nbt, true);
 	    }
 	  }
 
@@ -120,11 +124,13 @@ public abstract class SlashBladeTICBasic extends ItemSlashBlade implements ITink
 
 	  @Override
 	  public boolean showDurabilityBar(ItemStack stack) {
-	    return super.showDurabilityBar(stack) && !ToolHelper.isBroken(stack);
+	    return false;
 	  }
 	
     public final NBTTagCompound buildTag(List<Material> materials) {
-      return buildTagData(materials).get();
+      NBTTagCompound nbt = buildTagData(materials).get();
+      
+      return nbt;
     }
 
     protected abstract ToolNBT buildTagData(List<Material> materials);
@@ -138,7 +144,8 @@ public abstract class SlashBladeTICBasic extends ItemSlashBlade implements ITink
     public ItemStack buildItem(List<Material> materials) {
       ItemStack tool = new ItemStack(this);
       tool.setTagCompound(buildItemNBT(materials));
-
+      float attack = ToolHelper.getActualDamage(tool, Minecraft.getMinecraft().player);
+      ItemSlashBlade.setBaseAttackModifier(buildItemNBT(materials), attack);
       return tool;
     }
 
@@ -157,7 +164,8 @@ public abstract class SlashBladeTICBasic extends ItemSlashBlade implements ITink
       basetag.setTag(Tags.TOOL_DATA, toolTag);
       // copy of the original tool data
       basetag.setTag(Tags.TOOL_DATA_ORIG, toolTag.copy());
-
+      
+     
       // save categories on the tool
       TagUtil.setCategories(basetag, getCategories());
 
@@ -304,7 +312,7 @@ public abstract class SlashBladeTICBasic extends ItemSlashBlade implements ITink
     @Nonnull
     @Override
     public ItemStack repair(ItemStack repairable, NonNullList<ItemStack> repairItems) {
-      if(repairable.getItemDamage() == 0 && !ToolHelper.isBroken(repairable)) {
+      if(repairable.getItemDamage() == 0 && !SlashBladeHelper.isBroken(repairable)) {
         // undamaged and not broken - no need to repair
         return ItemStack.EMPTY;
       }
@@ -362,7 +370,7 @@ public abstract class SlashBladeTICBasic extends ItemSlashBlade implements ITink
           break;
         }
 
-        ToolHelper.repairTool(item, calculateRepair(item, amount));
+        SlashBladeHelper.repairTool(item, calculateRepair(item, amount));
         // save that we repaired it :I
         NBTTagCompound tag = TagUtil.getExtraTag(item);
         tag.setInteger(Tags.REPAIR_COUNT, tag.getInteger(Tags.REPAIR_COUNT) + 1);

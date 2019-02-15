@@ -8,6 +8,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.StringUtils;
 import net.minecraft.world.WorldServer;
@@ -23,6 +24,8 @@ import slimeknights.tconstruct.library.tinkering.IModifyable;
 import slimeknights.tconstruct.library.tinkering.IRepairable;
 import slimeknights.tconstruct.library.tinkering.PartMaterialType;
 import slimeknights.tconstruct.library.utils.TagUtil;
+import slimeknights.tconstruct.library.utils.Tags;
+import slimeknights.tconstruct.library.utils.ToolHelper;
 import slimeknights.tconstruct.tools.common.inventory.ContainerTinkerStation;
 
 import java.util.List;
@@ -36,6 +39,7 @@ import cn.mmf.slashblade_tic.client.gui.GuiBladeStation;
 import cn.mmf.slashblade_tic.packet.BladeStationSelectionPacket;
 import cn.mmf.slashblade_tic.packet.BladeStationTextPacket;
 import cn.mmf.slashblade_tic.util.SlashBladeBuilder;
+import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 
 // also tool forge
 public class ContainerBladeStation extends ContainerTinkerStation<TileBladeStation> {
@@ -245,7 +249,7 @@ public class ContainerBladeStation extends ContainerTinkerStation<TileBladeStati
     if(repairable.isEmpty() || !(repairable.getItem() instanceof IRepairable)) {
       return ItemStack.EMPTY;
     }
-
+    NBTTagCompound nbt = ItemSlashBlade.getItemTagCompound(repairable);
     return SlashBladeBuilder.tryRepairTool(getInputs(), repairable, remove);
   }
 
@@ -273,8 +277,13 @@ public class ContainerBladeStation extends ContainerTinkerStation<TileBladeStati
     }
 
     ItemStack result = SlashBladeBuilder.tryModifyTool(getInputs(), modifyable, remove);
+    
     if(!result.isEmpty()) {
       TinkerCraftingEvent.ToolModifyEvent.fireEvent(result, player, modifyable.copy());
+      NBTTagCompound nbt = ItemSlashBlade.getItemTagCompound(result);
+      float attack = ToolHelper.getActualDamage(result, Minecraft.getMinecraft().player);
+      ItemSlashBlade.setBaseAttackModifier(nbt, attack);
+      ItemSlashBlade.RepairCount.set(nbt, ItemSlashBlade.RepairCount.get(nbt)+1);
     }
     return result;
   }

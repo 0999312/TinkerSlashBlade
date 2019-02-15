@@ -14,7 +14,7 @@ import slimeknights.tconstruct.tools.common.tileentity.TileToolStation;
 public class TileBladeStation extends TileToolStation {
 
     public TileBladeStation() {
-        inventoryTitle = "gui.armorstation.name";
+        inventoryTitle = "gui.bladestation.name";
     }
 
     @Override

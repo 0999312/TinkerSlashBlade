@@ -8,8 +8,10 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import slimeknights.tconstruct.library.events.TinkerToolEvent;
 import slimeknights.tconstruct.library.events.TinkerEvent.OnItemBuilding;
 import slimeknights.tconstruct.library.events.TinkerEvent.OnToolPartReplacement;
+import slimeknights.tconstruct.library.events.TinkerToolEvent.OnRepair;
 import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.tinkering.TinkersItem;
 
@@ -64,4 +66,20 @@ public abstract class TinkerSlashBladeEvent extends Event {
       return !MinecraftForge.EVENT_BUS.post(new OnToolPartReplacement(replacementParts, toolStack));
     }
   }
+  
+
+  public static class OnRepair extends TinkerSlashBladeEvent {
+
+    public final int amount;
+
+    public OnRepair(ItemStack itemStack, int amount) {
+      this.amount = amount;
+    }
+
+    public static boolean fireEvent(ItemStack itemStack, int amount) {
+      OnRepair event = new OnRepair(itemStack, amount);
+      return !MinecraftForge.EVENT_BUS.post(event);
+    }
+  }
+  
 }

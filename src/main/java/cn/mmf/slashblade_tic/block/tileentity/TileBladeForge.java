@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileBladeForge extends TileBladeStation {
 
     public TileBladeForge() {
-        inventoryTitle = "gui.armorforge.name";
+        inventoryTitle = "gui.bladeforge.name";
     }
 
     @Override

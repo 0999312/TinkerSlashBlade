@@ -9,7 +9,8 @@ import cn.mmf.slashblade_tic.blade.TinkerSlashBladeEvent;
 import cn.mmf.slashblade_tic.blade.TinkerSlashBladeRegistry;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
-
+import mods.flammpfeil.slashblade.item.ItemSlashBlade;
+import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -97,7 +98,6 @@ public final class SlashBladeBuilder {
       }
       ItemStack output = ((SlashBladeCore) item).buildItemFromStacks(input);
       if(!output.isEmpty()) {
-        // name the item
         if(name != null && !name.isEmpty()) {
           output.setStackDisplayName(name);
         }
@@ -261,6 +261,7 @@ public final class SlashBladeBuilder {
         NBTTagCompound root = TagUtil.getTagSafe(copy);
         rebuildTool(root, (SlashBladeTICBasic) copy.getItem());
         copy.setTagCompound(root);
+
       }
       return copy;
     }
@@ -550,23 +551,24 @@ public final class SlashBladeBuilder {
       }
     }
 
+   
     // remaining info, get updated toolTag
     toolTag = TagUtil.getToolTag(rootNBT);
     // adjust free modifiers
     int freeModifiers = toolTag.getInteger(Tags.FREE_MODIFIERS);
     freeModifiers -= TagUtil.getBaseModifiersUsed(rootNBT);
     toolTag.setInteger(Tags.FREE_MODIFIERS, Math.max(0, freeModifiers));
-
+   
     // broken?
     if(broken) {
       toolTag.setBoolean(Tags.BROKEN, true);
     }
 
     TagUtil.setToolTag(rootNBT, toolTag);
-
     if(freeModifiers < 0) {
       throw new TinkerGuiException(Util.translateFormatted("gui.error.not_enough_modifiers", -freeModifiers));
     }
+    
   }
 
   public static short getEnchantmentLevel(NBTTagCompound rootTag, Enchantment enchantment) {

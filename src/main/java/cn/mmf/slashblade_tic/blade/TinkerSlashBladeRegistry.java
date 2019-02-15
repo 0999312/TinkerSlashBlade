@@ -61,9 +61,6 @@ public class TinkerSlashBladeRegistry {
 	    TinkerRegistry.registerToolPart(part);
 	  }
 
-	  public static Set<IToolPart> getToolParts() {
-	    return ImmutableSet.copyOf(toolParts);
-	  }
 
 	  /** Adds a tool to the Crafting UI of both the Tool Station as well as the Tool Forge */
 	  public static void registerToolCrafting(SlashBladeCore tool) {

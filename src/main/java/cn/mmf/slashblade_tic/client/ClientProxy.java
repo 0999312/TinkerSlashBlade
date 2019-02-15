@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
+import slimeknights.tconstruct.common.ModelRegisterUtil;
 import slimeknights.tconstruct.library.TinkerRegistryClient;
 import slimeknights.tconstruct.library.client.ToolBuildGuiInfo;
 import slimeknights.tconstruct.tools.melee.TinkerMeleeWeapons;
@@ -36,6 +37,7 @@ public class ClientProxy extends CommonProxy {
 	    public void init(FMLInitializationEvent event)
 	    {
 	        super.init(event);
+
 	        registerToolBuildInfo();
 	    }
 

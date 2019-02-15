@@ -3,6 +3,7 @@ package cn.mmf.slashblade_tic;
 import cn.mmf.slashblade_tic.blade.TinkerSlashBladeEvent;
 import cn.mmf.slashblade_tic.item.RegisterLoader;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -29,6 +30,7 @@ public class CommonProxy {
     public void postInit(FMLPostInitializationEvent event)
     {
     	
+
     }
 
 }
