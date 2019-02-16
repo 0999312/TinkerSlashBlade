@@ -51,12 +51,14 @@ public class SlashBladeCore extends SlashBladeTICBasic implements IToolStationDi
         this.setCreativeTab(TinkerRegistry.tabTools);
 	}
 
-		public List<ResourceLocationRaw> getMuitlModelTexture(ItemStack blade) {
-			List<Material> materials = TinkerUtil.getMaterialsFromTagList(TagUtil.getBaseMaterialsTagList(blade));
+		public List<ResourceLocationRaw> getMuitlModelTexture() {
 			List<ResourceLocationRaw> res = new ArrayList<ResourceLocationRaw>();
-			res.add(new ResourceLocationRaw("flammpfeil.slashblade","model/handle/" + materials.get(0).identifier + "_handle.png"));
-			res.add(new ResourceLocationRaw("flammpfeil.slashblade","model/blade/" + materials.get(1).identifier + "_blade.png"));
-			res.add(new ResourceLocationRaw("flammpfeil.slashblade","model/sheath/" + materials.get(2).identifier + "_saya.png"));
+			res.add(new ResourceLocationRaw("flammpfeil.slashblade","model/handle/handle.png"));
+			res.add(new ResourceLocationRaw("flammpfeil.slashblade","model/blade/blade.png"));
+			res.add(new ResourceLocationRaw("flammpfeil.slashblade","model/sheath/saya.png"));
+			res.add(new ResourceLocationRaw("flammpfeil.slashblade","model/handle/handle_color.png"));
+			res.add(new ResourceLocationRaw("flammpfeil.slashblade","model/blade/blade_color.png"));
+			res.add(new ResourceLocationRaw("flammpfeil.slashblade","model/sheath/saya_color.png"));
 			return res;
 		}
 		

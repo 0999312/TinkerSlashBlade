@@ -1,7 +1,15 @@
 package cn.mmf.slashblade_tic.item;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import javax.imageio.ImageIO;
+
+import org.apache.commons.io.IOUtils;
 
 import cn.mmf.slashblade_tic.Main;
 import cn.mmf.slashblade_tic.blade.ItemSlashBladeTIC;
@@ -13,10 +21,14 @@ import cn.mmf.slashblade_tic.block.BlockBladeStation;
 import cn.mmf.slashblade_tic.block.tileentity.TileBladeForge;
 import cn.mmf.slashblade_tic.block.tileentity.TileBladeStation;
 import cn.mmf.slashblade_tic.client.ModelReg;
+import cn.mmf.slashblade_tic.util.TextureMixer;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
+import mods.flammpfeil.slashblade.util.ResourceLocationRaw;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
@@ -78,7 +90,7 @@ public class RegisterLoader {
 	     register(sb);
 	    TinkerSlashBladeRegistry.registerTool(sb);
 		TinkerSlashBladeRegistry.registerToolCrafting(sb);	
-		
+		 
 		for (final PartMaterialType pmt: sb.getRequiredComponents()) {
 			if (pmt.getPossibleParts().contains(wrapper)) {
 				TinkerRegistry.registerStencilTableCrafting(Pattern.setTagForPart(new ItemStack(TinkerTools.pattern), wrapper));
@@ -87,9 +99,40 @@ public class RegisterLoader {
 
 	}
 	@SideOnly(Side.CLIENT)
+	public static void RegisterColor() throws IOException {
+		TextureMixer texture_mixer = new TextureMixer();
+		List<ResourceLocationRaw> list_model = sb.getMuitlModelTexture();
+		IResourceManager manager = Minecraft.getMinecraft().getResourceManager();
+		   BufferedImage img = null,img2 = null;
+		   InputStream imageStream,imageStream2;
+	        for(int i = 0; i<list_model.size()-3;i++){
+	        	imageStream = manager.getResource(list_model.get(i)).getInputStream();
+	        	imageStream2 = manager.getResource(list_model.get(i+3)).getInputStream();
+	        	try
+	            {
+	        		img=ImageIO.read(imageStream);
+	        		img2=ImageIO.read(imageStream2);
+	            }
+	            finally
+	            {
+	                IOUtils.closeQuietly(imageStream);
+	        	}
+	        }
+		for(Material mat : TinkerRegistry.getAllMaterials()){
+			
+			texture_mixer.addColor(mat.renderInfo.getVertexColor(), img, img2);
+		}
+	}
+	
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public static void RegisterModel(ModelRegistryEvent event) {
 		ModelRegisterUtil.registerPartModel(RegisterLoader.wrapper);
+		try {
+			RegisterColor();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		ModelReg.Slashblade_model(sb);
 		ModelReg.registerRender(bladestation);
 		ModelReg.registerRender(bladeforge);
@@ -109,12 +152,7 @@ public class RegisterLoader {
 	@SubscribeEvent
     public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
         IForgeRegistry<IRecipe> registry = event.getRegistry();
-        for(ItemStack item : TinkerRegistry.getStencilTableCrafting()){
-        
-        	if( Pattern.getPartFromTag(item)==wrapper){
-        		System.out.println("(OMO):难道你真的叛变了吗？！");
-        	}
-        	}
+
         registry.register(new ShapelessOreRecipe(new ResourceLocation(Main.MODID,"blade_station"), bladestation, new Object[]{
         		SlashBlade.bladeWood,TinkerTools.toolTables
         }).setRegistryName(new ResourceLocation(Main.MODID,"blade_station")));
