@@ -112,17 +112,16 @@ public class RegisterLoader {
 	            {
 	        		img=ImageIO.read(imageStream);
 	        		img2=ImageIO.read(imageStream2);
-	        		for(Material mat : TinkerRegistry.getAllMaterials()){
-	        			texture_mixer.addColor(mat.renderInfo.getVertexColor(), img, img2);
-	        		}
 	            }
 	            finally
 	            {
 	                IOUtils.closeQuietly(imageStream);
-	                IOUtils.closeQuietly(imageStream2);
 	        	}
 	        }
-
+		for(Material mat : TinkerRegistry.getAllMaterials()){
+			
+			texture_mixer.addColor(mat.renderInfo.getVertexColor(), img, img2);
+		}
 	}
 	
 	@SideOnly(Side.CLIENT)
