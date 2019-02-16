@@ -52,15 +52,17 @@ public class TextureMixer {
 	        	imageStream2 = manager.getResource(list.get(i+3)).getInputStream();
 	        	try
 	            {
-	        		color = materials.get(i).renderInfo.getVertexColor();
+	        		color = 0X449988;
 	        		BufferedImage img1=ImageIO.read(imageStream);
 	        		BufferedImage img2=ImageIO.read(imageStream2);
 	        		img = useColor(color, img1, img2);
+	        		
 	        		imgs.add(img);
 	            }
 	            finally
 	            {
 	                IOUtils.closeQuietly(imageStream);
+	                IOUtils.closeQuietly(imageStream2);
 	        	}
 	        }
 		   return imgs;
@@ -84,7 +86,6 @@ public class TextureMixer {
 		   Graphics2D g2d1 = img_color.createGraphics();
 		   g2d1.setColor(new Color(RenderUtil.red(color), RenderUtil.green(color), RenderUtil.blue(color)));
 		   g2d1.dispose();
-		   System.out.println(color);
            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.5F));
 		   g2d.drawImage(img_color, 0, 0, null);
 		   g2d.dispose();
