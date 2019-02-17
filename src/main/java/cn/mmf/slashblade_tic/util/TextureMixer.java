@@ -39,24 +39,26 @@ import slimeknights.tconstruct.library.materials.Material;
 
 @SideOnly(Side.CLIENT)
 public class TextureMixer {
-	   private static Map<Integer, BufferedImage> imageMap = Maps.newHashMap();
-	   
-	   public List<BufferedImage> Rendering(List<Material> materials,List<ResourceLocationRaw> list) throws IOException{
+	   private static Map<String, BufferedImage[]> imageMap = Maps.newHashMap();
+	   private static TextureMixer mixer = new TextureMixer();
+	   public static TextureMixer getInstance(){
+			return mixer;
+	   }
+
+	   public static List<BufferedImage> Rendering(List<Material> materials,List<ResourceLocationRaw> list) throws IOException{
 		   IResourceManager manager = Minecraft.getMinecraft().getResourceManager();
 		   List<BufferedImage> imgs = new ArrayList<BufferedImage>();
-		   int color ;
-		   BufferedImage img ;
+		   BufferedImage[] img ;
 		   InputStream imageStream,imageStream2;
 	        for(int i = 0; i<list.size()-3;i++){
+	        	System.out.println(i);
 	        	imageStream = manager.getResource(list.get(i)).getInputStream();
+	        	System.out.println(list.get(i).getResourcePath());
 	        	imageStream2 = manager.getResource(list.get(i+3)).getInputStream();
 	        	try
-	            {
-	        		color = materials.get(i).renderInfo.getVertexColor();
-	        		BufferedImage img1=ImageIO.read(imageStream);
-	        		BufferedImage img2=ImageIO.read(imageStream2);
-	        		img = useColor(color, img1, img2);
-	        		imgs.add(img);
+					{
+	        		img = mixer.useColor(materials.get(i).identifier);
+	        		imgs.add(img[i]);
 	            }
 	            finally
 	            {
@@ -65,57 +67,67 @@ public class TextureMixer {
 	        }
 		   return imgs;
 	   }
-	   
-	   public Map<Integer, BufferedImage> getColorMap() {
-		return imageMap;
-	   }
-	   
-	   public BufferedImage useColor(int color,BufferedImage img,BufferedImage img_color) {
-		   if(imageMap.get(color)!=null)
-			   return imageMap.get(color);
-		   
-		   img = addColor(color, img, img_color);
 
-		   return img;
+	   public static BufferedImage[] useColor(String idn) {
+		   if(imageMap.get(idn)!=null)
+			   return imageMap.get(idn);
+		   else
+		   	throw new NullPointerException("Mismatched!");
 	   }
-	   
-	   public static BufferedImage addColor(int color,BufferedImage img,BufferedImage img_color) {
-		   Graphics2D g2d = img.createGraphics();
-		   Graphics2D g2d1 = img_color.createGraphics();
-		   g2d1.setColor(new Color(RenderUtil.red(color), RenderUtil.green(color), RenderUtil.blue(color)));
-		   g2d1.dispose();
-		   System.out.println(color);
-           g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.5F));
-		   g2d.drawImage(img_color, 0, 0, null);
-		   g2d.dispose();
-		   imageMap.put(color, img);
-		   return img;
+
+	   public static void MapColor(String idn, BufferedImage[] dest){
+	   		imageMap.put(idn, dest);
 	   }
-	   
-	   public BufferedImage TextureMix(List<BufferedImage> imgs,float alpha) {
-	        BufferedImage buffImg = new BufferedImage(64, 128, BufferedImage.TYPE_4BYTE_ABGR);
-            Graphics2D g2d = buffImg.createGraphics();  
-            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.DST_OVER, alpha));
-	        g2d.drawImage(imgs.get(0), 0, 0, imgs.get(0).getWidth(), imgs.get(0).getHeight(), null);
-	        g2d.drawImage(imgs.get(1), 0, 64, imgs.get(1).getWidth(), imgs.get(1).getHeight(), null);
-	        g2d.drawImage(imgs.get(2), 0, 96, imgs.get(2).getWidth(), imgs.get(2).getHeight(), null);
-	        g2d.dispose();
-	        return buffImg;
-	    }
 
-		private final Cache<BufferedImage, ResourceLocation> texCache = CacheBuilder.newBuilder()
-				.maximumSize(500L)
-				.expireAfterWrite(10L, TimeUnit.MINUTES)
-				.build();
-	 private final Map<String, Integer> mapTextureCounters = Maps.<String, Integer>newHashMap();
+	public static BufferedImage addColor(int color,BufferedImage img,BufferedImage img_color) {
+		Graphics2D g2d = img.createGraphics();
+		System.out.println(color);
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.6F));
+		g2d.drawImage(img_color, 0, 0, null);
+		g2d.dispose();
 
-	   public ResourceLocationRaw  generateTexture(BufferedImage buffImg) throws ExecutionException {
-		   ResourceLocation res = texCache.get(buffImg,()-> getMixTextureLocation("blade_texture", new MixTexture(buffImg)));
-		   ResourceLocationRaw res1 = new ResourceLocationRaw(res.getResourceDomain(), res.getResourcePath());
+		return img;
+	}
+
+	public static BufferedImage getOverlay(int color, BufferedImage img2, BufferedImage img_color){
+	   	BufferedImage img = new BufferedImage(img2.getWidth(), img2.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2d = img.createGraphics();
+		g2d.drawImage(img2, 0,0,null);
+		Graphics2D g2d1 = img_color.createGraphics();
+		g2d1.setPaint(new Color(color));
+		g2d1.fillRect(0,0,img_color.getWidth(), img_color.getHeight());
+		g2d1.dispose();
+		System.out.println(color);
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.6F));
+		g2d.drawImage(img_color, 0, 0, null);
+		g2d.dispose();
+		return img;
+	}
+
+	public BufferedImage TextureMix(List<BufferedImage> imgs,float alpha) {
+		BufferedImage buffImg = new BufferedImage(64, 128, BufferedImage.TYPE_4BYTE_ABGR);
+		Graphics2D g2d = buffImg.createGraphics();
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.DST_OVER, alpha));
+		g2d.drawImage(imgs.get(0), 0, 0, imgs.get(0).getWidth(), imgs.get(0).getHeight(), null);
+		g2d.drawImage(imgs.get(1), 0, 64, imgs.get(1).getWidth(), imgs.get(1).getHeight(), null);
+		g2d.drawImage(imgs.get(2), 0, 96, imgs.get(2).getWidth(), imgs.get(2).getHeight(), null);
+		g2d.finalize();
+		return buffImg;
+	}
+
+	private final Cache<BufferedImage, ResourceLocation> texCache = CacheBuilder.newBuilder()
+			.maximumSize(500L)
+			.expireAfterWrite(10L, TimeUnit.MINUTES)
+			.build();
+	private final Map<String, Integer> mapTextureCounters = Maps.<String, Integer>newHashMap();
+
+	public ResourceLocationRaw  generateTexture(BufferedImage buffImg) throws ExecutionException {
+		ResourceLocation res = texCache.get(buffImg,()-> getMixTextureLocation("blade_texture", new MixTexture(buffImg)));
+		ResourceLocationRaw res1 = new ResourceLocationRaw(res.getResourceDomain(), res.getResourcePath());
 		return res1;
 	    }
 	   public TextureMixer() {
-		// TODO Auto-generated constructor stub
+
 	   }
 	   
 	   public ResourceLocation getMixTextureLocation(String name, MixTexture texture)

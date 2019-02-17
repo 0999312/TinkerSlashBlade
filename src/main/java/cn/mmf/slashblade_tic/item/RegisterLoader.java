@@ -1,5 +1,6 @@
 package cn.mmf.slashblade_tic.item;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -100,27 +101,39 @@ public class RegisterLoader {
 	}
 	@SideOnly(Side.CLIENT)
 	public static void RegisterColor() throws IOException {
-		TextureMixer texture_mixer = new TextureMixer();
+		TextureMixer texture_mixer = TextureMixer.getInstance();
 		List<ResourceLocationRaw> list_model = sb.getMuitlModelTexture();
 		IResourceManager manager = Minecraft.getMinecraft().getResourceManager();
-		   BufferedImage img = null,img2 = null;
+		   BufferedImage[] img = new BufferedImage[3],img2 = new BufferedImage[3], altered = new BufferedImage[3], alteredbg = new BufferedImage[3];
+
 		   InputStream imageStream,imageStream2;
-	        for(int i = 0; i<list_model.size()-3;i++){
-	        	imageStream = manager.getResource(list_model.get(i)).getInputStream();
-	        	imageStream2 = manager.getResource(list_model.get(i+3)).getInputStream();
-	        	try
-	            {
-	        		img=ImageIO.read(imageStream);
-	        		img2=ImageIO.read(imageStream2);
-	            }
-	            finally
-	            {
-	                IOUtils.closeQuietly(imageStream);
-	        	}
-	        }
+		for(int i = 0; i<list_model.size()-3;i++){
+			imageStream = manager.getResource(list_model.get(i)).getInputStream();
+			imageStream2 = manager.getResource(list_model.get(i+3)).getInputStream();
+			try
+			{
+				img[i]=ImageIO.read(imageStream);
+				img2[i]=ImageIO.read(imageStream2);
+				alteredbg[i] = new BufferedImage(img[i].getWidth(), img[i].getHeight(), BufferedImage.TYPE_INT_ARGB);
+				Graphics2D g2dbg = alteredbg[i].createGraphics();
+				g2dbg.drawImage(img[i],0,0,null);
+				g2dbg.dispose();
+				altered[i] = new BufferedImage(img2[i].getWidth(), img2[i].getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+			}
+			finally
+			{
+				IOUtils.closeQuietly(imageStream);
+			}
+		}
+
 		for(Material mat : TinkerRegistry.getAllMaterials()){
-			
-			texture_mixer.addColor(mat.renderInfo.getVertexColor(), img, img2);
+			BufferedImage[] dest = new BufferedImage[3];
+			for (int i = 0; i < list_model.size()-3 ; i++){
+				dest[i] = TextureMixer.getOverlay(mat.renderInfo.getVertexColor(), alteredbg[i], altered[i]);
+			}
+			texture_mixer.MapColor(mat.identifier, dest);
+			System.out.println(mat.identifier);
 		}
 	}
 	
@@ -192,21 +205,6 @@ public class RegisterLoader {
         Item blockitem = new ItemBlock(item).setUnlocalizedName(item.getUnlocalizedName().substring(5));
         register(blockitem);
     }
-//    private static void registerStencil(IToolPart armorPart) {
-//    	System.out.println("|WO)");
-//        for(SlashBladeCore armorCore : TinkerSlashBladeRegistry.getTools()) {
-//        	System.out.println("|MO)");
-//            for(PartMaterialType partMaterialType : armorCore.getRequiredComponents()) {
-//            	System.out.println("(OMO) |WO)");
-//                if(partMaterialType.getPossibleParts().contains(armorPart)) {
-//                	System.out.println("(OMO):为什么只是看着");
-//                    
-//                	return;
-//                }
-//            }
-//        }
-//        
-//    }
     @SubscribeEvent (priority = EventPriority.LOW)
     public static void modelBake(ModelBakeEvent evt) {
         ToolClientEvents.replaceTableModel(new ModelResourceLocation(bladeforge.getRegistryName(), "inventory"), evt);

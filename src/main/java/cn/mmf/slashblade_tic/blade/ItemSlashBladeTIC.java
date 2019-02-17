@@ -21,6 +21,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import slimeknights.tconstruct.library.client.MaterialRenderInfo;
 import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.tinkering.Category;
 import slimeknights.tconstruct.library.tinkering.PartMaterialType;
@@ -40,15 +41,8 @@ public class ItemSlashBladeTIC extends SlashBladeCore {
 
 	    addCategory(Category.WEAPON);
 	  }
-	  
-	  @Override
-	public void addInformation(ItemStack stack, World worldIn, List tooltip, ITooltipFlag arg3) {
-		// TODO Auto-generated method stub
-		super.addInformation(stack, worldIn, tooltip, arg3);
-		tooltip.add(ItemSlashBlade.getItemTagCompound(stack).toString());
-	}
-	  
-		private final Cache<BufferedImage, ResourceLocationRaw> texCache = CacheBuilder.newBuilder()
+
+		private final Cache<List<Material>, ResourceLocationRaw> texCache = CacheBuilder.newBuilder()
 				.maximumSize(500L)
 				.expireAfterWrite(10L, TimeUnit.MINUTES)
 				.build();  
@@ -56,15 +50,18 @@ public class ItemSlashBladeTIC extends SlashBladeCore {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public ResourceLocationRaw getModelTexture(ItemStack par1ItemStack){
-		TextureMixer texture_mixer = new TextureMixer();
+		TextureMixer texture_mixer = TextureMixer.getInstance();
 		List<ResourceLocationRaw> list_model = getMuitlModelTexture();
 		List<Material> materials = TinkerUtil.getMaterialsFromTagList(TagUtil.getBaseMaterialsTagList(par1ItemStack));
+
 		ResourceLocationRaw res = new ResourceLocationRaw("flammpfeil.slashblade","model/blade.png");
 		try {
-			List<BufferedImage> list = texture_mixer.Rendering(materials, list_model);
-			BufferedImage image = texture_mixer.TextureMix(list, 1.0F);
-			res = texCache.get(image, () -> texture_mixer.generateTexture(image));
-		} catch (IOException | ExecutionException e) {
+			res = texCache.get(materials, () -> texture_mixer.generateTexture(
+					texture_mixer.TextureMix(
+							texture_mixer.Rendering(materials, list_model), 1.0F)
+					)
+				);
+		} catch (ExecutionException e) {
 		}
 				
 		return res;
