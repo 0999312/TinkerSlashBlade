@@ -51,9 +51,7 @@ public class TextureMixer {
 		   BufferedImage[] img ;
 		   InputStream imageStream,imageStream2;
 	        for(int i = 0; i<list.size()-3;i++){
-	        	System.out.println(i);
 	        	imageStream = manager.getResource(list.get(i)).getInputStream();
-	        	System.out.println(list.get(i).getResourcePath());
 	        	imageStream2 = manager.getResource(list.get(i+3)).getInputStream();
 	        	try
 					{
@@ -79,16 +77,6 @@ public class TextureMixer {
 	   		imageMap.put(idn, dest);
 	   }
 
-	public static BufferedImage addColor(int color,BufferedImage img,BufferedImage img_color) {
-		Graphics2D g2d = img.createGraphics();
-		System.out.println(color);
-		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.6F));
-		g2d.drawImage(img_color, 0, 0, null);
-		g2d.dispose();
-
-		return img;
-	}
-
 	public static BufferedImage getOverlay(int color, BufferedImage img2, BufferedImage img_color){
 	   	BufferedImage img = new BufferedImage(img2.getWidth(), img2.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2d = img.createGraphics();
@@ -96,11 +84,10 @@ public class TextureMixer {
 		Graphics2D g2d1 = img_color.createGraphics();
 		g2d1.setPaint(new Color(color));
 		g2d1.fillRect(0,0,img_color.getWidth(), img_color.getHeight());
-		g2d1.dispose();
-		System.out.println(color);
-		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.6F));
+		g2d1.finalize();
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.7F));
 		g2d.drawImage(img_color, 0, 0, null);
-		g2d.dispose();
+		g2d.finalize();
 		return img;
 	}
 

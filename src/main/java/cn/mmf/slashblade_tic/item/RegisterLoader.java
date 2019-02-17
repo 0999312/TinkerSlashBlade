@@ -205,6 +205,7 @@ public class RegisterLoader {
         Item blockitem = new ItemBlock(item).setUnlocalizedName(item.getUnlocalizedName().substring(5));
         register(blockitem);
     }
+
     @SubscribeEvent (priority = EventPriority.LOW)
     public static void modelBake(ModelBakeEvent evt) {
         ToolClientEvents.replaceTableModel(new ModelResourceLocation(bladeforge.getRegistryName(), "inventory"), evt);
