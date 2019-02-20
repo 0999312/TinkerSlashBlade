@@ -13,6 +13,10 @@
 
 package cn.mmf.slashblade_tic.client.gui;
 
+import java.util.Set;
+
+import cn.mmf.slashblade_tic.blade.SlashBladeCore;
+import cn.mmf.slashblade_tic.blade.TinkerSlashBladeRegistry;
 import cn.mmf.slashblade_tic.block.tileentity.TileBladeStation;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.math.BlockPos;
@@ -24,4 +28,9 @@ public class GuiBladeForge extends GuiBladeStation {
         super(player, world, pos, tile);
         metal();
     }
+    
+    public Set<SlashBladeCore> getBuildableItems() {
+        return TinkerSlashBladeRegistry.getToolForgeCrafting();
+      }
+
 }

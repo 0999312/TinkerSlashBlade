@@ -56,5 +56,16 @@ public class ClientProxy extends CommonProxy {
 	        info.addSlotPosition(33 + 20 - 5, 42 - 20 + 4); // blade
 	        info.addSlotPosition(33 - 2 - 1, 42 + 2); // guard
 	        TinkerSlashBladeRegistryClient.addToolBuilding(info);
-	        }
+	        
+	        SlashBladeBuildGuiInfo info2;
+
+	        // broadsword
+	        info2 = new SlashBladeBuildGuiInfo(RegisterLoader.sb_white);
+	        info2.addSlotPosition(33 - 20 - 1, 42 + 20); // handle
+	        info2.addSlotPosition(33 + 20 - 5, 42 - 20 + 4); // blade
+	        info2.addSlotPosition(33 - 2 - 1, 42 + 2); // guard
+	        TinkerSlashBladeRegistryClient.addToolBuilding(info2);
+	        
+	    }
+       
 }

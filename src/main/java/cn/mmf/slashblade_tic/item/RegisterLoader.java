@@ -14,6 +14,7 @@ import org.apache.commons.io.IOUtils;
 
 import cn.mmf.slashblade_tic.Main;
 import cn.mmf.slashblade_tic.blade.ItemSlashBladeTIC;
+import cn.mmf.slashblade_tic.blade.ItemSlashBladeTICWhite;
 import cn.mmf.slashblade_tic.blade.SlashBladeCore;
 import cn.mmf.slashblade_tic.blade.SlashBladeTICBasic;
 import cn.mmf.slashblade_tic.blade.TinkerSlashBladeRegistry;
@@ -72,8 +73,8 @@ import slimeknights.tconstruct.tools.common.TableRecipeFactory;
 
 @Mod.EventBusSubscriber(modid = Main.MODID)
 public class RegisterLoader {
-	public static BladePart wrapper;
-	public static ItemSlashBladeTIC sb;
+	public static BladePart wrapper,handle,blade;
+	public static SlashBladeCore sb,sb_white;
 	public static Block bladestation;
 	public static BlockBladeForge bladeforge;
 	public RegisterLoader(FMLPreInitializationEvent event) {
@@ -85,22 +86,40 @@ public class RegisterLoader {
 				 .setUnlocalizedName(Main.MODID+".slashblade.saya");
 		 register(wrapper);
 		 TinkerSlashBladeRegistry.registerToolPart(wrapper);
-
+		 blade = (BladePart) new BladePart(Material.VALUE_Ingot * 4)
+				 .setUnlocalizedName(Main.MODID+".slashblade.blade");
+		 register(blade);
+		 TinkerSlashBladeRegistry.registerToolPart(wrapper);
+		 handle = (BladePart) new BladePart(Material.VALUE_Ingot * 2)
+				 .setUnlocalizedName(Main.MODID+".slashblade.handle");
+		 register(handle);
+		 TinkerSlashBladeRegistry.registerToolPart(wrapper);
+		 TinkerSlashBladeRegistry.registerToolPart(blade);
+		 TinkerSlashBladeRegistry.registerToolPart(handle);
+		 
+		sb_white = (ItemSlashBladeTICWhite) new ItemSlashBladeTICWhite().setUnlocalizedName(Main.MODID+".slashblade.white");
+		 register(sb_white);
+		 TinkerSlashBladeRegistry.registerTool(sb_white);
+		 TinkerSlashBladeRegistry.registerToolCrafting(sb_white);
 		 
 	     sb = (ItemSlashBladeTIC) new ItemSlashBladeTIC().setUnlocalizedName(Main.MODID+".slashblade");
 	     register(sb);
 	    TinkerSlashBladeRegistry.registerTool(sb);
-		TinkerSlashBladeRegistry.registerToolCrafting(sb);	
-		 
-		for (final PartMaterialType pmt: sb.getRequiredComponents()) {
-			if (pmt.getPossibleParts().contains(wrapper)) {
-				TinkerRegistry.registerStencilTableCrafting(Pattern.setTagForPart(new ItemStack(TinkerTools.pattern), wrapper));
+		TinkerSlashBladeRegistry.registerToolForgeCrafting(sb);	
+
+		for(SlashBladeCore sb : TinkerSlashBladeRegistry.getTools()){
+			for (final PartMaterialType pmt: sb.getRequiredComponents()) {
+				if (pmt.getPossibleParts().contains(wrapper)) 
+					TinkerRegistry.registerStencilTableCrafting(Pattern.setTagForPart(new ItemStack(TinkerTools.pattern), wrapper));
+				if (pmt.getPossibleParts().contains(blade)) 
+					TinkerRegistry.registerStencilTableCrafting(Pattern.setTagForPart(new ItemStack(TinkerTools.pattern), blade));
+				if (pmt.getPossibleParts().contains(handle)) 
+					TinkerRegistry.registerStencilTableCrafting(Pattern.setTagForPart(new ItemStack(TinkerTools.pattern), handle));
 			}
 		}
-
 	}
 	@SideOnly(Side.CLIENT)
-	public static void RegisterColor() throws IOException {
+	public static void RegisterColor(SlashBladeCore sb,String name) throws IOException {
 		TextureMixer texture_mixer = TextureMixer.getInstance();
 		List<ResourceLocationRaw> list_model = sb.getMuitlModelTexture();
 		IResourceManager manager = Minecraft.getMinecraft().getResourceManager();
@@ -112,18 +131,16 @@ public class RegisterLoader {
 			imageStream2 = manager.getResource(list_model.get(i+3)).getInputStream();
 			try
 			{
-				img[i]=ImageIO.read(imageStream);
+				alteredbg[i]=ImageIO.read(imageStream);
 				img2[i]=ImageIO.read(imageStream2);
-				alteredbg[i] = new BufferedImage(img[i].getWidth(), img[i].getHeight(), BufferedImage.TYPE_INT_ARGB);
-				Graphics2D g2dbg = alteredbg[i].createGraphics();
-				g2dbg.drawImage(img[i],0,0,null);
-				g2dbg.dispose();
+				
 				altered[i] = new BufferedImage(img2[i].getWidth(), img2[i].getHeight(), BufferedImage.TYPE_INT_ARGB);
 
 			}
 			finally
 			{
 				IOUtils.closeQuietly(imageStream);
+				IOUtils.closeQuietly(imageStream2);
 			}
 		}
 
@@ -132,8 +149,7 @@ public class RegisterLoader {
 			for (int i = 0; i < list_model.size()-3 ; i++){
 				dest[i] = TextureMixer.getOverlay(mat.renderInfo.getVertexColor(), alteredbg[i], altered[i]);
 			}
-			texture_mixer.MapColor(mat.identifier, dest);
-			System.out.println(mat.identifier);
+			texture_mixer.MapColor(mat.identifier+"_"+name, dest);
 		}
 	}
 	
@@ -141,12 +157,16 @@ public class RegisterLoader {
 	@SubscribeEvent
 	public static void RegisterModel(ModelRegistryEvent event) {
 		ModelRegisterUtil.registerPartModel(RegisterLoader.wrapper);
+		ModelRegisterUtil.registerPartModel(RegisterLoader.handle);
+		ModelRegisterUtil.registerPartModel(RegisterLoader.blade);
 		try {
-			RegisterColor();
+			RegisterColor(sb,"slashblade");
+			RegisterColor(sb_white,"slashblade_white");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		ModelReg.Slashblade_model(sb);
+		ModelReg.Slashblade_model(sb_white);
 		ModelReg.registerRender(bladestation);
 		ModelReg.registerRender(bladeforge);
 	}

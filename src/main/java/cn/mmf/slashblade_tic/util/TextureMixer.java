@@ -45,7 +45,7 @@ public class TextureMixer {
 			return mixer;
 	   }
 
-	   public static List<BufferedImage> Rendering(List<Material> materials,List<ResourceLocationRaw> list) throws IOException{
+	   public static List<BufferedImage> Rendering(String name,List<Material> materials,List<ResourceLocationRaw> list) throws IOException{
 		   IResourceManager manager = Minecraft.getMinecraft().getResourceManager();
 		   List<BufferedImage> imgs = new ArrayList<BufferedImage>();
 		   BufferedImage[] img ;
@@ -55,12 +55,13 @@ public class TextureMixer {
 	        	imageStream2 = manager.getResource(list.get(i+3)).getInputStream();
 	        	try
 					{
-	        		img = mixer.useColor(materials.get(i).identifier);
+	        		img = mixer.useColor(materials.get(i).identifier+"_"+name);
 	        		imgs.add(img[i]);
 	            }
 	            finally
 	            {
 	                IOUtils.closeQuietly(imageStream);
+	                IOUtils.closeQuietly(imageStream2);
 	        	}
 	        }
 		   return imgs;
@@ -82,12 +83,19 @@ public class TextureMixer {
 		Graphics2D g2d = img.createGraphics();
 		g2d.drawImage(img2, 0,0,null);
 		Graphics2D g2d1 = img_color.createGraphics();
-		g2d1.setPaint(new Color(color));
+		g2d1.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC,1F));
+        Color color1 = new Color(color);
+        int red= color1.getRed()-12; if(red>255) red=255; if(red<0) red=0;
+        int green= color1.getGreen()-12; if(green>255) green=255; if(green<0) green=0;
+        int blue= color1.getBlue()-12; if(blue>255) blue=255; if(blue<0) blue=0;
+        Color color4 = new Color(red,green,blue);
+        g2d1.setColor(color4);
 		g2d1.fillRect(0,0,img_color.getWidth(), img_color.getHeight());
 		g2d1.finalize();
-		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.7F));
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP,0.45F));
 		g2d.drawImage(img_color, 0, 0, null);
 		g2d.finalize();
+		
 		return img;
 	}
 

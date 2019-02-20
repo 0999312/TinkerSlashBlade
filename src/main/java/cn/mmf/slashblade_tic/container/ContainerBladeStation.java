@@ -283,7 +283,7 @@ public class ContainerBladeStation extends ContainerTinkerStation<TileBladeStati
       NBTTagCompound nbt = ItemSlashBlade.getItemTagCompound(result);
       float attack = ToolHelper.getActualDamage(result, Minecraft.getMinecraft().player);
       ItemSlashBlade.setBaseAttackModifier(nbt, attack);
-      ItemSlashBlade.RepairCount.set(nbt, ItemSlashBlade.RepairCount.get(nbt)+1);
+
     }
     return result;
   }
