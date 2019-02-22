@@ -103,7 +103,7 @@ public class ItemSlashBladeTICWhite extends SlashBladeCore {
 	 
 	  @Override
 	  public float damagePotential() {
-	    return 1.0f;
+	    return 1.1f;
 	  }
 
 	  @Override
@@ -120,7 +120,7 @@ public class ItemSlashBladeTICWhite extends SlashBladeCore {
 	  public ToolNBT buildTagData(List<Material> materials) {
 	    ToolNBT data = buildDefaultTag(materials);
 	    // 2 base damage, like vanilla swords
-	    data.attack += 1.5f;
+	    data.attack += 2f;
 	    data.durability *= DURABILITY_MODIFIER;
 	    return data;
 	  }

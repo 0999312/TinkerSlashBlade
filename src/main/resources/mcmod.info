@@ -1,14 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "slashbladetic",
+  "name": "Tinker SlashBlade",
+  "description": "What about Tinkers Construct with SlashBlade?",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["Mysterious Mountain Forging-shop"],
+  "credits": "Furia",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

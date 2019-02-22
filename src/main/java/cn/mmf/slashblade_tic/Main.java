@@ -10,12 +10,12 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = Main.MODID, name = Main.NAME, version = Main.VERSION,dependencies="required-after:forge@[14.23.4.2768,);required-after:flammpfeil.slashblade@[mc1.12-r10,);required-after:tconstruct;")
+@Mod(modid = Main.MODID, name = Main.NAME, version = Main.VERSION,dependencies="required-after:forge@[14.23.4.2768,);required-after:flammpfeil.slashblade@[mc1.12-r17,);required-after:tconstruct;after:*;")
 public class Main
 {
     public static final String MODID = "slashbladetic";
     public static final String NAME = "Tinker SlashBlade";
-    public static final String VERSION = "1.0";
+    public static final String VERSION = "@version@";
 
 	@Instance(Main.MODID)
     public static Main instance;

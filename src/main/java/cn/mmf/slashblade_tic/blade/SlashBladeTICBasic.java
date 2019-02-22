@@ -144,7 +144,7 @@ public abstract class SlashBladeTICBasic extends ItemSlashBlade implements ITink
     public ItemStack buildItem(List<Material> materials) {
       ItemStack tool = new ItemStack(this);
       tool.setTagCompound(buildItemNBT(materials));
-      float attack = ToolHelper.getActualDamage(tool, Minecraft.getMinecraft().player);
+      float attack = SlashBladeHelper.getActualAttack(tool);
       ItemSlashBlade.setBaseAttackModifier(buildItemNBT(materials), attack);
       return tool;
     }
@@ -455,6 +455,7 @@ public abstract class SlashBladeTICBasic extends ItemSlashBlade implements ITink
 
     /* Information */
 
+@SideOnly(Side.CLIENT)
 @Override
 public void addInformation(ItemStack stack, World worldIn, List tooltip, ITooltipFlag arg3) {
 	// TODO Auto-generated method stub

@@ -226,8 +226,11 @@ public class RegisterLoader {
         register(blockitem);
     }
 
+	@SideOnly(Side.CLIENT)
     @SubscribeEvent (priority = EventPriority.LOW)
     public static void modelBake(ModelBakeEvent evt) {
+        ToolClientEvents.replaceTableModel(new ModelResourceLocation(bladeforge.getRegistryName(), "normal"), evt);
+        ToolClientEvents.replaceTableModel(new ModelResourceLocation(bladestation.getRegistryName(), "normal"), evt);
         ToolClientEvents.replaceTableModel(new ModelResourceLocation(bladeforge.getRegistryName(), "inventory"), evt);
         ToolClientEvents.replaceTableModel(new ModelResourceLocation(bladestation.getRegistryName(), "inventory"), evt);
     }
