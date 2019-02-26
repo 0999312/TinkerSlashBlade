@@ -50,7 +50,7 @@ public class SlashBladeCore extends SlashBladeTICBasic implements IToolStationDi
 		super(requiredComponents);
         this.setCreativeTab(TinkerRegistry.tabTools);
 	}
-
+ 
 		public List<ResourceLocationRaw> getMuitlModelTexture() {
 			List<ResourceLocationRaw> res = new ArrayList<ResourceLocationRaw>();
 			res.add(new ResourceLocationRaw("flammpfeil.slashblade","model/handle/handle.png"));

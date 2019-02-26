@@ -102,7 +102,7 @@ public abstract class SlashBladeTICBasic extends ItemSlashBlade implements ITink
 	
 	@Override
 	  public int getMaxDamage(ItemStack stack) {
-	    return ToolHelper.getDurabilityStat(stack);
+	    return (ToolHelper.getDurabilityStat(stack)<2)?ToolHelper.getDurabilityStat(stack):2;
 	  }
 
 	  @Override

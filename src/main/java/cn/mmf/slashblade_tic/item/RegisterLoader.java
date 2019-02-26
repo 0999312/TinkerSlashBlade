@@ -82,6 +82,8 @@ public class RegisterLoader {
 	}
 	@SubscribeEvent
 	public static void initItems(RegistryEvent.Register<Item> event) {
+		
+		
 		 wrapper = (BladePart) new BladePart(Material.VALUE_Ingot * 8)
 				 .setUnlocalizedName(Main.MODID+".slashblade.saya");
 		 register(wrapper);
@@ -189,6 +191,8 @@ public class RegisterLoader {
         registry.register(new ShapelessOreRecipe(new ResourceLocation(Main.MODID,"blade_station"), bladestation, new Object[]{
         		SlashBlade.bladeWood,TinkerTools.toolTables
         }).setRegistryName(new ResourceLocation(Main.MODID,"blade_station")));
+        registry.register(new ShapelessFixRecipe(new ResourceLocation(Main.MODID,"blade_fix"), new ItemStack(SlashBlade.proudSoul,2), new ItemStack(sb)).setRegistryName(new ResourceLocation(Main.MODID,"blade_fix")));
+        registry.register(new ShapelessFixRecipe(new ResourceLocation(Main.MODID,"blade_fix2"), new ItemStack(SlashBlade.proudSoul,2), new ItemStack(sb_white)).setRegistryName(new ResourceLocation(Main.MODID,"blade_fix2")));
         if (bladeforge != null) {
         	bladeforge.baseBlocks.addAll(TinkerTools.toolForge.baseBlocks);
             for (String oredict : bladeforge.baseBlocks) {

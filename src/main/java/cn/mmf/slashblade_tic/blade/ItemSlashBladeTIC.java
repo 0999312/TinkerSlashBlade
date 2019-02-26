@@ -3,6 +3,7 @@ package cn.mmf.slashblade_tic.blade;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -28,11 +29,12 @@ import slimeknights.tconstruct.library.tinkering.PartMaterialType;
 import slimeknights.tconstruct.library.tools.ToolNBT;
 import slimeknights.tconstruct.library.utils.TagUtil;
 import slimeknights.tconstruct.library.utils.TinkerUtil;
+import slimeknights.tconstruct.tools.TinkerMaterials;
 import slimeknights.tconstruct.tools.TinkerTools;
 
 public class ItemSlashBladeTIC extends SlashBladeCore {
 	
-	public static final float DURABILITY_MODIFIER = 1.1f;
+	public static final float DURABILITY_MODIFIER = 0.5f;
 
 	  public ItemSlashBladeTIC() {
 	    super(PartMaterialType.handle(RegisterLoader.handle),
@@ -52,13 +54,19 @@ public class ItemSlashBladeTIC extends SlashBladeCore {
 	public ResourceLocationRaw getModelTexture(ItemStack par1ItemStack){
 		TextureMixer texture_mixer = TextureMixer.getInstance();
 		List<ResourceLocationRaw> list_model = getMuitlModelTexture();
-		List<Material> materials = TinkerUtil.getMaterialsFromTagList(TagUtil.getBaseMaterialsTagList(par1ItemStack));
-
+		List<Material> materials = (TinkerUtil.getMaterialsFromTagList(TagUtil.getBaseMaterialsTagList(par1ItemStack))!=null)? 
+						TinkerUtil.getMaterialsFromTagList(TagUtil.getBaseMaterialsTagList(par1ItemStack)) 
+						: new ArrayList<Material>();
+		if(materials.isEmpty()){
+			materials.add(TinkerMaterials.paper);
+			materials.add(TinkerMaterials.paper);
+			materials.add(TinkerMaterials.paper);
+		}
 		ResourceLocationRaw res = new ResourceLocationRaw("flammpfeil.slashblade","model/blade.png");
 		try {
 			res = texCache.get(materials, () -> texture_mixer.generateTexture(
 					texture_mixer.TextureMix(
-							texture_mixer.Rendering("slashblade", materials, list_model), 1.0F)
+							texture_mixer.Rendering("slashblade",materials, list_model), 1.0F)
 					)
 				);
 		} catch (ExecutionException e) {
@@ -66,8 +74,6 @@ public class ItemSlashBladeTIC extends SlashBladeCore {
 				
 		return res;
 	}
-
-	  
 	
 	  @Override
 	  public float damagePotential() {

@@ -181,7 +181,7 @@ public final class SlashBladeBuilder {
     NonNullList<ItemStack> usedStacks = Util.deepCopyFixedNonNullList(input);
 
     Set<IModifier> appliedModifiers = Sets.newHashSet();
-    for(IModifier modifier : TinkerRegistry.getAllModifiers()) {
+    for(IModifier modifier : TinkerSlashBladeRegistry.getAllModifiers()) {
       Optional<RecipeMatch.Match> matchOptional;
       do {
         matchOptional = modifier.matches(stacks);
@@ -507,8 +507,6 @@ public final class SlashBladeBuilder {
     NBTTagList modifiersTagOld = TagUtil.getModifiersTagList(rootNBT);
     rootNBT.removeTag(Tags.TOOL_MODIFIERS); // the active-modifiers tag
     rootNBT.setTag(Tags.TOOL_MODIFIERS, new NBTTagList());
-    rootNBT.removeTag("ench"); // and the enchantments tag
-    rootNBT.removeTag(Tags.ENCHANT_EFFECT); // enchant effect too, will be readded by a trait either way
 
     // clean up traits
     rootNBT.removeTag(Tags.TOOL_TRAITS);

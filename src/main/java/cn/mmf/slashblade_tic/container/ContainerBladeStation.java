@@ -1,5 +1,6 @@
 package cn.mmf.slashblade_tic.container;
 
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,6 +40,7 @@ import cn.mmf.slashblade_tic.client.gui.GuiBladeStation;
 import cn.mmf.slashblade_tic.packet.BladeStationSelectionPacket;
 import cn.mmf.slashblade_tic.packet.BladeStationTextPacket;
 import cn.mmf.slashblade_tic.util.SlashBladeBuilder;
+import cn.mmf.slashblade_tic.util.SlashBladeHelper;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 
 // also tool forge
@@ -281,7 +283,7 @@ public class ContainerBladeStation extends ContainerTinkerStation<TileBladeStati
     if(!result.isEmpty()) {
       TinkerCraftingEvent.ToolModifyEvent.fireEvent(result, player, modifyable.copy());
       NBTTagCompound nbt = ItemSlashBlade.getItemTagCompound(result);
-      float attack = ToolHelper.getActualDamage(result, Minecraft.getMinecraft().player);
+      float attack = SlashBladeHelper.getActualAttack(result);
       ItemSlashBlade.setBaseAttackModifier(nbt, attack);
 
     }

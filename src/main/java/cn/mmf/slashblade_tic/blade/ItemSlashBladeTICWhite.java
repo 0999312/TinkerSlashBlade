@@ -31,11 +31,12 @@ import slimeknights.tconstruct.library.tinkering.PartMaterialType;
 import slimeknights.tconstruct.library.tools.ToolNBT;
 import slimeknights.tconstruct.library.utils.TagUtil;
 import slimeknights.tconstruct.library.utils.TinkerUtil;
+import slimeknights.tconstruct.tools.TinkerMaterials;
 import slimeknights.tconstruct.tools.TinkerTools;
 
 public class ItemSlashBladeTICWhite extends SlashBladeCore {
 	
-	public static final float DURABILITY_MODIFIER = 1.1f;
+	public static final float DURABILITY_MODIFIER = 0.75f;
 
 	  public ItemSlashBladeTICWhite() {
 	    super(PartMaterialType.handle(TinkerTools.toughToolRod),
@@ -79,8 +80,14 @@ public class ItemSlashBladeTICWhite extends SlashBladeCore {
 	public ResourceLocationRaw getModelTexture(ItemStack par1ItemStack){
 		TextureMixer texture_mixer = TextureMixer.getInstance();
 		List<ResourceLocationRaw> list_model = getMuitlModelTexture();
-		List<Material> materials = TinkerUtil.getMaterialsFromTagList(TagUtil.getBaseMaterialsTagList(par1ItemStack));
-
+		List<Material> materials = (TinkerUtil.getMaterialsFromTagList(TagUtil.getBaseMaterialsTagList(par1ItemStack))!=null)? 
+						TinkerUtil.getMaterialsFromTagList(TagUtil.getBaseMaterialsTagList(par1ItemStack)) 
+						: new ArrayList<Material>();
+		if(materials.isEmpty()){
+			materials.add(TinkerMaterials.paper);
+			materials.add(TinkerMaterials.paper);
+			materials.add(TinkerMaterials.paper);
+		}
 		ResourceLocationRaw res = new ResourceLocationRaw("flammpfeil.slashblade","model/blade.png");
 		try {
 			res = texCache.get(materials, () -> texture_mixer.generateTexture(
