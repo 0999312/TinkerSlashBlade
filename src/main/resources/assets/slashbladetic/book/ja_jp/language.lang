@@ -1,16 +1,11 @@
 // Sections
 intro=前書き
 materials=道具の素材
-bowmaterials=弓の素材
 tools=道具
 modifiers=改造
-smeltery=乾式製錬炉
-seared_furnace=焼成かまど
-tinker_tank=ティンカータンク
 
 repairing=修理
 offhand=オフハンド採掘
-bolt_core=ボルトの作り方
 
 modifier.effect=効果：
 tool.properties=特徴：

@@ -52,6 +52,7 @@ public class ContainerBladeStation extends ContainerTinkerStation<TileBladeStati
   protected int activeSlots;
   public String toolName;
 
+
   public ContainerBladeStation(InventoryPlayer playerInventory, TileBladeStation tile) {
     super(tile);
     this.player = playerInventory.player;
@@ -68,7 +69,9 @@ public class ContainerBladeStation extends ContainerTinkerStation<TileBladeStati
     this.addPlayerInventory(playerInventory, 8, 84 + 8);
     onCraftMatrixChanged(playerInventory);
   }
-
+  public boolean isForge(){
+	  return false;
+  }
   public ItemStack getResult() {
     return out.getStack();
   }
@@ -214,8 +217,10 @@ public class ContainerBladeStation extends ContainerTinkerStation<TileBladeStati
 
     if(resultTaken) {
       updateSlotsAfterToolAction();
-      NBTTagCompound nbt = ItemSlashBlade.getItemTagCompound(stack);
-      ItemSlashBlade.RepairCount.set(nbt, ItemSlashBlade.RepairCount.get(nbt)+1);
+	      if(isForge()){
+	      NBTTagCompound nbt = ItemSlashBlade.getItemTagCompound(stack);
+	      ItemSlashBlade.RepairCount.set(nbt, ItemSlashBlade.RepairCount.get(nbt)+1);
+	      }
     }
     else {
       // calculate the result again (serverside)

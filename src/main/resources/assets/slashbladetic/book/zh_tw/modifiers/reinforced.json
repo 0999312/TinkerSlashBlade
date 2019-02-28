@@ -1,19 +1,13 @@
 {
-  "modifier": "reinforced",
+  "blademodifier": "reinforced",
   "text": [
     {
-      "text": "在工具上加上黑曜石板似乎有助於耐久度，使工具更強壯。"
+      "text": "附上一个耐久强化大板有助于提升工具的耐久，让它变得更坚硬。"
     }
   ],
   "effects": [
-    "增加不消耗耐久度的機率",
-    "可疊加上先前的強化等級",
-    "分為多個等級"
-  ],
-  "demoTool": [
-    "tconstruct:pickaxe",
-    "tconstruct:hammer",
-    "tconstruct:shortbow",
-    "tconstruct:arrow"
+    "使用工具有几率不消耗耐久",
+    "强化等级可以堆叠",
+    "多个等级"
   ]
 }

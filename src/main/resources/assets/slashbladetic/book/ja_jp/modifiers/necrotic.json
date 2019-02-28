@@ -1,5 +1,5 @@
 {
-  "modifier": "necrotic",
+  "blademodifier": "necrotic",
   "text": [
     {
       "text": "ウィザースケルトンの骨を道具に置くと、禍々しい命を奪う力を与えます。"
@@ -9,10 +9,5 @@
     "ダメージを与えると回復する",
     "レベルが上がると回復量が上がる",
     "複数レベル"
-  ],
-  "demoTool": [
-    "tconstruct:broadsword",
-    "tconstruct:cleaver",
-    "tconstruct:arrow"
   ]
 }

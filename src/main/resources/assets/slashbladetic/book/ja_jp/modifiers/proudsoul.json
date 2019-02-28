@@ -1,0 +1,12 @@
+{
+  "blademodifier": "proud_soul",
+  "text": [
+    {
+      "text": "あなたはあなたの刃に影響を与える栄光の感覚を感じます"
+    }
+  ],
+  "effects": [
+    "Increases more proudsoul",
+    "単一レベル"
+  ]
+}

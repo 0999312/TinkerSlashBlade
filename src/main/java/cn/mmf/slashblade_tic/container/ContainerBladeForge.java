@@ -21,6 +21,7 @@ import cn.mmf.slashblade_tic.block.tileentity.TileBladeForge;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.common.Sounds;
 import slimeknights.tconstruct.library.TinkerRegistry;
@@ -31,6 +32,10 @@ public class ContainerBladeForge extends ContainerBladeStation {
     public ContainerBladeForge(InventoryPlayer playerInventory, TileBladeForge tile) {
         super(playerInventory, tile);
 
+    }
+    @Override
+    public boolean isForge(){
+  	  return true;
     }
     @Override
     protected Set<SlashBladeCore> getBuildableTools() {

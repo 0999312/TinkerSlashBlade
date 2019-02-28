@@ -1,9 +1,19 @@
 package cn.mmf.slashblade_tic;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+
+import cn.mmf.slashblade_tic.blade.SlashBladeCore;
 import cn.mmf.slashblade_tic.blade.TinkerSlashBladeEvent;
 import cn.mmf.slashblade_tic.blade.TinkerSlashBladeRegistry;
 import cn.mmf.slashblade_tic.compat.tinkertoolleveling.ModBladeLeveling;
 import cn.mmf.slashblade_tic.item.RegisterLoader;
+import cn.mmf.slashblade_tic.modifiers.ModBladeExtraTrait;
 import cn.mmf.slashblade_tic.modifiers.ModProud;
 import mods.flammpfeil.slashblade.SlashBlade;
 import net.minecraft.entity.EnumCreatureAttribute;
@@ -22,9 +32,14 @@ import net.minecraftforge.registries.IForgeRegistry;
 import slimeknights.mantle.util.RecipeMatch;
 import slimeknights.mantle.util.RecipeMatchRegistry;
 import slimeknights.tconstruct.library.TinkerRegistry;
+import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.modifiers.IModifier;
 import slimeknights.tconstruct.library.modifiers.Modifier;
+import slimeknights.tconstruct.library.tinkering.PartMaterialType;
+import slimeknights.tconstruct.library.tools.IToolPart;
+import slimeknights.tconstruct.library.tools.ToolCore;
 import slimeknights.tconstruct.library.tools.ToolPart;
+import slimeknights.tconstruct.library.traits.ITrait;
 import slimeknights.tconstruct.shared.TinkerCommons;
 import slimeknights.tconstruct.tools.TinkerModifiers;
 import slimeknights.tconstruct.tools.TinkerTools;
@@ -44,7 +59,7 @@ import slimeknights.tconstruct.tools.modifiers.ModWebbed;
 
 public class CommonProxy {
 	 public static Modifier modProud;
-
+	 public static List<Modifier> extraTraitMods;
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		new RegisterLoader(event);
@@ -60,7 +75,6 @@ public class CommonProxy {
     	TinkerSlashBladeRegistry.registerModifier(TinkerModifiers.modDiamond);
     	TinkerSlashBladeRegistry.registerModifier(TinkerModifiers.modEmerald);
     	TinkerSlashBladeRegistry.registerModifier(TinkerModifiers.modFiery);
-    	TinkerSlashBladeRegistry.registerModifier(TinkerModifiers.modKnockback);
     	TinkerSlashBladeRegistry.registerModifier(TinkerModifiers.modNecrotic);
     	TinkerSlashBladeRegistry.registerModifier(TinkerModifiers.modSmite);
     	TinkerSlashBladeRegistry.registerModifier(TinkerModifiers.modReinforced);
@@ -80,7 +94,38 @@ public class CommonProxy {
         if (Loader.isModLoaded("tinkertoolleveling")) {
             ModBladeLeveling.modLeveling = new ModBladeLeveling();
         }
+        registerExtraTraitModifiers();
 
     }
+	
+	  private Map<String, ModBladeExtraTrait> extraTraitLookup = new HashMap<>();
+	  private void registerExtraTraitModifiers() {
+		    TinkerRegistry.getAllMaterials().forEach(this::registerExtraTraitModifiers);
+		    extraTraitMods = Lists.newArrayList(extraTraitLookup.values());
+		  }
 
+		  private void registerExtraTraitModifiers(Material material) {
+		    TinkerSlashBladeRegistry.getTools().forEach(tool -> registerExtraTraitModifiers(material, tool));
+		  }
+
+		  private void registerExtraTraitModifiers(Material material, SlashBladeCore tool) {
+		    tool.getRequiredComponents().forEach(pmt -> registerExtraTraitModifiers(material, tool, pmt));
+		  }
+
+		  private void registerExtraTraitModifiers(Material material, SlashBladeCore tool, PartMaterialType partMaterialType) {
+		    partMaterialType.getPossibleParts().forEach(part -> registerExtraTraitModifiers(material, tool, partMaterialType, part));
+		  }
+
+		  private <T extends Item & IToolPart> void registerExtraTraitModifiers(Material material, SlashBladeCore tool, PartMaterialType partMaterialType, IToolPart toolPart) {
+		    if(toolPart instanceof Item) {
+		      Collection<ITrait> traits = partMaterialType.getApplicableTraitsForMaterial(material);
+		      if(!traits.isEmpty()) {
+		        // we turn it into a set to remove duplicates, reducing the total amount of modifiers created by roughly 25%!
+		        final Collection<ITrait> traits2 = ImmutableSet.copyOf(traits);
+		        String identifier = ModBladeExtraTrait.generateIdentifier(material, traits2);
+		        ModBladeExtraTrait mod = extraTraitLookup.computeIfAbsent(identifier, id -> new ModBladeExtraTrait(material, traits2, identifier));
+		        mod.addCombination(tool, (T) toolPart);
+		      }
+		    }
+		  }
 }

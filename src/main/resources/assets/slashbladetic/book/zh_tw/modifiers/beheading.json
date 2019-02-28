@@ -1,18 +1,13 @@
 {
-  "modifier": "beheading",
+  "blademodifier": "beheading",
   "text": [
     {
-      "text": "在武器加上終界珍珠和一些黑曜石會有著奇怪的效果 — 將目標的頭和它的身體分離。 理髮師，頭頂稍微修一下就可以了?"
+      "text": "使用末影珍珠和黑曜石强化工具可以有效提升怪物的头颅掉落几率"
     }
   ],
   "effects": [
-    "敵人會掉下它們的頭",
-    "添加多一點的終界珍珠與黑曜石可以增加掉頭的機率",
-    "分為多個等級"
-  ],
-  "demoTool": [
-    "tconstruct:broadsword",
-    "tconstruct:cleaver",
-    "tconstruct:arrow"
+    "我们砍掉了敌人的头",
+    "使用末影珍珠和黑曜石强化工具可以获得“斩首”效果",
+    "多个等级"
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "modifier": "emerald",
+  "blademodifier": "emerald",
   "text": [
     {
       "text": "Affixing an emerald to a tool's weakest point makes it especially resilient and fabulous. Villagers may also covet your tool, be wary."
@@ -10,10 +10,5 @@
     "Mining level increased to Iron",
     "Single use",
     "Outrageous!"
-  ],
-  "demoTool": [
-    "tconstruct:pickaxe",
-    "tconstruct:hammer",
-    "tconstruct:cleaver"
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "modifier": "shulking",
+  "blademodifier": "shulking",
   "text": [
     {
       "text": "シュルカーの力であなたの道具を強化してください。敵を攻撃して浮かせ、無力化させよう。"
@@ -10,10 +10,5 @@
     "敵を浮遊させる",
     "ウキウキ",
     "単一レベル"
-  ],
-  "demoTool": [
-    "tconstruct:pickaxe",
-    "tconstruct:broadsword",
-    "tconstruct:arrow"
   ]
 }

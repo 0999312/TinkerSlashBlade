@@ -1,15 +1,15 @@
 {
-  "title":"The lost pages",
+  "title":"Preface",
   "text": [
     {
-      "text": "Welcome to the second edition of Materials and You: Surviving the first day and beyond. Sadly, it looks like some pages were lost!"
+      "text": "Welcome to Bladesmith Standard Manual. Seems like you are new in bladesmith's family, that's OK."
     },
     {
       "text": "This book is currently incomplete, but it contains all tool materials and modifiers. Later versions will contain more information, so be sure to check back occasionally!",
       "paragraph": true
     },
     {
-      "text": "Oh, also if you're wondering where Copper, Aluminum,... went: TConstruct only adds Cobalt and Ardite ore to the nether, but does not generate general ores anymore. It does however support any mod that adds them automatically.",
+      "text": "Oh, before you reading this book, play SlashBlade mod first please.",
       "paragraph": true
     }
   ]

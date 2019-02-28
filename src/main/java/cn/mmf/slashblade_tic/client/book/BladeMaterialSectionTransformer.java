@@ -3,7 +3,6 @@ package cn.mmf.slashblade_tic.client.book;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import slimeknights.mantle.client.book.data.content.PageContent;
-import slimeknights.tconstruct.library.book.content.ContentMaterial;
 import slimeknights.tconstruct.library.book.sectiontransformer.AbstractMaterialSectionTransformer;
 import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.materials.MaterialTypes;
@@ -22,6 +21,6 @@ public class BladeMaterialSectionTransformer extends AbstractMaterialSectionTran
 
     @Override
     protected PageContent getPageContent(Material material) {
-      return new ContentMaterial(material);
+      return new ContentBladeMaterial(material);
     }
 }

@@ -1,19 +1,14 @@
 {
-  "modifier": "shulking",
+  "blademodifier": "shulking",
   "text": [
     {
-      "text": "使你的工具有界伏蚌的能力。打一下敵人，讓它們無助地飄在半空中。"
+      "text": "把悬浮属性强化到你的工具上面，让那些敌人们在半空中束手无策吧"
     }
   ],
   "effects": [
-    "每一點都會增加漂浮的時間。",
-    "讓敵人漂走",
-    "真好笑",
-    "單一等級"
-  ],
-  "demoTool": [
-    "tconstruct:pickaxe",
-    "tconstruct:broadsword",
-    "tconstruct:arrow"
+    "每次强化都可增加一点悬浮时间",
+    "可以给予击中的敌人以悬浮效果",
+    "你好像不需要这个就可以让敌人悬浮吧！",
+    "单个等级"
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "modifier": "webbed",
+  "blademodifier": "webbed",
   "text": [
     {
       "text": "那些粘人的蜘蛛网也是有用的东西。用它来迟缓你的敌人的前进步伐吧！"
@@ -9,9 +9,5 @@
     "每一个等级都会增加迟缓时间",
     "迟缓的运动",
     "多个等级"
-  ],
-  "demoTool": [
-    "tconstruct:pickaxe",
-    "tconstruct:broadsword"
   ]
-} 
+}

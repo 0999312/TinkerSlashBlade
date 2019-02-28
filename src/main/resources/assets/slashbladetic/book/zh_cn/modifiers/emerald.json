@@ -1,5 +1,5 @@
 {
-  "modifier": "emerald",
+  "blademodifier": "emerald",
   "text": [
     {
       "text": "绿宝石能有效强化工具的耐久，最好小心点村民，他们可能会垂涎你的工具。"
@@ -10,9 +10,5 @@
     "最小挖掘等级提升到铁矿级别",
     "只能强化一次",
     "太离谱了!"
-  ],
-  "demoTool": [
-    "tconstruct:pickaxe",
-    "tconstruct:hammer"
   ]
 }

@@ -1,17 +1,13 @@
 {
-  "modifier": "bane_of_arthopods",
-  "text": [
+  "blademodifier": "bane_of_arthopods",
+    "text": [
     {
-      "text": "用蜘蛛自己的眼球打擊蜘蛛會讓它因為害怕而退縮。 有害蟲的困擾嗎? 這裡有個辦法，殺死那些蟲!"
+      "text": "蜘蛛最害怕的居然是自己的眼睛！还在为这些家伙头疼么，我有一个好主意，杀光它们"
     }
   ],
   "effects": [
-    "對蜘蛛和蠹魚造成大量的傷害",
-    "分為多個等級"
-  ],
-  "demoTool": [
-    "tconstruct:broadsword",
-    "tconstruct:hammer",
-    "tconstruct:arrow"
+    "对蠹虫和蜘蛛能造成额外的伤害",
+    "多个等级"
   ]
+
 }

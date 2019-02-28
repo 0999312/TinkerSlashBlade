@@ -1,5 +1,5 @@
 {
-  "modifier": "diamond",
+  "blademodifier": "diamond",
   "text": [
     {
       "text": "道具の端にダイヤモンドを追加すると、耐久性が増し、採掘レベルが上がります。また、魅力的なファッションを与えます。"
@@ -11,11 +11,5 @@
     "採掘レベルが1つ上がる(黒曜石まで)",
     "単一レベル",
     "ファビュラス！"
-  ],
-  "demoTool": [
-    "tconstruct:pickaxe",
-    "tconstruct:broadsword",
-    "tconstruct:shortbow",
-    "tconstruct:arrow"
   ]
 }

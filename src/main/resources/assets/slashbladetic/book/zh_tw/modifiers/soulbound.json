@@ -1,21 +1,13 @@
 {
-  "modifier": "soulbound",
+  "blademodifier": "soulbound",
   "text": [
     {
-      "text": "一個完美的結合，你很愛你的工具，就算死亡回歸(咦?)也不能拆散你們。"
+      "text": "哦，你和你的工具简直就是天生一对，即使是死亡！也不能将你们分开。"
     }
   ],
   "effects": [
-    "在你死後工具還會留在你身上",
-    "增強只能附加一次",
-    "不消耗修改次數"
-  ],
-  "demoTool": [
-    "tconstruct:broadsword",
-    "tconstruct:cleaver",
-    "tconstruct:pickaxe",
-    "tconstruct:hammer",
-    "tconstruct:shortbow",
-    "tconstruct:arrow"
+    "玩家死亡后复活，工具仍旧能保存在物品栏",
+    "只能强化一次",
+    "不需要强化槽"
   ]
 }

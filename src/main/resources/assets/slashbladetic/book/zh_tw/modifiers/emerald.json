@@ -1,19 +1,14 @@
 {
-  "modifier": "emerald",
+  "blademodifier": "emerald",
   "text": [
     {
-      "text": "在工具最脆弱的地方鑲上綠寶石可以讓工具特別有彈性更完美。 連村民也可能覬覦你的工具，小心。"
+      "text": "绿宝石能有效强化工具的耐久，最好小心点村民，他们可能会垂涎你的工具。"
     }
   ],
   "effects": [
-    "增加50%耐久度",
-    "挖掘等級提升到了鐵等級",
-    "只能強化一次",
-    "好到不像話!"
-  ],
-  "demoTool": [
-    "tconstruct:pickaxe",
-    "tconstruct:hammer",
-    "tconstruct:cleaver"
+    "增加工具50%的耐久",
+    "最小挖掘等级提升到铁矿级别",
+    "只能强化一次",
+    "太离谱了!"
   ]
 }

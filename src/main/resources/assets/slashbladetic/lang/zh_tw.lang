@@ -2,6 +2,7 @@ item.slashbladetic.slashblade.saya.name=鞘
 item.slashbladetic.slashblade.handle.name=握柄
 item.slashbladetic.slashblade.blade.name=刀条
 item.slashbladetic.slashblade.name=大太刀「」
+item.slashbladetic.book_smith.name=《刀匠标准手册》
 item.slashbladetic.slashblade.white.name=利刀「白鞘」
 tile.slashbladetic.blade_station.name=拔刀劍裝配台
 tile.slashbladetic.blade_forge.name=拔刀劍鍛造台
@@ -10,3 +11,5 @@ gui.bladestation.name=拔刀劍裝配台
 item.slashbladetic.slashblade.desc=無銘無名的大太刀\n能很好地與附魔結合\n賜予其名字會有不可思議的魅力
 item.slashbladetic.slashblade.white.desc=白鞘之刀\n切斷之名的代表\n尚未有偉業
 modifier.proud_soul.name=榮耀之魂
+
+item.slashbladetic.book_smith.tooltip=妖怪之山锻刀铺 出品

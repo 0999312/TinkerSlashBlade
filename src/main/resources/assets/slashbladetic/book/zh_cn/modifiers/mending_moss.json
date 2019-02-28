@@ -1,8 +1,8 @@
 {
-  "modifier": "mending_moss",
+  "blademodifier": "mending_moss",
   "text": [
     {
-      "text": "你用旧的工具边缘长了些苔藓。用一些经验来附魔能让它与工具融合，从而逐步的修复它。"
+      "text": "你用旧的工具边缘长了些苔藓。用一些经验来附魔能让它与工具融合，从而逐步的修复它。我说你下次爱惜点你的刀好不好？"
     }
   ],
   "effects": [
@@ -11,11 +11,5 @@
     "随着时间的推移缓慢修复工具",
     "必须放在快捷栏中或副手上才能修复",
     "多个等级"
-  ],
-  "demoTool": [
-    "tconstruct:pickaxe",
-    "tconstruct:broadsword",
-    "tconstruct:shortbow",
-    "tconstruct:arrow"
   ]
 }

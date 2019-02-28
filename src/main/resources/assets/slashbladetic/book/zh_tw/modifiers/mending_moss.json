@@ -1,21 +1,15 @@
 {
-  "modifier": "mending_moss",
+  "blademodifier": "mending_moss",
   "text": [
     {
-      "text": "有一些青苔長在你磨損的工具邊緣。提供一些經驗值使它與工具融合，它就會緩緩地修復工具。"
+      "text": "你用旧的工具边缘长了些苔藓。用一些经验来附魔能让它与工具融合，从而逐步的修复它。我说你下次爱惜点你的刀好不好？"
     }
   ],
   "effects": [
-    "儲存撿起的經驗",
-    "儲存上限隨著修改等級上升",
-    "隨著時間緩慢地修復工具",
-    "工具必須放在快捷欄或是副手才能修復",
-    "分為多個等級"
-  ],
-  "demoTool": [
-    "tconstruct:pickaxe",
-    "tconstruct:broadsword",
-    "tconstruct:shortbow",
-    "tconstruct:arrow"
+    "吸取捡起的经验球",
+    "最大吸取量取决于强化等级",
+    "随着时间的推移缓慢修复工具",
+    "必须放在快捷栏中或副手上才能修复",
+    "多个等级"
   ]
 }

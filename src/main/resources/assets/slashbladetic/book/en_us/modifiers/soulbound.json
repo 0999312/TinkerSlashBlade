@@ -1,5 +1,5 @@
 {
-  "modifier": "soulbound",
+  "blademodifier": "soulbound",
   "text": [
     {
       "text": "A perfect match. You love your tool. Not even death can part you from it."
@@ -9,13 +9,5 @@
     "Tool remains in your inventory after death",
     "Single use",
     "Does NOT require a modifier"
-  ],
-  "demoTool": [
-    "tconstruct:broadsword",
-    "tconstruct:cleaver",
-    "tconstruct:pickaxe",
-    "tconstruct:hammer",
-    "tconstruct:shortbow",
-    "tconstruct:arrow"
   ]
 }

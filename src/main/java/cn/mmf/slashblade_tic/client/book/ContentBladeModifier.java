@@ -64,6 +64,7 @@ public class ContentBladeModifier extends TinkerPage {
         if(blade == null) {
             blade = Lists.newArrayList();
             blade.add(RegisterLoader.sb);
+            blade.add(RegisterLoader.sb_white);
         }
     }
 

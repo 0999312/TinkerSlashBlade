@@ -1,22 +1,18 @@
 // Sections
-intro=介紹
-materials=工具材質
-bowmaterials=弓箭材質
+intro=介绍
+materials=工具材料
 tools=工具
-modifiers=強化
-smeltery=冶煉
-seared_furnace=焦黑熔爐
-tinker_tank=工匠液體槽
+modifiers=强化
 
-repairing=修復
-offhand=副手採集
-bolt_core=弩矢合成
 
-modifier.effect=效果:
-tool.properties=屬性:
+repairing=修复
+offhand=副手采掘
 
-material.craft_partbuilder=能在部件加工台被合成
-material.craft_casting=能從 %s 被鑄造
+modifier.effect=特殊效果：
+tool.properties=属性：
 
-wood.flavour=如果土撥鼠 (woodchuck) 能夠敲木頭 (chuck) ，那土撥鼠能夠敲下多少木頭?
-stone.flavour=像石頭一樣頑固
+material.craft_partbuilder=在部件加工台制作
+material.craft_casting=可以用%s铸造
+
+wood.flavour=使用木刀条的白鞘叫木偶~
+stone.flavour=石刀刃很脆的，根本不适合用来实战的。

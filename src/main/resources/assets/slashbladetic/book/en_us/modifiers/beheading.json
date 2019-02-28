@@ -1,5 +1,5 @@
 {
-  "modifier": "beheading",
+  "blademodifier": "beheading",
   "text": [
     {
       "text": "Working an ender pearl and some obsidian on a weapon has the curious effect of separating the target's head from its body. Just a little off the top?"
@@ -9,10 +9,5 @@
     "Enemies drop their heads",
     "Adding more Obsidian and Ender Pearls increases the chance of decapitation",
     "Multiple levels"
-  ],
-  "demoTool": [
-    "tconstruct:broadsword",
-    "tconstruct:cleaver",
-    "tconstruct:arrow"
   ]
 }

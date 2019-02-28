@@ -1,5 +1,5 @@
 {
-  "modifier": "emerald",
+  "blademodifier": "emerald",
   "text": [
     {
       "text": "エメラルドを道具の一番弱い部分に取り付けると、耐久性が増し、素晴らしいものになります。村人はあなたの道具を欲しがるかもしれません。"
@@ -10,10 +10,5 @@
     "採掘レベルが鉄になる",
     "単一レベル",
     "斬新！"
-  ],
-  "demoTool": [
-    "tconstruct:pickaxe",
-    "tconstruct:hammer",
-    "tconstruct:cleaver"
   ]
 }

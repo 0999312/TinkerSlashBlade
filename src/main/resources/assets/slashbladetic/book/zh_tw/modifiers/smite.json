@@ -1,18 +1,12 @@
 {
-  "modifier": "smite",
+  "blademodifier": "smite",
   "text": [
     {
-      "text": "源自土壤的神聖原力強化你的武器，在高處重擊敵人。"
+      "text": "来自神圣土的原始力量能够强化你的武器，来，干掉那些高处的敌人吧。"
     }
   ],
   "effects": [
-    "對不死生物造成大量的傷害",
-    "分為多個等級"
-  ],
-  "demoTool": [
-    "tconstruct:broadsword",
-    "tconstruct:cleaver",
-    "tconstruct:hammer",
-    "tconstruct:arrow"
+    "对亡灵生物造成额外的伤害",
+    "多个等级"
   ]
 }

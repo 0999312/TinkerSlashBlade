@@ -1,21 +1,15 @@
 {
-  "modifier": "diamond",
+  "blademodifier": "diamond",
   "text": [
     {
-      "text": "在工具的邊緣鑲上鑽石可以使工具更有彈性，也可以使工具挖掘更多東西。 另外，工具也變得更好看了。"
+      "text": "使用钻石强化工具能有效提升工具的耐久度，可以使工具拥有更长的使用时间。除此之外，工具变得也更好看了"
     }
   ],
   "effects": [
-    "額外的耐久度",
-    "增加次要屬性",
-    "挖掘等級提升到了黑曜石等級",
-    "只能強化一次",
-    "完美!"
-  ],
-  "demoTool": [
-    "tconstruct:pickaxe",
-    "tconstruct:broadsword",
-    "tconstruct:shortbow",
-    "tconstruct:arrow"
+    "增加耐久度",
+    "次要属性的增加",
+    "挖掘等级提升到黑曜石级",
+    "只能强化一次",
+    "很厉害吧？最棒的吧？天才吧？"
   ]
 }

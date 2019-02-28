@@ -1,10 +1,12 @@
 [
   {
-    "type": "blank"
-  },
-  {
     "name": "tmp_intro",
     "type": "text",
     "data": "intro/tmp.json"
+  },
+  {
+    "name": "tmp_intro_2",
+    "type": "text",
+    "data": "intro/tmp_2.json"
   }
 ]

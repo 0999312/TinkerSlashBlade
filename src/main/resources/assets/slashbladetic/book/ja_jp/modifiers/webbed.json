@@ -1,5 +1,5 @@
 {
-  "modifier": "webbed",
+  "blademodifier": "webbed",
   "text": [
     {
       "text": "粘着性のあるクモの巣もなにかに使えるべきである。これで敵を遅くさせよう！"
@@ -9,10 +9,5 @@
     "レベル毎に移動速度低下の効果時間が伸びる",
     "スローモーション",
     "複数レベル"
-  ],
-  "demoTool": [
-    "tconstruct:pickaxe",
-    "tconstruct:broadsword",
-    "tconstruct:arrow"
   ]
 }

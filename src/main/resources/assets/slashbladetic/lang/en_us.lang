@@ -2,6 +2,7 @@ item.slashbladetic.slashblade.saya.name=Sheath
 item.slashbladetic.slashblade.handle.name=Handle
 item.slashbladetic.slashblade.blade.name=Blade
 item.slashbladetic.slashblade.name=SlashBlade--
+item.slashbladetic.book_smith.name=Bladesmith Standard Manual
 item.slashbladetic.slashblade.white.name=Sharpness-White-
 tile.slashbladetic.blade_station.name=Blade Station
 tile.slashbladetic.blade_forge.name=Blade Forge
@@ -10,3 +11,5 @@ gui.bladestation.name=Blade Station
 item.slashbladetic.slashblade.desc=Nameless SlashBlade
 item.slashbladetic.slashblade.white.desc=Steel Edge
 modifier.proud_soul.name=ProudSoul
+
+item.slashbladetic.book_smith.tooltip=Made by MMF Group.
