@@ -2,16 +2,21 @@ package cn.mmf.slashblade_tic;
 
 import cn.mmf.slashblade_tic.blade.TinkerSlashBladeEvent;
 import cn.mmf.slashblade_tic.blade.TinkerSlashBladeRegistry;
+import cn.mmf.slashblade_tic.compat.tinkertoolleveling.ModBladeLeveling;
 import cn.mmf.slashblade_tic.item.RegisterLoader;
+import cn.mmf.slashblade_tic.modifiers.ModProud;
+import mods.flammpfeil.slashblade.SlashBlade;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 import slimeknights.mantle.util.RecipeMatch;
@@ -38,7 +43,7 @@ import slimeknights.tconstruct.tools.modifiers.ModSoulbound;
 import slimeknights.tconstruct.tools.modifiers.ModWebbed;
 
 public class CommonProxy {
-
+	 public static Modifier modProud;
 
 	public void preInit(FMLPreInitializationEvent event)
 	{
@@ -48,6 +53,7 @@ public class CommonProxy {
 	
     public void init(FMLInitializationEvent event)
     { 
+
     	TinkerSlashBladeRegistry.registerModifier(TinkerModifiers.modBaneOfArthopods);
     	TinkerSlashBladeRegistry.registerModifier(TinkerModifiers.modBeheading);
     	TinkerSlashBladeRegistry.registerModifier(TinkerModifiers.modCreative);
@@ -63,12 +69,17 @@ public class CommonProxy {
     	TinkerSlashBladeRegistry.registerModifier(TinkerModifiers.modWebbed);
     	TinkerSlashBladeRegistry.registerModifier(TinkerModifiers.modShulking);
     	TinkerSlashBladeRegistry.registerModifier(TinkerModifiers.modMendingMoss);
+    	modProud=new ModProud();
+    	modProud.addItem(SlashBlade.findItemStack(SlashBlade.modid, SlashBlade.TrapezohedronBladeSoulStr, 1), 1, 1);
+    	TinkerSlashBladeRegistry.registerModifier(modProud);
     }
 
 
 	public void postInit(FMLPostInitializationEvent event)
     {
-    	
+        if (Loader.isModLoaded("tinkertoolleveling")) {
+            ModBladeLeveling.modLeveling = new ModBladeLeveling();
+        }
 
     }
 

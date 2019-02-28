@@ -77,12 +77,14 @@ public class RegisterLoader {
 	public static SlashBladeCore sb,sb_white;
 	public static Block bladestation;
 	public static BlockBladeForge bladeforge;
+	public static Item book_smith;
 	public RegisterLoader(FMLPreInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 	@SubscribeEvent
 	public static void initItems(RegistryEvent.Register<Item> event) {
-		
+		book_smith = new ItemBookBladeSmith().setUnlocalizedName(Main.MODID+".book_smith");
+		register(book_smith);
 		
 		 wrapper = (BladePart) new BladePart(Material.VALUE_Ingot * 8)
 				 .setUnlocalizedName(Main.MODID+".slashblade.saya");
@@ -149,7 +151,7 @@ public class RegisterLoader {
 		for(Material mat : TinkerRegistry.getAllMaterials()){
 			BufferedImage[] dest = new BufferedImage[3];
 			for (int i = 0; i < list_model.size()-3 ; i++){
-				dest[i] = TextureMixer.getOverlay(mat.renderInfo.getVertexColor(), alteredbg[i], altered[i]);
+				dest[i] = TextureMixer.getOverlay(mat.materialTextColor, alteredbg[i], altered[i]);
 			}
 			texture_mixer.MapColor(mat.identifier+"_"+name, dest);
 		}
@@ -158,6 +160,8 @@ public class RegisterLoader {
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public static void RegisterModel(ModelRegistryEvent event) {
+		ModelReg.registerRender(book_smith);
+		
 		ModelRegisterUtil.registerPartModel(RegisterLoader.wrapper);
 		ModelRegisterUtil.registerPartModel(RegisterLoader.handle);
 		ModelRegisterUtil.registerPartModel(RegisterLoader.blade);
@@ -191,8 +195,6 @@ public class RegisterLoader {
         registry.register(new ShapelessOreRecipe(new ResourceLocation(Main.MODID,"blade_station"), bladestation, new Object[]{
         		SlashBlade.bladeWood,TinkerTools.toolTables
         }).setRegistryName(new ResourceLocation(Main.MODID,"blade_station")));
-        registry.register(new ShapelessFixRecipe(new ResourceLocation(Main.MODID,"blade_fix"), new ItemStack(SlashBlade.proudSoul,2), new ItemStack(sb)).setRegistryName(new ResourceLocation(Main.MODID,"blade_fix")));
-        registry.register(new ShapelessFixRecipe(new ResourceLocation(Main.MODID,"blade_fix2"), new ItemStack(SlashBlade.proudSoul,2), new ItemStack(sb_white)).setRegistryName(new ResourceLocation(Main.MODID,"blade_fix2")));
         if (bladeforge != null) {
         	bladeforge.baseBlocks.addAll(TinkerTools.toolForge.baseBlocks);
             for (String oredict : bladeforge.baseBlocks) {

@@ -116,7 +116,7 @@ public class SlashBladeHelper {
 		    unbreakTool(stack);
 		    TinkerSlashBladeEvent.OnRepair.fireEvent(stack, amount);
 		    NBTTagCompound nbt = ItemSlashBlade.getItemTagCompound(stack);
-		    ItemSlashBlade.RepairCount.set(nbt, ItemSlashBlade.RepairCount.get(nbt)+1);
+
 		    healTool(stack, amount, entity);
 		  }
 }

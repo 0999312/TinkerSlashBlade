@@ -281,7 +281,10 @@ public class SlashBladeCore extends SlashBladeTICBasic implements IToolStationDi
 	  public double attackSpeed() {
 		return 0;
 	}
-
+	  /** A simple string identifier for the tool, used for identification in texture generation etc. */
+	  public String getIdentifier() {
+	    return getRegistryName().getResourcePath();
+	  }
 	  /**
 	   * Builds a default tool from:
 	   * 1. Handle

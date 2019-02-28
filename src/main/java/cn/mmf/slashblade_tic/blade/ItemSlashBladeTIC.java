@@ -58,8 +58,8 @@ public class ItemSlashBladeTIC extends SlashBladeCore {
 						TinkerUtil.getMaterialsFromTagList(TagUtil.getBaseMaterialsTagList(par1ItemStack)) 
 						: new ArrayList<Material>();
 		if(materials.isEmpty()){
-			materials.add(TinkerMaterials.paper);
-			materials.add(TinkerMaterials.paper);
+			materials.add(TinkerMaterials.wood);
+			materials.add(TinkerMaterials.iron);
 			materials.add(TinkerMaterials.paper);
 		}
 		ResourceLocationRaw res = new ResourceLocationRaw("flammpfeil.slashblade","model/blade.png");
@@ -82,7 +82,7 @@ public class ItemSlashBladeTIC extends SlashBladeCore {
 
 	  @Override
 	  public double attackSpeed() {
-	    return -2d; // default vanilla sword speed
+	    return -2d; 
 	  }
 	
 	  @Override
@@ -93,8 +93,7 @@ public class ItemSlashBladeTIC extends SlashBladeCore {
 	  @Override
 	  public ToolNBT buildTagData(List<Material> materials) {
 	    ToolNBT data = buildDefaultTag(materials);
-	    // 2 base damage, like vanilla swords
-	    data.attack += 1f;
+	    data.attack += 0.5f;
 	    data.durability *= DURABILITY_MODIFIER;
 	    return data;
 	  }

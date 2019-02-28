@@ -214,6 +214,8 @@ public class ContainerBladeStation extends ContainerTinkerStation<TileBladeStati
 
     if(resultTaken) {
       updateSlotsAfterToolAction();
+      NBTTagCompound nbt = ItemSlashBlade.getItemTagCompound(stack);
+      ItemSlashBlade.RepairCount.set(nbt, ItemSlashBlade.RepairCount.get(nbt)+1);
     }
     else {
       // calculate the result again (serverside)
@@ -238,6 +240,7 @@ public class ContainerBladeStation extends ContainerTinkerStation<TileBladeStati
     onCraftMatrixChanged(null);
 
     this.playCraftSound(playerIn);
+
   }
 
   protected void playCraftSound(EntityPlayer player) {
@@ -266,6 +269,7 @@ public class ContainerBladeStation extends ContainerTinkerStation<TileBladeStati
     ItemStack result = SlashBladeBuilder.tryReplaceToolParts(tool, inputs, remove);
     if(!result.isEmpty()) {
       TinkerCraftingEvent.ToolPartReplaceEvent.fireEvent(result, player, inputs);
+      
     }
     return result;
   }
@@ -285,7 +289,6 @@ public class ContainerBladeStation extends ContainerTinkerStation<TileBladeStati
       NBTTagCompound nbt = ItemSlashBlade.getItemTagCompound(result);
       float attack = SlashBladeHelper.getActualAttack(result);
       ItemSlashBlade.setBaseAttackModifier(nbt, attack);
-
     }
     return result;
   }
@@ -307,6 +310,7 @@ public class ContainerBladeStation extends ContainerTinkerStation<TileBladeStati
     }
 
     result.setStackDisplayName(toolName);
+    NBTTagCompound nbt = ItemSlashBlade.getItemTagCompound(result);
 
     return result;
   }

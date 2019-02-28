@@ -23,6 +23,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -72,7 +75,27 @@ public abstract class SlashBladeTICBasic extends ItemSlashBlade implements ITink
 		 this.requiredComponents = requiredComponents;
 	}
 
-
+	@Override
+	public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase,
+			EntityLivingBase par3EntityLivingBase) {
+	    List<ITrait> traits = TinkerUtil.getTraitsOrdered(par1ItemStack);
+	    float baseDamage = (float) par3EntityLivingBase.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
+	    if(par2EntityLivingBase != null) {
+		      for(ITrait trait : traits) {
+		        trait.onHit(par1ItemStack, par3EntityLivingBase, par2EntityLivingBase,0,false);
+		      }
+		    }
+	    boolean result = super.hitEntity(par1ItemStack, par2EntityLivingBase, par3EntityLivingBase);
+	    
+	    if(par2EntityLivingBase != null) {
+	      for(ITrait trait : traits) {
+	        trait.afterHit(par1ItemStack, par3EntityLivingBase, par2EntityLivingBase,baseDamage,false,true);
+	      }
+	    }
+	    
+		return result;
+	}
+	
 	 /* Tool Information */
 	  public List<PartMaterialType> getRequiredComponents() {
 	    return ImmutableList.copyOf(requiredComponents);
@@ -145,7 +168,7 @@ public abstract class SlashBladeTICBasic extends ItemSlashBlade implements ITink
       ItemStack tool = new ItemStack(this);
       tool.setTagCompound(buildItemNBT(materials));
       float attack = SlashBladeHelper.getActualAttack(tool);
-      ItemSlashBlade.setBaseAttackModifier(buildItemNBT(materials), attack);
+      ItemSlashBlade.setBaseAttackModifier(ItemSlashBlade.getItemTagCompound(tool), attack);
       return tool;
     }
 

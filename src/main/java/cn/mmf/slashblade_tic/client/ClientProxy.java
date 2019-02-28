@@ -4,6 +4,7 @@ import org.lwjgl.input.Keyboard;
 
 import cn.mmf.slashblade_tic.CommonProxy;
 import cn.mmf.slashblade_tic.blade.TinkerSlashBladeRegistryClient;
+import cn.mmf.slashblade_tic.client.book.BookBladeSmith;
 import cn.mmf.slashblade_tic.client.gui.SlashBladeBuildGuiInfo;
 import cn.mmf.slashblade_tic.item.RegisterLoader;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -19,6 +20,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import slimeknights.tconstruct.common.ModelRegisterUtil;
 import slimeknights.tconstruct.library.TinkerRegistryClient;
+import slimeknights.tconstruct.library.book.TinkerBook;
 import slimeknights.tconstruct.library.client.ToolBuildGuiInfo;
 import slimeknights.tconstruct.tools.melee.TinkerMeleeWeapons;
 
@@ -29,7 +31,7 @@ public class ClientProxy extends CommonProxy {
 	    public void preInit(FMLPreInitializationEvent event)
 	    {
 	        super.preInit(event);
-
+	        BookBladeSmith.init();
 	    }
 
 
@@ -45,25 +47,21 @@ public class ClientProxy extends CommonProxy {
 	    public void postInit(FMLPostInitializationEvent event)
 	    {
 	        super.postInit(event);
-	       
+	        BookBladeSmith.INSTANCE.fontRenderer = TinkerBook.INSTANCE.fontRenderer;
 	    }
 	    private void registerToolBuildInfo() {
 	        SlashBladeBuildGuiInfo info;
 
-	        // broadsword
 	        info = new SlashBladeBuildGuiInfo(RegisterLoader.sb);
-	        info.addSlotPosition(33 - 20 - 1, 42 + 20); // handle
-	        info.addSlotPosition(33 + 20 - 5, 42 - 20 + 4); // blade
-	        info.addSlotPosition(33 - 2 - 1, 42 + 2); // guard
+	        info.addSlotPosition(33 - 20 - 1, 42 + 20); 
+	        info.addSlotPosition(33 + 20 - 5, 42 - 20 + 4); 
+	        info.addSlotPosition(33 - 2 - 1, 42 + 2); 
 	        TinkerSlashBladeRegistryClient.addToolBuilding(info);
-	        
 	        SlashBladeBuildGuiInfo info2;
-
-	        // broadsword
 	        info2 = new SlashBladeBuildGuiInfo(RegisterLoader.sb_white);
-	        info2.addSlotPosition(33 - 20 - 1, 42 + 20); // handle
-	        info2.addSlotPosition(33 + 20 - 5, 42 - 20 + 4); // blade
-	        info2.addSlotPosition(33 - 2 - 1, 42 + 2); // guard
+	        info2.addSlotPosition(33 - 20 - 1, 42 + 20); 
+	        info2.addSlotPosition(33 + 20 - 5, 42 - 20 + 4); 
+	        info2.addSlotPosition(33 - 2 - 1, 42 + 2); 
 	        TinkerSlashBladeRegistryClient.addToolBuilding(info2);
 	        
 	    }

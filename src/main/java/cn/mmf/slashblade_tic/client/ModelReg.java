@@ -28,4 +28,10 @@ public class ModelReg {
         ModelResourceLocation model = new ModelResourceLocation(block.getRegistryName(), "inventory");
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, model);
     }
+    @SideOnly(Side.CLIENT)
+    public static void registerRender(Item block)
+    {
+        ModelResourceLocation model = new ModelResourceLocation(block.getRegistryName(), "inventory");
+        ModelLoader.setCustomModelResourceLocation(block, 0, model);
+    }
 }
