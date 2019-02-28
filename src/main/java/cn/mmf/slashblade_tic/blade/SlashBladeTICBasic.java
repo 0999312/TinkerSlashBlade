@@ -68,7 +68,6 @@ public abstract class SlashBladeTICBasic extends ItemSlashBlade implements ITink
 
     protected final PartMaterialType[] requiredComponents;
     
-    // used to classify what the thing can do
     protected final Set<Category> categories = new THashSet<>();
 	public SlashBladeTICBasic(PartMaterialType... requiredComponents) {
 		super(ToolMaterial.IRON, 4f);
@@ -125,7 +124,7 @@ public abstract class SlashBladeTICBasic extends ItemSlashBlade implements ITink
 	
 	@Override
 	  public int getMaxDamage(ItemStack stack) {
-	    return (ToolHelper.getDurabilityStat(stack)<2)?ToolHelper.getDurabilityStat(stack):2;
+	    return (ToolHelper.getDurabilityStat(stack)<2)?2:ToolHelper.getDurabilityStat(stack);
 	  }
 
 	  @Override
