@@ -9,6 +9,10 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import slimeknights.tconstruct.common.TinkerNetwork;
 @Config(modid= Main.MODID)
 public class ConfigHandler {
+    @Config.Name("Spawn With Book")
+    @Config.Comment("Set to true to give an BSM to players who enter a world for the first time")
+    public static boolean spawnWithBook = true;
+    
     public static final Leveling leveling = new Leveling();
 	   public static class Leveling {
 	        @Config.Name("Starting Modifier Amount")
@@ -22,11 +26,11 @@ public class ConfigHandler {
 	        @Config.Name("Base XP Requirement")
 	        @Config.Comment("Base XP needed for blade")
 	        @Config.RequiresWorldRestart
-	        public int baseXP = 100;
+	        public int baseXP = 1000;
 	        @Config.Name("Leveling Multiplier")
 	        @Config.Comment("How much to multiply the experience needed for each level")
 	        @Config.RequiresWorldRestart
-	        public float levelMultiplier = 2.0F;
+	        public float levelMultiplier = 2.5F;
 	    }
 	    @Mod.EventBusSubscriber(modid = Main.MODID)
 	    private static class ConfigEventHandler {

@@ -23,8 +23,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -127,6 +129,17 @@ public abstract class SlashBladeTICBasic extends ItemSlashBlade implements ITink
 	    return (ToolHelper.getDurabilityStat(stack)<2)?2:ToolHelper.getDurabilityStat(stack);
 	  }
 
+	@Override
+	public void onUpdate(ItemStack arg0, World arg1, Entity arg2, int arg3, boolean arg4) {
+		super.onUpdate(arg0, arg1, arg2, arg3, arg4);
+	    onUpdateTraits(arg0, arg1, arg2, arg3, arg4);
+	}
+	  protected void onUpdateTraits(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+		    final boolean isSelectedOrOffhand = isSelected ||
+		                                     (entityIn instanceof EntityPlayer && ((EntityPlayer) entityIn).getHeldItemOffhand() == stack);
+
+		    TinkerUtil.getTraitsOrdered(stack).forEach(trait -> trait.onUpdate(stack, worldIn, entityIn, itemSlot, isSelectedOrOffhand));
+		  }
 	  @Override
 	  public void setDamage(ItemStack stack, int damage) {
 	    int max = getMaxDamage(stack);

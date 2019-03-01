@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 import org.apache.commons.io.IOUtils;
 
+import cn.mmf.slashblade_tic.ConfigHandler;
 import cn.mmf.slashblade_tic.Main;
 import cn.mmf.slashblade_tic.blade.ItemSlashBladeTIC;
 import cn.mmf.slashblade_tic.blade.ItemSlashBladeTICWhite;
@@ -31,6 +32,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.IResourceManager;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
@@ -48,16 +50,19 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.oredict.OreIngredient;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import net.minecraftforge.registries.IForgeRegistry;
 import slimeknights.tconstruct.common.ModelRegisterUtil;
 import slimeknights.tconstruct.library.TinkerRegistry;
+import slimeknights.tconstruct.library.book.TinkerBook;
 import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.tinkering.PartMaterialType;
 import slimeknights.tconstruct.library.tinkering.TinkersItem;
@@ -65,6 +70,8 @@ import slimeknights.tconstruct.library.tools.IToolPart;
 import slimeknights.tconstruct.library.tools.Pattern;
 import slimeknights.tconstruct.library.tools.ToolCore;
 import slimeknights.tconstruct.library.tools.ToolPart;
+import slimeknights.tconstruct.library.utils.TagUtil;
+import slimeknights.tconstruct.shared.TinkerCommons;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 import slimeknights.tconstruct.tools.TinkerMaterials;
 import slimeknights.tconstruct.tools.TinkerTools;
@@ -195,6 +202,9 @@ public class RegisterLoader {
         registry.register(new ShapelessOreRecipe(new ResourceLocation(Main.MODID,"blade_station"), bladestation, new Object[]{
         		SlashBlade.bladeWood,TinkerTools.toolTables
         }).setRegistryName(new ResourceLocation(Main.MODID,"blade_station")));
+        registry.register(new ShapelessOreRecipe(new ResourceLocation(Main.MODID,"book_smith"), book_smith, new Object[]{
+        		SlashBlade.bladeWood,TinkerCommons.book
+        }).setRegistryName(new ResourceLocation(Main.MODID,"book_smith")));
         if (bladeforge != null) {
         	bladeforge.baseBlocks.addAll(TinkerTools.toolForge.baseBlocks);
             for (String oredict : bladeforge.baseBlocks) {
@@ -239,5 +249,19 @@ public class RegisterLoader {
         ToolClientEvents.replaceTableModel(new ModelResourceLocation(bladestation.getRegistryName(), "normal"), evt);
         ToolClientEvents.replaceTableModel(new ModelResourceLocation(bladeforge.getRegistryName(), "inventory"), evt);
         ToolClientEvents.replaceTableModel(new ModelResourceLocation(bladestation.getRegistryName(), "inventory"), evt);
+    }
+	
+    @SubscribeEvent
+    public void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+        if(ConfigHandler.spawnWithBook) {
+            NBTTagCompound playerData = event.player.getEntityData();
+            NBTTagCompound data = TagUtil.getTagSafe(playerData, EntityPlayer.PERSISTED_NBT_TAG);
+
+            if(!data.getBoolean(Main.MODID+"_hasbook")) {
+                ItemHandlerHelper.giveItemToPlayer(event.player, new ItemStack(book_smith));
+                data.setBoolean(Main.MODID+"_hasbook", true);
+                playerData.setTag(EntityPlayer.PERSISTED_NBT_TAG, data);
+            }
+        }
     }
 }
