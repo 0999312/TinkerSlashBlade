@@ -1,8 +1,15 @@
 item.slashbladetic.slashblade.saya.name=鞘
+item.slashbladetic.slashblade.handle.name=柄
+item.slashbladetic.slashblade.blade.name=刃
 item.slashbladetic.slashblade.name=大太刀「」
 item.slashbladetic.slashblade.white.name=利刀「白鞘」
-item.slashbladetic.book_smith.name=《職人スタンダードマニュアル》
+item.slashbladetic.book_smith.name=《刀鍛冶スタンダードマニュアル》
+tile.slashbladetic.blade_station.name=刀組立台
+tile.slashbladetic.blade_forge.name=刀鍛治台
+gui.bladeforge.name=刀組立台
+gui.bladestation.name=刀鍛冶台
 item.slashbladetic.slashblade.desc=無銘無名の大業物\n付与術が印は業が受皿\n力持つ名振るうは業の極
 item.slashbladetic.slashblade.white.desc=白鞘\n切裂く意思が寄り代\nなれど業には不十分
+modifier.proud_soul.name=刀の魂片
 
 item.slashbladetic.book_smith.tooltip=Made by MMF Group.
