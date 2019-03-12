@@ -10,6 +10,6 @@ gui.bladeforge.name=刀組立台
 gui.bladestation.name=刀鍛冶台
 item.slashbladetic.slashblade.desc=無銘無名の大業物\n付与術が印は業が受皿\n力持つ名振るうは業の極
 item.slashbladetic.slashblade.white.desc=白鞘\n切裂く意思が寄り代\nなれど業には不十分
-modifier.proud_soul.name=刀の魂片
+modifier.proud_soul.name=栄光の魂
 
-item.slashbladetic.book_smith.tooltip=Made by MMF Group.
+item.slashbladetic.book_smith.tooltip=妖怪の山鍛工場 著
