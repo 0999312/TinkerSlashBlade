@@ -118,16 +118,10 @@ public class RegisterLoader {
 	    TinkerSlashBladeRegistry.registerTool(sb);
 		TinkerSlashBladeRegistry.registerToolForgeCrafting(sb);	
 
-		for(SlashBladeCore sb : TinkerSlashBladeRegistry.getTools()){
-			for (final PartMaterialType pmt: sb.getRequiredComponents()) {
-				if (pmt.getPossibleParts().contains(wrapper)) 
-					TinkerRegistry.registerStencilTableCrafting(Pattern.setTagForPart(new ItemStack(TinkerTools.pattern), wrapper));
-				if (pmt.getPossibleParts().contains(blade)) 
-					TinkerRegistry.registerStencilTableCrafting(Pattern.setTagForPart(new ItemStack(TinkerTools.pattern), blade));
-				if (pmt.getPossibleParts().contains(handle)) 
-					TinkerRegistry.registerStencilTableCrafting(Pattern.setTagForPart(new ItemStack(TinkerTools.pattern), handle));
-			}
-		}
+		TinkerRegistry.registerStencilTableCrafting(Pattern.setTagForPart(new ItemStack(TinkerTools.pattern), wrapper));
+		TinkerRegistry.registerStencilTableCrafting(Pattern.setTagForPart(new ItemStack(TinkerTools.pattern), blade));
+		TinkerRegistry.registerStencilTableCrafting(Pattern.setTagForPart(new ItemStack(TinkerTools.pattern), handle));
+
 	}
 	@SideOnly(Side.CLIENT)
 	public static void RegisterColor(SlashBladeCore sb,String name) throws IOException {

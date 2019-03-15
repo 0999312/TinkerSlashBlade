@@ -11,6 +11,7 @@ import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.hash.TIntIntHashMap;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -18,7 +19,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.translation.I18n;
 
 import org.apache.logging.log4j.Logger;
 
@@ -234,7 +234,7 @@ public final class SlashBladeBuilder {
     for(int i = 0; i < input.size(); i++) {
       if(!input.get(i).isEmpty() && ItemStack.areItemStacksEqual(input.get(i), stacks.get(i))) {
         if(!appliedModifiers.isEmpty()) {
-          String error = I18n.translateToLocalFormatted("gui.error.no_modifier_for_item", input.get(i).getDisplayName());
+          String error = I18n.format("gui.error.no_modifier_for_item", input.get(i).getDisplayName());
           throw new TinkerGuiException(error);
         }
         return ItemStack.EMPTY;
@@ -281,7 +281,7 @@ public final class SlashBladeBuilder {
   @Nonnull
   public static ItemStack tryReplaceToolParts(ItemStack toolStack, final NonNullList<ItemStack> toolPartsIn, final boolean removeItems)
       throws TinkerGuiException {
-    if(toolStack == null || !(toolStack.getItem() instanceof TinkersItem)) {
+    if(toolStack == null || !(toolStack.getItem() instanceof SlashBladeCore)) {
       return ItemStack.EMPTY;
     }
 
@@ -295,7 +295,7 @@ public final class SlashBladeBuilder {
     final NonNullList<ItemStack> toolParts = Util.deepCopyFixedNonNullList(inputItems);
 
     TIntIntMap assigned = new TIntIntHashMap();
-    TinkersItem tool = (TinkersItem) toolStack.getItem();
+    SlashBladeCore tool = (SlashBladeCore) toolStack.getItem();
     // materiallist has to be copied because it affects the actual NBT on the tool if it's changed
     final NBTTagList materialList = TagUtil.getBaseMaterialsTagList(toolStack).copy();
 
@@ -357,7 +357,7 @@ public final class SlashBladeBuilder {
     });
 
     // check that each material is still compatible with each modifier
-    TinkersItem tinkersItem = (TinkersItem) toolStack.getItem();
+    SlashBladeCore tinkersItem = (SlashBladeCore) toolStack.getItem();
     ItemStack copyToCheck = tinkersItem.buildItem(TinkerUtil.getMaterialsFromTagList(materialList));
     // this includes traits
     NBTTagList modifiers = TagUtil.getBaseModifiersTagList(toolStack);
@@ -393,7 +393,7 @@ public final class SlashBladeBuilder {
 
     // check if the output has enough durability. we only allow it if the result would not be broken
     if(output.getItemDamage() > output.getMaxDamage()) {
-      String error = I18n.translateToLocalFormatted("gui.error.not_enough_durability", output.getItemDamage() - output.getMaxDamage());
+      String error = I18n.format("gui.error.not_enough_durability", output.getItemDamage() - output.getMaxDamage());
       throw new TinkerGuiException(error);
     }
 
@@ -416,7 +416,7 @@ public final class SlashBladeBuilder {
       throws TinkerGuiException {
     Item itemPart = Pattern.getPartFromTag(pattern);
     if(itemPart == null || !(itemPart instanceof MaterialItem) || !(itemPart instanceof IToolPart)) {
-      String error = I18n.translateToLocalFormatted("gui.error.invalid_pattern");
+      String error = I18n.format("gui.error.invalid_pattern");
       throw new TinkerGuiException(error);
     }
 
