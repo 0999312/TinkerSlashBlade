@@ -2,11 +2,11 @@
   "blademodifier": "proud_soul",
   "text": [
     {
-      "text": "あなたはあなたの刃に影響を与える栄光の感覚を感じます"
+      "text": "あなたは栄光の魂による刀への影響を感じ取り、刀はより多くのProudSoulを得ます。"
     }
   ],
   "effects": [
-    "Increases more proudsoul",
+    "ProudSoul獲得量を増加",
     "単一レベル"
   ]
 }
