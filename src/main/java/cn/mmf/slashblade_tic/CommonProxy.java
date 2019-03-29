@@ -5,12 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.alcatrazescapee.tinkersforging.TinkersForging;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 
 import cn.mmf.slashblade_tic.blade.SlashBladeCore;
 import cn.mmf.slashblade_tic.blade.TinkerSlashBladeEvent;
 import cn.mmf.slashblade_tic.blade.TinkerSlashBladeRegistry;
+import cn.mmf.slashblade_tic.compat.tinkersforging.TinkerForging_Recipes;
+import cn.mmf.slashblade_tic.compat.tinkersurvival.TinkerSurvival_WhiteList;
 import cn.mmf.slashblade_tic.compat.tinkertoolleveling.ModBladeLeveling;
 import cn.mmf.slashblade_tic.item.RegisterLoader;
 import cn.mmf.slashblade_tic.modifiers.ModBladeExtraTrait;
@@ -56,6 +59,7 @@ import slimeknights.tconstruct.tools.modifiers.ModSharpness;
 import slimeknights.tconstruct.tools.modifiers.ModSilktouch;
 import slimeknights.tconstruct.tools.modifiers.ModSoulbound;
 import slimeknights.tconstruct.tools.modifiers.ModWebbed;
+import tinkersurvival.TinkerSurvival;
 
 public class CommonProxy {
 	 public static Modifier modProud;
@@ -91,9 +95,14 @@ public class CommonProxy {
 
 	public void postInit(FMLPostInitializationEvent event)
     {
-        if (Loader.isModLoaded("tinkertoolleveling")) {
+        if (Loader.isModLoaded("tinkertoolleveling")) 
             ModBladeLeveling.modLeveling = new ModBladeLeveling();
-        }
+      
+        if(Loader.isModLoaded(TinkerSurvival.MODID))
+        	new TinkerSurvival_WhiteList();
+        
+        if(Loader.isModLoaded(TinkersForging.MOD_ID))
+        	new TinkerForging_Recipes();
         registerExtraTraitModifiers();
 
     }

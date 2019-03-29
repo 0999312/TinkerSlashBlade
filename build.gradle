@@ -11,7 +11,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
-version = "V1.0.4-MC1.12.2"
+version = "V1.0.6-MC1.12.2"
 group = "cn.mmf.slashbladetic" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "SlashBladeTic"
 
@@ -70,6 +70,10 @@ dependencies {
 
 	deobfCompile "slimeknights.mantle:Mantle:1.12-1.3.3.39"
     deobfCompile "slimeknights:TConstruct:1.12.2-2.12.0.113"
+	
+	deobfCompile "tinkersurvival:TinkerSurvival:1.12.2:1.1.0.4"
+	deobfCompile "alcatrazcore:alcatrazcore:1.0.4"
+	deobfCompile "tinkers-forging:tinkersforging:1.1.2"
 }
 
 processResources {

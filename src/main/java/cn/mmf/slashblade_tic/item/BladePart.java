@@ -1,10 +1,14 @@
 package cn.mmf.slashblade_tic.item;
 
+import com.alcatrazescapee.tinkersforging.TinkersForging;
+
+import cn.mmf.slashblade_tic.ConfigHandler;
 import cn.mmf.slashblade_tic.blade.SlashBladeCore;
 import cn.mmf.slashblade_tic.blade.TinkerSlashBladeRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.fml.common.Loader;
 import slimeknights.tconstruct.common.config.Config;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.Material;
@@ -46,4 +50,9 @@ public class BladePart extends ToolPart {
 
 	    return false;
 	  }
+	  
+	  @Override
+	public boolean canBeCasted() {
+		return !ConfigHandler.must_Forging&&!Loader.isModLoaded(TinkersForging.MOD_ID);
+	}
 }

@@ -96,17 +96,15 @@ public class RegisterLoader {
 		 wrapper = (BladePart) new BladePart(Material.VALUE_Ingot * 8)
 				 .setUnlocalizedName(Main.MODID+".slashblade.saya");
 		 register(wrapper);
-		 TinkerSlashBladeRegistry.registerToolPart(wrapper);
 		 blade = (BladePart) new BladePart(Material.VALUE_Ingot * 4)
 				 .setUnlocalizedName(Main.MODID+".slashblade.blade");
 		 register(blade);
-		 TinkerSlashBladeRegistry.registerToolPart(wrapper);
 		 handle = (BladePart) new BladePart(Material.VALUE_Ingot * 2)
 				 .setUnlocalizedName(Main.MODID+".slashblade.handle");
 		 register(handle);
-		 TinkerSlashBladeRegistry.registerToolPart(wrapper);
-		 TinkerSlashBladeRegistry.registerToolPart(blade);
-		 TinkerSlashBladeRegistry.registerToolPart(handle);
+		 TinkerSlashBladeRegistry.registerToolPart(wrapper,wrapper);
+		 TinkerSlashBladeRegistry.registerToolPart(blade,blade);
+		 TinkerSlashBladeRegistry.registerToolPart(handle,handle);
 		 
 		sb_white = (ItemSlashBladeTICWhite) new ItemSlashBladeTICWhite().setUnlocalizedName(Main.MODID+".slashblade.white");
 		 register(sb_white);

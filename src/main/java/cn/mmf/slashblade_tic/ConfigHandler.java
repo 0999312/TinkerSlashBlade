@@ -13,6 +13,14 @@ public class ConfigHandler {
     @Config.Comment("Set to true to give an BSM to players who enter a world for the first time")
     public static boolean spawnWithBook = true;
     
+    @Config.Name("Auto set SlashBlade in tinker's survival")
+    @Config.Comment("Set to true to auto add SlashBlade and addons to tinker's survival's whitelist.")
+    public static boolean slashblade_autoWhiteList = false;
+    
+    @Config.Name("Must using forging when tinker's forging is loaded")
+    @Config.Comment("Set to true to make blade parts can't be casted when tinker's forging is loaded.")
+    public static boolean must_Forging = false;
+    
     public static final Leveling leveling = new Leveling();
 	   public static class Leveling {
 	        @Config.Name("Starting Modifier Amount")

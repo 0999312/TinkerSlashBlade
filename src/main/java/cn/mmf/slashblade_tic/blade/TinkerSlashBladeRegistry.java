@@ -38,7 +38,7 @@ public class TinkerSlashBladeRegistry {
 
 	  /** This set contains all known tools */
 	  private static final Set<SlashBladeCore> tools = new TLinkedHashSet<>();
-	  private static final Set<IToolPart> toolParts = new TLinkedHashSet<>();
+	  private static final Set<Item> toolPartItems = new TLinkedHashSet<>();
 	  private static final Set<SlashBladeCore> toolStationCrafting = Sets.newLinkedHashSet();
 	  private static final Set<SlashBladeCore> toolForgeCrafting = Sets.newLinkedHashSet();
 	  private static final List<ItemStack> stencilTableCrafting = Lists.newLinkedList();
@@ -68,7 +68,11 @@ public class TinkerSlashBladeRegistry {
 	   * Used for the sharpening kit. Allows to register a toolpart that is not part of a tool.
 	   */
 	  public static void registerToolPart(IToolPart part) {
-	    TinkerRegistry.registerToolPart(part);
+		registerToolPart(part,null);
+	  }
+	  public static void registerToolPart(IToolPart part,Item item) {
+		 if(item !=null) toolPartItems.add(item);
+		    TinkerRegistry.registerToolPart(part);
 	  }
 
 
@@ -95,6 +99,10 @@ public class TinkerSlashBladeRegistry {
 	  public static Set<SlashBladeCore> getToolForgeCrafting() {
 	    return ImmutableSet.copyOf(toolForgeCrafting);
 	  }
+	  
+	  public static Set<Item> getAllPartItems() {
+		    return ImmutableSet.copyOf(toolPartItems);
+		  }
 
 	  /** Adds a new pattern to craft to the stenciltable. NBT sensitive. Has to be a Pattern. */
 	  public static void registerStencilTableCrafting(ItemStack stencil) {
