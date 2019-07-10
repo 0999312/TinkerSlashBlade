@@ -12,4 +12,23 @@ item.slashbladetic.slashblade.desc=無銘無名の大業物\n付与術が印は�
 item.slashbladetic.slashblade.white.desc=白鞘\n切裂く意思が寄り代\nなれど業には不十分
 modifier.proud_soul.name=栄光の魂
 
+item.slashbladetic.blade_model_paper.name=拵の紙
+
+slashbladetic.blade_model.name=拵
+
+modifier.blade_extratrait.name=刀の印
+modifier.blade_model_change.name=拵入り
+
+modifier.proud_soul.desc=ProudSoul獲得量を増加
+modifier.blade_extratrait.desc=別の部品の能力を加える
+modifier.blade_model_change.desc=最終的なもので変更はできません
+
 item.slashbladetic.book_smith.tooltip=妖怪の山鍛工場 著
+
+slashbladetic.blade_standby.name=スタイルでスタンバイ
+slashbladetic.summonedswordcolor.name=幻影剣の色
+
+slashblade.standby.null.name=ヌル
+slashblade.standby.left_hand.name=左手
+slashblade.standby.back.name=背後
+slashblade.standby.ninja.name=忍者スタイル

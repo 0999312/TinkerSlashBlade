@@ -3,6 +3,7 @@ package cn.mmf.slashblade_tic.modifiers;
 import com.google.common.collect.ImmutableList;
 
 import cn.mmf.slashblade_tic.blade.SlashBladeCore;
+import cn.mmf.slashblade_tic.blade.TinkerSlashBladeRegistry;
 import cn.mmf.slashblade_tic.util.SlashBladeBuilder;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -19,6 +20,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import slimeknights.mantle.util.RecipeMatch;
+import slimeknights.mantle.util.RecipeMatchRegistry;
 import slimeknights.tconstruct.library.Util;
 import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.modifiers.ModifierAspect;
@@ -45,11 +47,12 @@ public class ModBladeExtraTrait extends ToolModifier {
 
   public ModBladeExtraTrait(Material material, Collection<ITrait> traits, String customIdentifier) {
       super(EXTRA_TRAIT_IDENTIFIER + customIdentifier, material.materialTextColor);
-
-    this.material = material;
-    this.toolCores = new HashSet<>();
-    this.traits = traits;
-    addAspects(new ExtraTraitAspect(), new ModifierAspect.SingleAspect(this), new ModifierAspect.DataAspect(this));
+      
+      TinkerSlashBladeRegistry.registerModifier(this);
+      this.material = material;
+      this.toolCores = new HashSet<>();
+      this.traits = traits;
+      addAspects(new ExtraTraitAspect(), new ModifierAspect.SingleAspect(this), new ModifierAspect.DataAspect(this));
   }
 
   public <T extends Item & IToolPart> void addCombination(SlashBladeCore toolCore, T toolPart) {
@@ -110,7 +113,6 @@ public class ModBladeExtraTrait extends ToolModifier {
     public void updateNBT(NBTTagCompound root, NBTTagCompound modifierTag) {
       // nothing to do
     }
-
 
   }
 

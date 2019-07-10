@@ -24,6 +24,8 @@ import cn.mmf.slashblade_tic.block.BlockBladeStation;
 import cn.mmf.slashblade_tic.block.tileentity.TileBladeForge;
 import cn.mmf.slashblade_tic.block.tileentity.TileBladeStation;
 import cn.mmf.slashblade_tic.client.ModelReg;
+import cn.mmf.slashblade_tic.modifiers.ModBladeExtraTraitDisplay;
+import cn.mmf.slashblade_tic.modifiers.ModBladeModelChangeDisplay;
 import cn.mmf.slashblade_tic.util.TextureMixer;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
@@ -84,7 +86,7 @@ public class RegisterLoader {
 	public static SlashBladeCore sb,sb_white;
 	public static Block bladestation;
 	public static BlockBladeForge bladeforge;
-	public static Item book_smith;
+	public static Item book_smith,blade_model_paper;
 	public RegisterLoader(FMLPreInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
@@ -92,6 +94,8 @@ public class RegisterLoader {
 	public static void initItems(RegistryEvent.Register<Item> event) {
 		book_smith = new ItemBookBladeSmith().setUnlocalizedName(Main.MODID+".book_smith");
 		register(book_smith);
+		blade_model_paper = new ItemBladeModelTexture().setUnlocalizedName(Main.MODID+".blade_model_paper");
+		register(blade_model_paper);
 		
 		 wrapper = (BladePart) new BladePart(Material.VALUE_Ingot * 8)
 				 .setUnlocalizedName(Main.MODID+".slashblade.saya");
@@ -160,6 +164,7 @@ public class RegisterLoader {
 	@SubscribeEvent
 	public static void RegisterModel(ModelRegistryEvent event) {
 		ModelReg.registerRender(book_smith);
+		ModelReg.registerRender(blade_model_paper);
 		
 		ModelRegisterUtil.registerPartModel(RegisterLoader.wrapper);
 		ModelRegisterUtil.registerPartModel(RegisterLoader.handle);
@@ -174,6 +179,9 @@ public class RegisterLoader {
 		ModelReg.Slashblade_model(sb_white);
 		ModelReg.registerRender(bladestation);
 		ModelReg.registerRender(bladeforge);
+		
+		new ModBladeExtraTraitDisplay();
+		new ModBladeModelChangeDisplay();
 	}
 	@SubscribeEvent
 	public static void RegisterBlock(RegistryEvent.Register<Block> event) {
@@ -190,7 +198,8 @@ public class RegisterLoader {
 	@SubscribeEvent
     public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
         IForgeRegistry<IRecipe> registry = event.getRegistry();
-
+        SlashBlade.addRecipe("model_change_paper", new RecipePaperGetting());
+        MinecraftForge.EVENT_BUS.register(new RecipePaperGetting());
         registry.register(new ShapelessOreRecipe(new ResourceLocation(Main.MODID,"blade_station"), bladestation, new Object[]{
         		SlashBlade.bladeWood,TinkerTools.toolTables
         }).setRegistryName(new ResourceLocation(Main.MODID,"blade_station")));

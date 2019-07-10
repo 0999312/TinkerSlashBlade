@@ -12,6 +12,7 @@ import com.alcatrazescapee.tinkersforging.util.material.MaterialType;
 
 import cn.mmf.slashblade_tic.Main;
 import cn.mmf.slashblade_tic.blade.TinkerSlashBladeRegistry;
+import cn.mmf.slashblade_tic.item.RegisterLoader;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,19 +24,26 @@ public class TinkerForging_Recipes {
 
 	public TinkerForging_Recipes() {
 		for(Item item : TinkerSlashBladeRegistry.getAllPartItems()){
-        for (MaterialType material : MaterialRegistry.getAllMaterials())
-        {
-            if (!MaterialRegistry.isTinkersMaterial(material) || !material.isEnabled()) continue;
-
-            ItemStack output = getPartFor(item, material);
-
-            String inputOre = UPPER_UNDERSCORE_TO_LOWER_CAMEL.convert("INGOT_" + material.getName());
-
-            if (!output.isEmpty() && inputOre != null && OreDictionary.doesOreNameExist(inputOre))
-            	ModRecipes.ANVIL.add(new AnvilRecipe(output, inputOre, 2, material.getTier(), new ForgeRule[]{
-            			ForgeRule.DRAW_NOT_LAST,ForgeRule.HIT_LAST,ForgeRule.SHRINK_ANY
-            	}));
-        }
+	        for (MaterialType material : MaterialRegistry.getAllMaterials())
+	        {
+	            if (!MaterialRegistry.isTinkersMaterial(material) || !material.isEnabled()) continue;
+	
+	            ItemStack output = getPartFor(item, material);
+	            String inputOre = UPPER_UNDERSCORE_TO_LOWER_CAMEL.convert("INGOT_" + material.getName());
+	
+	            if (!output.isEmpty() && inputOre != null && OreDictionary.doesOreNameExist(inputOre))
+	            	ModRecipes.ANVIL.add(new AnvilRecipe(output, inputOre, 4, material.getTier(), new ForgeRule[]{
+	            			ForgeRule.DRAW_NOT_LAST,ForgeRule.HIT_LAST,ForgeRule.SHRINK_ANY
+	            	}));
+	            if (!output.isEmpty() &&output.getItem() == RegisterLoader.handle && inputOre != null && OreDictionary.doesOreNameExist(inputOre))
+	            	ModRecipes.ANVIL.add(new AnvilRecipe(output, inputOre, 6, material.getTier(), new ForgeRule[]{
+	            			ForgeRule.DRAW_NOT_LAST,ForgeRule.HIT_LAST,ForgeRule.SHRINK_ANY
+	            	}));
+	            if (!output.isEmpty() &&output.getItem() == RegisterLoader.wrapper && inputOre != null && OreDictionary.doesOreNameExist(inputOre))
+	            	ModRecipes.ANVIL.add(new AnvilRecipe(output, inputOre, 5, material.getTier(), new ForgeRule[]{
+	            			ForgeRule.BEND_NOT_LAST,ForgeRule.UPSET_LAST,ForgeRule.DRAW_ANY
+	            	}));
+	        }
 		}
 	}
 	

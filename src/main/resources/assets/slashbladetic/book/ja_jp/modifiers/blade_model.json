@@ -1,0 +1,12 @@
+{
+  "blademodifier": "blade_model_change",
+  "text": [
+    {
+      "text": "刀の拵入り~"
+    }
+  ],
+  "effects": [
+    "拵入りは最終的なもので変更はできません",
+    "改造スロット不要"
+  ]
+}

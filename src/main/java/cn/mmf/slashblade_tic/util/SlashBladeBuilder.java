@@ -123,7 +123,7 @@ public final class SlashBladeBuilder {
       return;
     }
 
-    IModifier modifier = TinkerRegistry.getModifier(trait.getIdentifier());
+    IModifier modifier = TinkerSlashBladeRegistry.getModifier(trait.getIdentifier());
 
     if(modifier == null || !(modifier instanceof AbstractTrait)) {
       log.error("addTrait: No matching modifier for the Trait {} present", trait.getIdentifier());
@@ -160,6 +160,7 @@ public final class SlashBladeBuilder {
 
     return ((IRepairable) toolStack.getItem()).repair(toolStack, stacks);
   }
+  
 
   /**
    * Takes a tool and an array of itemstacks and tries to modify the tool with those.
@@ -287,7 +288,7 @@ public final class SlashBladeBuilder {
 
     // we never modify the original. Caller can remove all of them if we return a result
     NonNullList<ItemStack> inputItems = ItemStackList.of(Util.deepCopyFixedNonNullList(toolPartsIn));
-    if(!TinkerEvent.OnToolPartReplacement.fireEvent(inputItems, toolStack)) {
+    if(!TinkerSlashBladeEvent.OnToolPartReplacement.fireEvent(inputItems, toolStack)) {
       // event cancelled
       return ItemStack.EMPTY;
     }
@@ -612,4 +613,7 @@ public final class SlashBladeBuilder {
 
     rootTag.setTag("ench", enchantments);
   }
+  
+
+
 }

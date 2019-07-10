@@ -2,6 +2,7 @@ package cn.mmf.slashblade_tic.blade;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -40,6 +41,7 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.oredict.OreDictionary;
 import slimeknights.mantle.util.RecipeMatch;
 import slimeknights.tconstruct.common.ClientProxy;
 import slimeknights.tconstruct.common.config.Config;
@@ -133,25 +135,29 @@ public abstract class SlashBladeTICBasic extends ItemSlashBlade implements ITink
 	public void onUpdate(ItemStack arg0, World arg1, Entity arg2, int arg3, boolean arg4) {
 		super.onUpdate(arg0, arg1, arg2, arg3, arg4);
 	    onUpdateTraits(arg0, arg1, arg2, arg3, arg4);
+	    onUpdateBroken(arg0);
 	}
-	  protected void onUpdateTraits(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		    final boolean isSelectedOrOffhand = isSelected ||
-		                                     (entityIn instanceof EntityPlayer && ((EntityPlayer) entityIn).getHeldItemOffhand() == stack);
+	
+	private void onUpdateBroken(ItemStack stack) {
+		 NBTTagCompound tag = TagUtil.getToolTag(stack);
+		if(SlashBladeHelper.getCurrentDurability(stack)==SlashBladeHelper.getMaxDurability(stack))
+			SlashBladeHelper.unbreakTool(stack);
+		else
+		if(SlashBladeHelper.getCurrentDurability(stack)==0)
+			SlashBladeHelper.breakTool(stack, null);
+		if(SlashBladeHelper.isBroken(stack)) 
+			ItemSlashBlade.IsBroken.set(tag, true);
+		else 
+			ItemSlashBlade.IsBroken.set(tag, false);
+	}
+	
+	protected void onUpdateTraits(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+	final boolean isSelectedOrOffhand = isSelected || (entityIn instanceof EntityPlayer && ((EntityPlayer) entityIn).getHeldItemOffhand() == stack);
+	TinkerUtil.getTraitsOrdered(stack).forEach(trait -> trait.onUpdate(stack, worldIn, entityIn, itemSlot, isSelectedOrOffhand));
+	}
 
-		    TinkerUtil.getTraitsOrdered(stack).forEach(trait -> trait.onUpdate(stack, worldIn, entityIn, itemSlot, isSelectedOrOffhand));
-		  }
-	  @Override
-	  public void setDamage(ItemStack stack, int damage) {
-	    int max = getMaxDamage(stack);
-	    super.setDamage(stack, Math.min(max, damage));
-
-	    if(getDamage(stack) == max) {
-	      SlashBladeHelper.breakTool(stack, null);
-	      NBTTagCompound nbt = ItemSlashBlade.getItemTagCompound(stack);
-		  ItemSlashBlade.IsBroken.set(nbt, true);
-	    }
-	  }
-
+	
+	  
 	  @Override
 	  public boolean isDamageable() {
 	    return true;
@@ -164,7 +170,7 @@ public abstract class SlashBladeTICBasic extends ItemSlashBlade implements ITink
 	
     public final NBTTagCompound buildTag(List<Material> materials) {
       NBTTagCompound nbt = buildTagData(materials).get();
-      
+
       return nbt;
     }
 
@@ -206,10 +212,8 @@ public abstract class SlashBladeTICBasic extends ItemSlashBlade implements ITink
 
       // add traits
       addMaterialTraits(basetag, materials);
-
       // fire toolbuilding event
       TinkerSlashBladeEvent.OnItemBuilding.fireEvent(basetag, ImmutableList.copyOf(materials), this);
-
       return basetag;
     }
 

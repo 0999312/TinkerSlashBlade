@@ -274,7 +274,9 @@ public class ContainerBladeStation extends ContainerTinkerStation<TileBladeStati
     ItemStack result = SlashBladeBuilder.tryReplaceToolParts(tool, inputs, remove);
     if(!result.isEmpty()) {
       TinkerCraftingEvent.ToolPartReplaceEvent.fireEvent(result, player, inputs);
-      
+      NBTTagCompound nbt = ItemSlashBlade.getItemTagCompound(result);
+      float attack = SlashBladeHelper.getActualAttack(result);
+      ItemSlashBlade.setBaseAttackModifier(nbt, attack);
     }
     return result;
   }

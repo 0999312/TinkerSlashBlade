@@ -20,6 +20,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -36,7 +37,7 @@ import slimeknights.tconstruct.tools.TinkerTools;
 
 public class ItemSlashBladeTICWhite extends SlashBladeCore {
 	
-	public static final float DURABILITY_MODIFIER = 0.75f;
+	public static final float DURABILITY_MODIFIER = 0.6f;
 
 	  public ItemSlashBladeTICWhite() {
 	    super(PartMaterialType.handle(TinkerTools.toughToolRod),
@@ -78,6 +79,7 @@ public class ItemSlashBladeTICWhite extends SlashBladeCore {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public ResourceLocationRaw getModelTexture(ItemStack par1ItemStack){
+		
 		TextureMixer texture_mixer = TextureMixer.getInstance();
 		List<ResourceLocationRaw> list_model = getMuitlModelTexture();
 		List<Material> materials = (TinkerUtil.getMaterialsFromTagList(TagUtil.getBaseMaterialsTagList(par1ItemStack))!=null)? 
@@ -89,6 +91,20 @@ public class ItemSlashBladeTICWhite extends SlashBladeCore {
 			materials.add(TinkerMaterials.paper);
 		}
 		ResourceLocationRaw res = new ResourceLocationRaw("flammpfeil.slashblade","model/blade.png");
+		 NBTTagCompound tag = getItemTagCompound(par1ItemStack);
+		if(TextureName.exists(tag)){
+            String textureName = TextureName.get(tag);
+            ResourceLocationRaw loc;
+            if(!textureMap.containsKey(textureName))
+            {
+                loc = new ResourceLocationRaw("flammpfeil.slashblade","model/" + textureName + ".png");
+                textureMap.put(textureName,loc);
+            }else{
+                loc = textureMap.get(textureName);
+            }
+            res = loc;
+        }else
+		
 		try {
 			res = texCache.get(materials, () -> texture_mixer.generateTexture(
 					texture_mixer.TextureMix(
@@ -109,7 +125,7 @@ public class ItemSlashBladeTICWhite extends SlashBladeCore {
 	 
 	  @Override
 	  public float damagePotential() {
-	    return 1.1f;
+	    return 0.9f;
 	  }
 
 	  @Override
@@ -125,7 +141,7 @@ public class ItemSlashBladeTICWhite extends SlashBladeCore {
 	  @Override
 	  public ToolNBT buildTagData(List<Material> materials) {
 	    ToolNBT data = buildDefaultTag(materials);
-	    data.attack += 1f;
+	    data.attack -= 1f;
 	    data.durability *= DURABILITY_MODIFIER;
 	    return data;
 	  }

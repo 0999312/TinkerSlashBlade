@@ -18,6 +18,7 @@ import mods.flammpfeil.slashblade.util.ResourceLocationRaw;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -34,10 +35,11 @@ import slimeknights.tconstruct.tools.TinkerTools;
 
 public class ItemSlashBladeTIC extends SlashBladeCore {
 	
-	public static final float DURABILITY_MODIFIER = 0.5f;
+	public static final float DURABILITY_MODIFIER = 0.75f;
 
 	  public ItemSlashBladeTIC() {
-	    super(PartMaterialType.handle(RegisterLoader.handle),
+	    super(
+	    	 PartMaterialType.handle(RegisterLoader.handle),
 	         PartMaterialType.head(RegisterLoader.blade),
 	         PartMaterialType.extra(RegisterLoader.wrapper));
 
@@ -63,6 +65,19 @@ public class ItemSlashBladeTIC extends SlashBladeCore {
 			materials.add(TinkerMaterials.paper);
 		}
 		ResourceLocationRaw res = new ResourceLocationRaw("flammpfeil.slashblade","model/blade.png");
+		 NBTTagCompound tag = getItemTagCompound(par1ItemStack);
+		if(TextureName.exists(tag)){
+           String textureName = TextureName.get(tag);
+           ResourceLocationRaw loc;
+           if(!textureMap.containsKey(textureName))
+           {
+               loc = new ResourceLocationRaw("flammpfeil.slashblade","model/" + textureName + ".png");
+               textureMap.put(textureName,loc);
+           }else{
+               loc = textureMap.get(textureName);
+           }
+           res = loc;
+       }else
 		try {
 			res = texCache.get(materials, () -> texture_mixer.generateTexture(
 					texture_mixer.TextureMix(

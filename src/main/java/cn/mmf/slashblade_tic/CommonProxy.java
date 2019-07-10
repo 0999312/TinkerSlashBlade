@@ -10,6 +10,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 
 import cn.mmf.slashblade_tic.blade.SlashBladeCore;
+import cn.mmf.slashblade_tic.blade.SlashBladeTraitEvents;
 import cn.mmf.slashblade_tic.blade.TinkerSlashBladeEvent;
 import cn.mmf.slashblade_tic.blade.TinkerSlashBladeRegistry;
 import cn.mmf.slashblade_tic.compat.tinkersforging.TinkerForging_Recipes;
@@ -17,13 +18,19 @@ import cn.mmf.slashblade_tic.compat.tinkersurvival.TinkerSurvival_WhiteList;
 import cn.mmf.slashblade_tic.compat.tinkertoolleveling.ModBladeLeveling;
 import cn.mmf.slashblade_tic.item.RegisterLoader;
 import cn.mmf.slashblade_tic.modifiers.ModBladeExtraTrait;
+import cn.mmf.slashblade_tic.modifiers.ModBladeModelChange;
 import cn.mmf.slashblade_tic.modifiers.ModProud;
+import mods.flammpfeil.slashblade.ItemSlashBladeNamed;
 import mods.flammpfeil.slashblade.SlashBlade;
+import mods.flammpfeil.slashblade.item.ItemSlashBlade;
+import net.langball.lastsmith.Last_worker;
+import net.langball.lastsmith.blade.BladeLoader;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -63,16 +70,16 @@ import tinkersurvival.TinkerSurvival;
 
 public class CommonProxy {
 	 public static Modifier modProud;
-	 public static List<Modifier> extraTraitMods;
+	 public static List<Modifier> extraTraitMods,modelChangeMods;
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		new RegisterLoader(event);
 		new NetHandler();
+		MinecraftForge.EVENT_BUS.register(new SlashBladeTraitEvents());
 	}
 	
     public void init(FMLInitializationEvent event)
     { 
-
     	TinkerSlashBladeRegistry.registerModifier(TinkerModifiers.modBaneOfArthopods);
     	TinkerSlashBladeRegistry.registerModifier(TinkerModifiers.modBeheading);
     	TinkerSlashBladeRegistry.registerModifier(TinkerModifiers.modCreative);
@@ -92,7 +99,6 @@ public class CommonProxy {
     	TinkerSlashBladeRegistry.registerModifier(modProud);
     }
 
-
 	public void postInit(FMLPostInitializationEvent event)
     {
         if (Loader.isModLoaded("tinkertoolleveling")) 
@@ -103,8 +109,9 @@ public class CommonProxy {
         
         if(Loader.isModLoaded(TinkersForging.MOD_ID))
         	new TinkerForging_Recipes();
+      
         registerExtraTraitModifiers();
-
+        registerModelChangeModifiers();
     }
 	
 	  private Map<String, ModBladeExtraTrait> extraTraitLookup = new HashMap<>();
@@ -134,7 +141,33 @@ public class CommonProxy {
 		        String identifier = ModBladeExtraTrait.generateIdentifier(material, traits2);
 		        ModBladeExtraTrait mod = extraTraitLookup.computeIfAbsent(identifier, id -> new ModBladeExtraTrait(material, traits2, identifier));
 		        mod.addCombination(tool, (T) toolPart);
+		       
 		      }
 		    }
 		  }
+		  
+	  private Map<String, ModBladeModelChange> modelChangeLookup = new HashMap<>();
+	  private void registerModelChangeModifiers() {
+	    for(ItemStack tool : SlashBlade.BladeRegistry.values()){
+	    	registerModelChangeModifiers(tool);
+	    }
+	    if(Loader.isModLoaded(Last_worker.MODID)){
+	    for(ItemStack tool : BladeLoader.BladeRegistry.values()){
+	    	registerModelChangeModifiers(tool);
+	    }
+	    }
+	    modelChangeMods = Lists.newArrayList(modelChangeLookup.values());
+	  }
+
+	  private void registerModelChangeModifiers(ItemStack tools) {
+	    TinkerSlashBladeRegistry.getTools().forEach(tool -> registerModelChangeModifiers(tools, tool));
+	  }
+
+	  private void registerModelChangeModifiers(ItemStack tools, SlashBladeCore tool) {
+		  NBTTagCompound tag_blade = ItemSlashBlade.getItemTagCompound(tools);
+		  String identifier = ItemSlashBladeNamed.CurrentItemName.exists(tag_blade)? ItemSlashBladeNamed.CurrentItemName.get(tag_blade):"flammpfeil.slashblade.named";
+		  ModBladeModelChange mod = modelChangeLookup.computeIfAbsent(identifier, id -> new ModBladeModelChange(tools, tag_blade, identifier));
+	      mod.addCombination(tool);
+	  }
+
 }

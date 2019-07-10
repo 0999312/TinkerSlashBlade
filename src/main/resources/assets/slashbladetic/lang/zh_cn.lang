@@ -10,5 +10,23 @@ gui.bladeforge.name=拔刀剑锻造台
 gui.bladestation.name=拔刀剑装配台
 item.slashbladetic.slashblade.desc=无铭无名的大太刀\n能很好的与附魔相结合\n赐予名字会有不可思议的魅力
 item.slashbladetic.slashblade.white.desc=白鞘之刀\n切断之名的代表\n尚未有伟业
+
+item.slashbladetic.blade_model_paper.name=刀拵设计图
+slashbladetic.blade_model.name=拵
+
 modifier.proud_soul.name=荣耀之魂
+modifier.blade_extratrait.name=刀之刻印
+modifier.blade_model_change.name=拵入
+modifier.proud_soul.desc=击杀时耀魂增加量提升
+modifier.blade_extratrait.desc=获取部件属性
+modifier.blade_model_change.desc=更改你自己刀的模型
+
 item.slashbladetic.book_smith.tooltip=妖怪之山锻刀铺 出品
+
+slashbladetic.blade_standby.name=待命方式
+slashbladetic.summonedswordcolor.name=幻影剑颜色
+
+slashblade.standby.null.name=无显示
+slashblade.standby.left_hand.name=左手式
+slashblade.standby.back.name=背后式
+slashblade.standby.ninja.name=忍者式

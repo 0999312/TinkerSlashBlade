@@ -67,12 +67,35 @@ public abstract class TinkerSlashBladeEvent extends Event {
     }
   }
   
+  /**
+   * Fired when the player tries to replace blade's model
+   * You can modify the input items to achieve different results, this will not modify the actual items in the game.
+   * If you're modifying the list itself, make sure to put new items into originally empty indices to prevent the usage of other items in the input. Just append to the list.
+   * You can not modify the tool that's getting modified
+   */
+  @Cancelable
+  public static class OnModelReplacement extends TinkerSlashBladeEvent {
+
+    /** The items in the tool station. Can be manipulated. */
+    public NonNullList<ItemStack> replacementParts;
+    public ItemStack toolStack;
+
+    public OnModelReplacement(NonNullList<ItemStack> replacementParts, ItemStack toolStack) {
+      this.replacementParts = replacementParts;
+      this.toolStack = toolStack.copy();
+    }
+
+    public static boolean fireEvent(NonNullList<ItemStack> replacementParts, ItemStack toolStack) {
+      return !MinecraftForge.EVENT_BUS.post(new OnModelReplacement(replacementParts, toolStack));
+    }
+  }
 
   public static class OnRepair extends TinkerSlashBladeEvent {
-
+	public final ItemStack itemStack;
     public final int amount;
 
     public OnRepair(ItemStack itemStack, int amount) {
+    this.itemStack = itemStack;
       this.amount = amount;
     }
 
