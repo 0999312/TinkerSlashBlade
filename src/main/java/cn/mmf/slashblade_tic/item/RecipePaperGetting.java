@@ -60,7 +60,19 @@ public class RecipePaperGetting extends ShapedOreRecipe
 	            if(!target.isEmpty() && target.getItem() instanceof ItemSlashBlade)
 	            				hasBlade = true;
         	}
-            return hasBlade && hasGrindstone;
+        	boolean hasOthers = false;
+        	if(hasBlade && hasGrindstone){
+           	 for (int i = 0; i <= cInv.getWidth(); ++i)
+             {
+                 for (int j = 0; j <= cInv.getHeight(); ++j)
+                 {
+                	 if((i==0&&j==0)||(i==0&&j==1))continue;
+                	 ItemStack slot = cInv.getStackInRowAndColumn(i, j);
+                	 if(!slot.isEmpty()) hasOthers=true;
+                 }
+             }
+        	}
+            return hasBlade&&hasGrindstone&&!hasOthers;
     }
 
     @Override
@@ -86,7 +98,6 @@ public class RecipePaperGetting extends ShapedOreRecipe
 	        	if(item.hasTagCompound()){
 	        		NBTTagCompound tag = item.getTagCompound();
 	        		ItemStack new_paper=getItemstackWithNBT(tag);
-	        		
 	    			if (!event.player.inventory.addItemStackToInventory(new_paper))
 	    				event.player.dropItem(new_paper, false);
 	        		}

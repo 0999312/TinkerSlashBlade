@@ -116,35 +116,34 @@ public class CommonProxy {
 	
 	  private Map<String, ModBladeExtraTrait> extraTraitLookup = new HashMap<>();
 	  private void registerExtraTraitModifiers() {
-		    TinkerRegistry.getAllMaterials().forEach(this::registerExtraTraitModifiers);
-		    extraTraitMods = Lists.newArrayList(extraTraitLookup.values());
-		  }
+	    TinkerRegistry.getAllMaterials().forEach(this::registerExtraTraitModifiers);
+	    extraTraitMods = Lists.newArrayList(extraTraitLookup.values());
+	  }
 
-		  private void registerExtraTraitModifiers(Material material) {
-		    TinkerSlashBladeRegistry.getTools().forEach(tool -> registerExtraTraitModifiers(material, tool));
-		  }
+	  private void registerExtraTraitModifiers(Material material) {
+	    TinkerSlashBladeRegistry.getTools().forEach(tool -> registerExtraTraitModifiers(material, tool));
+	  }
 
-		  private void registerExtraTraitModifiers(Material material, SlashBladeCore tool) {
-		    tool.getRequiredComponents().forEach(pmt -> registerExtraTraitModifiers(material, tool, pmt));
-		  }
+	  private void registerExtraTraitModifiers(Material material, SlashBladeCore tool) {
+	    tool.getRequiredComponents().forEach(pmt -> registerExtraTraitModifiers(material, tool, pmt));
+	  }
 
-		  private void registerExtraTraitModifiers(Material material, SlashBladeCore tool, PartMaterialType partMaterialType) {
-		    partMaterialType.getPossibleParts().forEach(part -> registerExtraTraitModifiers(material, tool, partMaterialType, part));
-		  }
+	  private void registerExtraTraitModifiers(Material material, SlashBladeCore tool, PartMaterialType partMaterialType) {
+	    partMaterialType.getPossibleParts().forEach(part -> registerExtraTraitModifiers(material, tool, partMaterialType, part));
+	  }
 
-		  private <T extends Item & IToolPart> void registerExtraTraitModifiers(Material material, SlashBladeCore tool, PartMaterialType partMaterialType, IToolPart toolPart) {
-		    if(toolPart instanceof Item) {
-		      Collection<ITrait> traits = partMaterialType.getApplicableTraitsForMaterial(material);
-		      if(!traits.isEmpty()) {
-		        // we turn it into a set to remove duplicates, reducing the total amount of modifiers created by roughly 25%!
-		        final Collection<ITrait> traits2 = ImmutableSet.copyOf(traits);
-		        String identifier = ModBladeExtraTrait.generateIdentifier(material, traits2);
-		        ModBladeExtraTrait mod = extraTraitLookup.computeIfAbsent(identifier, id -> new ModBladeExtraTrait(material, traits2, identifier));
-		        mod.addCombination(tool, (T) toolPart);
-		       
-		      }
-		    }
-		  }
+	  private <T extends Item & IToolPart> void registerExtraTraitModifiers(Material material, SlashBladeCore tool, PartMaterialType partMaterialType, IToolPart toolPart) {
+	    if(toolPart instanceof Item) {
+	      Collection<ITrait> traits = partMaterialType.getApplicableTraitsForMaterial(material);
+	      if(!traits.isEmpty()) {
+	        // we turn it into a set to remove duplicates, reducing the total amount of modifiers created by roughly 25%!
+	        final Collection<ITrait> traits2 = ImmutableSet.copyOf(traits);
+	        String identifier = ModBladeExtraTrait.generateIdentifier(material, traits2);
+	        ModBladeExtraTrait mod = extraTraitLookup.computeIfAbsent(identifier, id -> new ModBladeExtraTrait(material, traits2, identifier));
+	        mod.addCombination(tool, (T) toolPart);
+	      }
+	    }
+	  }
 		  
 	  private Map<String, ModBladeModelChange> modelChangeLookup = new HashMap<>();
 	  private void registerModelChangeModifiers() {
@@ -152,9 +151,9 @@ public class CommonProxy {
 	    	registerModelChangeModifiers(tool);
 	    }
 	    if(Loader.isModLoaded(Last_worker.MODID)){
-	    for(ItemStack tool : BladeLoader.BladeRegistry.values()){
-	    	registerModelChangeModifiers(tool);
-	    }
+		    for(ItemStack tool : BladeLoader.BladeRegistry.values()){
+		    	registerModelChangeModifiers(tool);
+		    }
 	    }
 	    modelChangeMods = Lists.newArrayList(modelChangeLookup.values());
 	  }

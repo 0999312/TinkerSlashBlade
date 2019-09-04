@@ -68,14 +68,15 @@ public class ModBladeModelChange extends ToolModifier {
   }
 
   private ItemStack getItemstackWithNBT(NBTTagCompound tag_paper2) {
-	ItemStack paper = new ItemStack(RegisterLoader.blade_model_paper);
-    NBTTagCompound tag_result = ItemSlashBlade.getItemTagCompound(paper);
-    ItemSlashBlade.ModelName.set(tag_result,ItemSlashBlade.ModelName.exists(tag_paper2)? ItemSlashBlade.ModelName.get(tag_paper2):"blade");
-    ItemSlashBlade.TextureName.set(tag_result, ItemSlashBlade.TextureName.exists(tag_paper2)?ItemSlashBlade.TextureName.get(tag_paper2):"blade");
-    ItemSlashBladeNamed.CurrentItemName.set(tag_result, ItemSlashBladeNamed.CurrentItemName.exists(tag_paper2)?ItemSlashBladeNamed.CurrentItemName.get(tag_paper2):"flammpfeil.slashblade.named");
-	return paper;
-  }
-
+		ItemStack paper = new ItemStack(RegisterLoader.blade_model_paper);
+	    NBTTagCompound tag_result = ItemSlashBlade.getItemTagCompound(paper);
+	    ItemSlashBlade.ModelName.set(tag_result,ItemSlashBlade.ModelName.exists(tag_paper2)? ItemSlashBlade.ModelName.get(tag_paper2):"blade");
+	    ItemSlashBlade.TextureName.set(tag_result, ItemSlashBlade.TextureName.exists(tag_paper2)?ItemSlashBlade.TextureName.get(tag_paper2):"blade");
+	    ItemSlashBladeNamed.CurrentItemName.set(tag_result, ItemSlashBladeNamed.CurrentItemName.exists(tag_paper2)?ItemSlashBladeNamed.CurrentItemName.get(tag_paper2):"flammpfeil.slashblade.named");
+	    ItemSlashBlade.StandbyRenderType.set(tag_result, ItemSlashBlade.StandbyRenderType.exists(tag_paper2)?ItemSlashBlade.StandbyRenderType.get(tag_paper2):0);
+	    ItemSlashBladeNamed.SummonedSwordColor.set(tag_result, ItemSlashBladeNamed.SummonedSwordColor.exists(tag_paper2)?ItemSlashBladeNamed.SummonedSwordColor.get(tag_paper2):0x3333FF);
+		return paper;
+	  }
 
 
   @Override
@@ -105,6 +106,8 @@ public class ModBladeModelChange extends ToolModifier {
 	  ItemSlashBlade.ModelName.set(rootCompound,ItemSlashBlade.ModelName.exists(tag_paper)? ItemSlashBlade.ModelName.get(tag_paper):"blade");
 	    ItemSlashBlade.TextureName.set(rootCompound, ItemSlashBlade.TextureName.exists(tag_paper)?ItemSlashBlade.TextureName.get(tag_paper):"blade");
 	    ItemSlashBladeNamed.CurrentItemName.set(rootCompound, ItemSlashBladeNamed.CurrentItemName.exists(tag_paper)?ItemSlashBladeNamed.CurrentItemName.get(tag_paper):"flammpfeil.slashblade.named");
+	    ItemSlashBlade.StandbyRenderType.set(rootCompound, ItemSlashBlade.StandbyRenderType.exists(tag_paper)?ItemSlashBlade.StandbyRenderType.get(tag_paper):0);
+	    ItemSlashBladeNamed.SummonedSwordColor.set(rootCompound, ItemSlashBladeNamed.SummonedSwordColor.exists(tag_paper)?ItemSlashBladeNamed.SummonedSwordColor.get(tag_paper):0x3333FF);
   }
 
   @Override

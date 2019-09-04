@@ -122,8 +122,7 @@ public final class SlashBladeBuilder {
       log.error("addTrait: Trying to apply unregistered Trait {}", trait.getIdentifier());
       return;
     }
-
-    IModifier modifier = TinkerSlashBladeRegistry.getModifier(trait.getIdentifier());
+    ITrait modifier = TinkerRegistry.getTrait(trait.getIdentifier());
 
     if(modifier == null || !(modifier instanceof AbstractTrait)) {
       log.error("addTrait: No matching modifier for the Trait {} present", trait.getIdentifier());

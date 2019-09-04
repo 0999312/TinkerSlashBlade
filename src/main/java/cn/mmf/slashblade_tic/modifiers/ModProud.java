@@ -34,15 +34,11 @@ public class ModProud extends ModifierTrait {
             try {
                 int exp = (Integer)getExperiencePoints.invoke(target, (EntityPlayer) player);
                 exp = net.minecraftforge.event.ForgeEventFactory.getExperienceDrop(target, (EntityPlayer) player, exp);
-
                 float rank = StylishRankManager.getStylishRank(player);
-
                 exp *= 1.0 + rank *0.25;
-
                 NBTTagCompound tag = ItemSlashBlade.getItemTagCompound(stack);
                 ItemSlashBlade.PrevExp.set(tag,exp);
                 ItemSlashBlade.ProudSoul.add(tag,exp);
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
