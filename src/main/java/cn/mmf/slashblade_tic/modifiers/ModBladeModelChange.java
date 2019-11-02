@@ -8,6 +8,7 @@ import cn.mmf.slashblade_tic.item.RegisterLoader;
 import cn.mmf.slashblade_tic.util.SlashBladeBuilder;
 import mods.flammpfeil.slashblade.ItemSlashBladeNamed;
 import mods.flammpfeil.slashblade.SlashBlade;
+import mods.flammpfeil.slashblade.TagPropertyAccessor;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Blocks;
@@ -27,17 +28,21 @@ import java.util.stream.Collectors;
 import slimeknights.mantle.util.RecipeMatch;
 import slimeknights.tconstruct.library.Util;
 import slimeknights.tconstruct.library.materials.Material;
+import slimeknights.tconstruct.library.modifiers.IModifier;
 import slimeknights.tconstruct.library.modifiers.ModifierAspect;
 import slimeknights.tconstruct.library.modifiers.ModifierNBT;
 import slimeknights.tconstruct.library.modifiers.TinkerGuiException;
 import slimeknights.tconstruct.library.tools.IToolPart;
 import slimeknights.tconstruct.library.traits.ITrait;
 import slimeknights.tconstruct.library.utils.TagUtil;
+import slimeknights.tconstruct.library.utils.TinkerUtil;
 import slimeknights.tconstruct.shared.TinkerCommons;
 import slimeknights.tconstruct.tools.modifiers.ToolModifier;
 
 public class ModBladeModelChange extends ToolModifier {
 
+  public static TagPropertyAccessor.TagPropertyInteger SA_TYPES_HIDDEN = new TagPropertyAccessor.TagPropertyInteger("SpecialAttackType_Hidden");
+  
   public static final List<ItemStack> EMBOSSMENT_ITEMS = getEmbossmentItems();
   public static final String EXTRA_TRAIT_IDENTIFIER = "blade_model_change";
   public final Set<SlashBladeCore> toolCores;
@@ -49,7 +54,7 @@ public class ModBladeModelChange extends ToolModifier {
   }
 
   public ModBladeModelChange(ItemStack blade_model, NBTTagCompound tag_model,String id) {
-      super(EXTRA_TRAIT_IDENTIFIER + id, 0X8B0000);
+    super(EXTRA_TRAIT_IDENTIFIER + id, 0X8B0000);
 
     TinkerSlashBladeRegistry.registerModifier(this);
     this.tag_paper = tag_model;
@@ -70,14 +75,28 @@ public class ModBladeModelChange extends ToolModifier {
   private ItemStack getItemstackWithNBT(NBTTagCompound tag_paper2) {
 		ItemStack paper = new ItemStack(RegisterLoader.blade_model_paper);
 	    NBTTagCompound tag_result = ItemSlashBlade.getItemTagCompound(paper);
-	    ItemSlashBlade.ModelName.set(tag_result,ItemSlashBlade.ModelName.exists(tag_paper2)? ItemSlashBlade.ModelName.get(tag_paper2):"blade");
-	    ItemSlashBlade.TextureName.set(tag_result, ItemSlashBlade.TextureName.exists(tag_paper2)?ItemSlashBlade.TextureName.get(tag_paper2):"blade");
-	    ItemSlashBladeNamed.CurrentItemName.set(tag_result, ItemSlashBladeNamed.CurrentItemName.exists(tag_paper2)?ItemSlashBladeNamed.CurrentItemName.get(tag_paper2):"flammpfeil.slashblade.named");
-	    ItemSlashBlade.StandbyRenderType.set(tag_result, ItemSlashBlade.StandbyRenderType.exists(tag_paper2)?ItemSlashBlade.StandbyRenderType.get(tag_paper2):0);
-	    ItemSlashBladeNamed.SummonedSwordColor.set(tag_result, ItemSlashBladeNamed.SummonedSwordColor.exists(tag_paper2)?ItemSlashBladeNamed.SummonedSwordColor.get(tag_paper2):0x3333FF);
-		return paper;
+	    ItemSlashBlade.ModelName.set(tag_result,
+	    		ItemSlashBlade.ModelName.exists(tag_paper2)? 
+	    				ItemSlashBlade.ModelName.get(tag_paper2):"blade");
+	    ItemSlashBlade.TextureName.set(tag_result,
+	    		ItemSlashBlade.TextureName.exists(tag_paper2)?
+	    				ItemSlashBlade.TextureName.get(tag_paper2):"blade");
+	    ItemSlashBladeNamed.CurrentItemName.set(tag_result,
+	    		ItemSlashBladeNamed.CurrentItemName.exists(tag_paper2)?
+	    				ItemSlashBladeNamed.CurrentItemName.get(tag_paper2):"flammpfeil.slashblade.named");
+	    ItemSlashBlade.StandbyRenderType.set(tag_result,
+	    		ItemSlashBlade.StandbyRenderType.exists(tag_paper2)?
+	    				ItemSlashBlade.StandbyRenderType.get(tag_paper2):0);
+	    ItemSlashBladeNamed.SummonedSwordColor.set(tag_result,
+	    		ItemSlashBladeNamed.SummonedSwordColor.exists(tag_paper2)?
+	    				ItemSlashBladeNamed.SummonedSwordColor.get(tag_paper2):0x3333FF);
+	    ItemSlashBladeNamed.SpecialAttackType.set(tag_result,
+	    		ItemSlashBlade.SpecialAttackType.exists(tag_paper2)?
+	    				ItemSlashBlade.SpecialAttackType.get(tag_paper2):0);
+	    if(tag_paper2.hasKey("SB.SEffect"))
+	    	tag_result.setTag("SB.SEffect",tag_paper2.getCompoundTag("SB.SEffect"));
+	    return paper;
 	  }
-
 
   @Override
   public boolean canApplyCustom(ItemStack stack) throws TinkerGuiException {
@@ -108,6 +127,11 @@ public class ModBladeModelChange extends ToolModifier {
 	    ItemSlashBladeNamed.CurrentItemName.set(rootCompound, ItemSlashBladeNamed.CurrentItemName.exists(tag_paper)?ItemSlashBladeNamed.CurrentItemName.get(tag_paper):"flammpfeil.slashblade.named");
 	    ItemSlashBlade.StandbyRenderType.set(rootCompound, ItemSlashBlade.StandbyRenderType.exists(tag_paper)?ItemSlashBlade.StandbyRenderType.get(tag_paper):0);
 	    ItemSlashBladeNamed.SummonedSwordColor.set(rootCompound, ItemSlashBladeNamed.SummonedSwordColor.exists(tag_paper)?ItemSlashBladeNamed.SummonedSwordColor.get(tag_paper):0x3333FF);
+	    SA_TYPES_HIDDEN.set(rootCompound,
+	    		ItemSlashBlade.SpecialAttackType.exists(tag_paper)?
+	    				ItemSlashBlade.SpecialAttackType.get(tag_paper):0);
+	    if(tag_paper.hasKey("SB.SEffect"))
+	    	rootCompound.setTag("SB.SEffect.hidden",tag_paper.getCompoundTag("SB.SEffect"));
   }
 
   @Override
@@ -116,7 +140,7 @@ public class ModBladeModelChange extends ToolModifier {
   }
 
   private static class ExtraTraitAspect extends ModifierAspect {
-
+	  
     @Override
     public boolean canApply(ItemStack stack, ItemStack original) throws TinkerGuiException {
       NBTTagList modifierList = TagUtil.getModifiersTagList(original);
@@ -132,7 +156,7 @@ public class ModBladeModelChange extends ToolModifier {
 
     @Override
     public void updateNBT(NBTTagCompound root, NBTTagCompound modifierTag) {
-      // nothing to do
+    	
     }
 
 

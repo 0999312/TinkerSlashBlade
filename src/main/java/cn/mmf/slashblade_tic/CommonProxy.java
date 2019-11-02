@@ -17,6 +17,7 @@ import cn.mmf.slashblade_tic.compat.tinkersforging.TinkerForging_Recipes;
 import cn.mmf.slashblade_tic.compat.tinkersurvival.TinkerSurvival_WhiteList;
 import cn.mmf.slashblade_tic.compat.tinkertoolleveling.ModBladeLeveling;
 import cn.mmf.slashblade_tic.item.RegisterLoader;
+import cn.mmf.slashblade_tic.modifiers.ModBladeAwaking;
 import cn.mmf.slashblade_tic.modifiers.ModBladeExtraTrait;
 import cn.mmf.slashblade_tic.modifiers.ModBladeModelChange;
 import cn.mmf.slashblade_tic.modifiers.ModProud;
@@ -69,7 +70,7 @@ import slimeknights.tconstruct.tools.modifiers.ModWebbed;
 import tinkersurvival.TinkerSurvival;
 
 public class CommonProxy {
-	 public static Modifier modProud;
+	 public static Modifier modProud,modAwaking;
 	 public static List<Modifier> extraTraitMods,modelChangeMods;
 	public void preInit(FMLPreInitializationEvent event)
 	{
@@ -94,9 +95,14 @@ public class CommonProxy {
     	TinkerSlashBladeRegistry.registerModifier(TinkerModifiers.modWebbed);
     	TinkerSlashBladeRegistry.registerModifier(TinkerModifiers.modShulking);
     	TinkerSlashBladeRegistry.registerModifier(TinkerModifiers.modMendingMoss);
+
     	modProud=new ModProud();
-    	modProud.addItem(SlashBlade.findItemStack(SlashBlade.modid, SlashBlade.TrapezohedronBladeSoulStr, 1), 1, 1);
+    	modProud.addItem(SlashBlade.findItemStack(SlashBlade.modid, SlashBlade.SphereBladeSoulStr, 1), 1, 1);
     	TinkerSlashBladeRegistry.registerModifier(modProud);
+
+    	modAwaking=new ModBladeAwaking();
+    	modAwaking.addItem(SlashBlade.findItemStack(SlashBlade.modid, SlashBlade.TrapezohedronBladeSoulStr, 1), 1, 1);
+    	TinkerSlashBladeRegistry.registerModifier(modAwaking);
     }
 
 	public void postInit(FMLPostInitializationEvent event)

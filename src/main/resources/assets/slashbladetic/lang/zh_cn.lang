@@ -10,6 +10,7 @@ gui.bladeforge.name=拔刀剑锻造台
 gui.bladestation.name=拔刀剑装配台
 item.slashbladetic.slashblade.desc=无铭无名的大太刀\n能很好的与附魔相结合\n赐予名字会有不可思议的魅力
 item.slashbladetic.slashblade.white.desc=白鞘之刀\n切断之名的代表\n尚未有伟业
+modifier.blade_awaking.name=觉醒
 
 item.slashbladetic.blade_model_paper.name=刀拵设计图
 slashbladetic.blade_model.name=拵

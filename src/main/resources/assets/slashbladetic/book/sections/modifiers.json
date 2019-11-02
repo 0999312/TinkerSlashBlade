@@ -57,6 +57,10 @@
    },
    {
       "type" : "blademodifier",
+      "data" : "modifiers/awaking.json"
+   },
+   {
+      "type" : "blademodifier",
       "data" : "modifiers/extratrait.json"
    },
    {

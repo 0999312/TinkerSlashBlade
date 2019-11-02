@@ -215,7 +215,7 @@ public class SlashBladeCore extends SlashBladeTICBasic implements IToolStationDi
 	      // only valid ones
 	      if(hasValidMaterials(tool)) {
 	        subItems.add(tool);
-	        if(!Config.listAllMaterials) {
+	        if(!Config.listAllToolMaterials) {
 	          break;
 	        }
 	      }

@@ -11,6 +11,7 @@ gui.bladestation.name=刀鍛冶台
 item.slashbladetic.slashblade.desc=無銘無名の大業物\n付与術が印は業が受皿\n力持つ名振るうは業の極
 item.slashbladetic.slashblade.white.desc=白鞘\n切裂く意思が寄り代\nなれど業には不十分
 modifier.proud_soul.name=栄光の魂
+modifier.blade_awaking.name=覚醒
 
 item.slashbladetic.blade_model_paper.name=拵の紙
 
@@ -28,7 +29,7 @@ item.slashbladetic.book_smith.tooltip=妖怪の山鍛工場 著
 slashbladetic.blade_standby.name=スタイルでスタンバイ
 slashbladetic.summonedswordcolor.name=幻影剣の色
 
-slashblade.standby.null.name=ヌル
+slashblade.standby.null.name=無
 slashblade.standby.left_hand.name=左手
 slashblade.standby.back.name=背後
 slashblade.standby.ninja.name=忍者スタイル

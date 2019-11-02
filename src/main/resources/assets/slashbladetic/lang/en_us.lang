@@ -13,7 +13,7 @@ gui.bladestation.name=Blade Station
 item.slashbladetic.slashblade.desc=Nameless SlashBlade
 item.slashbladetic.slashblade.white.desc=Steel Edge
 item.slashbladetic.blade_model_paper.name=Sheath Design drawings
-
+modifier.blade_awaking.name=Awaking
 
 slashbladetic.blade_model.name=Sheath
 
