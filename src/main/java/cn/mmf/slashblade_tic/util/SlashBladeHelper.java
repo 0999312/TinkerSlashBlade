@@ -73,11 +73,10 @@ public class SlashBladeHelper {
     }
 
     public static void breakTool(ItemStack stack, EntityLivingBase entity) {
-        NBTTagCompound nbt = TagUtil.getToolTag(stack);
-        if (nbt.hasKey(Tags.BROKEN) && nbt.getBoolean(Tags.BROKEN)) {
+        NBTTagCompound tag = TagUtil.getToolTag(stack);
+        if (tag.hasKey(Tags.BROKEN) && tag.getBoolean(Tags.BROKEN)) {
             return;
         }
-        NBTTagCompound tag = TagUtil.getToolTag(stack);
         tag.setBoolean(Tags.BROKEN, true);
         ItemSlashBlade.IsBroken.set(tag, true);
         TagUtil.setToolTag(stack, tag);
